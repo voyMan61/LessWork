@@ -31,8 +31,8 @@ const styles = theme => ({
     'rgb(130, 0, 27) 40%, rgb(91, 0, 19) 100%)',
   },
   aa:{
-    
-    color:'black',
+    background: 'linear-gradient(to bottom, rgb(0, 55, 150) 50%,' +
+    'rgb(0, 50, 150) 50%, rgb(0, 75, 150) 100%)',
   },
 });
 //background: '#b3a558',
