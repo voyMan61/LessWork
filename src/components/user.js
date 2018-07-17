@@ -68,7 +68,7 @@ class USerView extends React.Component {
             <Tab label="Patterns" href="#Patterns" />
           </Tabs>
         </AppBar>
-        {value === 0 && <TabContainer>meowmeowmeowmeowmeow</TabContainer>}
+        {value === 0 && <TabContainer> </TabContainer>}
         {value === 1 && <TabContainer><Ste/></TabContainer>}
         {value === 2 && <TabContainer><Offerings/></TabContainer>}
         {value === 3 && <TabContainer><StaffTots/></TabContainer>}

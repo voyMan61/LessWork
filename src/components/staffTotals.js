@@ -236,7 +236,7 @@ class EnhancedTable extends React.Component {
   console.table(hits);
   if (isLoading) {
     return (
-    <p>Loading ...     <STE/></p>
+    <p>Loading ...</p>
   );
   }
   if(modee){
