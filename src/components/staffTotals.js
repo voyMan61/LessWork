@@ -19,15 +19,20 @@ import { lighten } from '@material-ui/core/styles/colorManipulator';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 
+
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import STE from './staffView.js';
 
 
 const columnData = [
   { id: 'Name', label: 'Staff Name' },
   { id: 'offerings_taken',  label: 'Offerings Taken ' },
-  { id: 'teaching_hours',  label: 'Teaching Hours ' },
+  { id: 'target',  label: 'Target ' },
   { id: 'total_load',  label: 'Total Load' },
-  { id: 'service_description',  label: 'Service Description' }
+  { id: 'Comments',  label: 'Comments' }
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -126,6 +131,12 @@ const styles = theme => ({
   tableWrapper: {
     overflowX: 'auto',
   },
+  red:{
+    backgroundColor: 'red',
+  },
+  default:{
+
+  },
   paper: {
     margin: theme.spacing.unit,
     position: 'absolute',
@@ -148,18 +159,14 @@ class EnhancedTable extends React.Component {
       selected: [],
       hits: [],
       fet: 'false',
+      load: 'red',
     };
   }
-  handleChange = () => {
-    this.setState(state => ({ checked: !state.checked }));
-  };
 
   handleROpen = (data, e) => {
     //const it = e.currentTarget('data-item');
     //console.log(it.name)
     console.log( data.name); 
-
-    //this.setState({open: true, mod: data, modee: true})
   };
   
   handleOpen = () => {
@@ -225,8 +232,8 @@ class EnhancedTable extends React.Component {
 }
   render() {
   const { classes } = this.props;
-  const { modee, mod, open, checked, isLoading, hits, fet, data, order, orderBy, selected, rowsPerPage, page } = this.state;
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, hits.length - page * rowsPerPage);
+  const { load, modee, mod, open, checked, isLoading, hits, fet, data, order, orderBy, selected, rowsPerPage, expanded } = this.state;
+  console.table(hits);
   if (isLoading) {
     return (
     <p>Loading ...     <STE/></p>
@@ -266,27 +273,20 @@ class EnhancedTable extends React.Component {
               onSelectAllClick={this.handleSelectAllClick}
               rowCount={hits.length}
             />
-            <TableBody>
+        <TableBody>
               {hits
                 .map(n => {
-                  const isSelected = this.isSelected(n.id);
-                  return ( 
+                  return (                  
                     <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
-                      <TableCell component="th" scope="row">
-                        {n.name}
-                      </TableCell>
-                      <TableCell>{n.offerings_taken}</TableCell>
-                      <TableCell>{n.teaching_hours}</TableCell>
-                      <TableCell>{n.total_load}</TableCell>
-                      <TableCell>{n.service_description}</TableCell>
+                      <TableCell component="th" scope="row"> {n.name}</TableCell>                    
+                      <TableCell >{n.offerings_taken}</TableCell>
+                      <TableCell>{n.target}</TableCell>
+                      <TableCell style={{color: n.total_load < 0.9* n.target? 'blue' : n.total_load > 1.1*n.target? 'red' :  'green'}}>{n.total_load}</TableCell>
+                      <TableCell>{n.comments}</TableCell>
                     </TableRow>
                   );
                 })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 49 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
+
             </TableBody>
           </Table>
         </div>
@@ -295,6 +295,7 @@ class EnhancedTable extends React.Component {
   }
 }
 }
+
 
 function getModalStyle() {
   const top = 50 ;
