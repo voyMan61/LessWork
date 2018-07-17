@@ -18,12 +18,6 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 
 
-function getSorting(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
-    : (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1);
-}
-
 const columnData = [
   { id: 'Unit Code',  label: 'Unit Code' },
   { id: 'Name', label: 'Name' },
@@ -33,9 +27,6 @@ const columnData = [
 ];
 
 class EnhancedTableHead extends React.Component {
-  createSortHandler = property => event => {
-    this.props.onRequestSort(event, property);
-  };
 
   render() {
     const { onSelectAllClick, order, orderBy, numSelected, rowCount } = this.props;
@@ -48,7 +39,6 @@ class EnhancedTableHead extends React.Component {
                 key={column.id}
                 numeric={column.numeric}
                 padding={column.disablePadding ? 'none' : 'default'}
-                sortDirection={orderBy === column.id ? order : false}
               >
                 <Tooltip
                   title="Sort"
@@ -58,7 +48,6 @@ class EnhancedTableHead extends React.Component {
                   <TableSortLabel
                     active={orderBy === column.id}
                     direction={order}
-                    onClick={this.createSortHandler(column.id)}
                   >
                     {column.label}
                   </TableSortLabel>
@@ -74,7 +63,6 @@ class EnhancedTableHead extends React.Component {
 
 EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.string.isRequired,
   orderBy: PropTypes.string.isRequired,
@@ -161,23 +149,6 @@ const styles = theme => ({
 
 });
 
-
-var url = 'http://immense-headland-42479.herokuapp.com/api/offering';
-
-async function getData() {
-  var e
-  fetch(url)
-  .then((response) => response.json())
-  .then((responseJson) => {
-      e = responseJson;
-      console.table(responseJson);
-
-      //ent.write("<h3>",url,"</h3>");
-      
-  }) 
-  return e;
-}
-
 class EnhancedTable extends React.Component {
   constructor(props) {
     super(props);
@@ -186,7 +157,6 @@ class EnhancedTable extends React.Component {
       mod: '',
       modee: false,
       open: false,
-      orderBy: 'calories',
       checked: false,
       selected: [],
       hits: [],
@@ -213,16 +183,6 @@ class EnhancedTable extends React.Component {
 
   handleClose = () => {
     this.setState({ open: false });
-  };
-
-
-  handleRequestSort = (event, property) => {
-    const orderBy = property;
-    let order = 'desc';
-    if (this.state.orderBy === property && this.state.order === 'desc') {
-      order = 'asc';
-    }
-    this.setState({ order, orderBy });
   };
 
   handleSelectAllClick = (event, checked) => {
@@ -267,7 +227,7 @@ class EnhancedTable extends React.Component {
   componentDidMount() {
     this.setState({ isLoading: true });
     var f = [];
-    fetch(url)
+    fetch('http://immense-headland-42479.herokuapp.com/api/offering')
     .then((response) => response.json())
     .then((responseJson) => {
         console.table(responseJson);
@@ -293,12 +253,10 @@ class EnhancedTable extends React.Component {
               order={order}
               orderBy={orderBy}
               onSelectAllClick={this.handleSelectAllClick}
-              onRequestSort={this.handleRequestSort}
               rowCount={hits.length}
             />
             <TableBody>
               {hits
-                .sort(getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(n => {
                   const isSelected = this.isSelected(n.id);
