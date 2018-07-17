@@ -18,6 +18,18 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 
 
+const CustomTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: '#301615',
+    color: theme.palette.common.white,
+    fontSize: 14,
+  },
+  body: {
+    fontSize: 12,
+  },
+}))(TableCell);
+
+
 const columnData = [
   { id: 'Unit Code',  label: 'Unit Code' },
   { id: 'Name', label: 'Name' },
@@ -35,24 +47,7 @@ class EnhancedTableHead extends React.Component {
         <TableRow>          
           {columnData.map(column => {
             return (
-              <TableCell
-                key={column.id}
-                numeric={column.numeric}
-                padding={column.disablePadding ? 'none' : 'default'}
-              >
-                <Tooltip
-                  title="Sort"
-                  placement={column.numeric ? 'bottom-end' : 'bottom-start'}
-                  enterDelay={300}
-                >
-                  <TableSortLabel
-                    active={orderBy === column.id}
-                    direction={order}
-                  >
-                    {column.label}
-                  </TableSortLabel>
-                </Tooltip>
-              </TableCell>
+              <CustomTableCell>{column.label}</CustomTableCell>
             );
           }, this)}
         </TableRow>
@@ -262,19 +257,19 @@ class EnhancedTable extends React.Component {
                   const isSelected = this.isSelected(n.id);
                   return ( 
                     <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
-                      <TableCell component="th" scope="row">
+                      <CustomTableCell component="th" scope="row">
                         {n.unit_code}
-                      </TableCell>
-                      <TableCell >{n.name}</TableCell>
-                      <TableCell>{n.enrolment}</TableCell>
-                      <TableCell>{n.pattern_code}</TableCell>
-                      <TableCell>{n.type}</TableCell>
+                      </CustomTableCell>
+                      <CustomTableCell >{n.name}</CustomTableCell>
+                      <CustomTableCell>{n.enrolment}</CustomTableCell>
+                      <CustomTableCell>{n.pattern_code}</CustomTableCell>
+                      <CustomTableCell>{n.type}</CustomTableCell>
                     </TableRow>
                   );
                 })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 49 * emptyRows }}>
-                  <TableCell colSpan={6} />
+                  <CustomTableCell colSpan={6} />
                 </TableRow>
               )}
             </TableBody>

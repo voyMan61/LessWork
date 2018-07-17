@@ -27,8 +27,12 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     height: '800px',
-    background: 'linear-gradient(to bottom, rgba(203,220,220,0.7) 60%,' +
-    'rgba(131,210,320,0.3) 100%, rgba(210,130,130,130) 100%)',
+    background: 'linear-gradient(to bottom, rgb(173, 0, 37) 30%,' +
+    'rgb(130, 0, 27) 40%, rgb(91, 0, 19) 100%)',
+  },
+  aa:{
+    background: '#b3a558',
+    color:'black',
   },
 });
 
@@ -59,7 +63,7 @@ class USerView extends React.Component {
 
     return (
       <Paper className={classes.root}>
-        <AppBar position="static" href="#" >
+        <AppBar className={classes.aa} position="static" href="#" >
           <Tabs value={value} onChange={this.handleChange}>
             <Tab label="Dashboard" href="#Dashboard" />
             <Tab label="    " href="#Blanked" />

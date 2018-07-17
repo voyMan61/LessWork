@@ -18,6 +18,18 @@ import { lighten } from '@material-ui/core/styles/colorManipulator';
 import Modal from '@material-ui/core/Modal';
 
 
+const CustomTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: '#301615',
+    color: theme.palette.common.white,
+    fontSize: 14,
+  },
+  body: {
+    fontSize: 12,
+  },
+}))(TableCell);
+
+
 const columnData = [
   { id: 'code', label: 'Pattern Code' },
   { id: 'short_desc',  label: 'Description' },
@@ -32,32 +44,12 @@ class EnhancedTableHead extends React.Component {
   };
 
   render() {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount } = this.props;
     return (
       <TableHead>
         <TableRow>          
           {columnData.map(column => {
             return (
-              <TableCell
-                key={column.id}
-                numeric={column.numeric}
-                padding={column.disablePadding ? 'none' : 'default'}
-                sortDirection={orderBy === column.id ? order : false}
-              >
-                <Tooltip
-                  title="Sort"
-                  placement={column.numeric ? 'bottom-end' : 'bottom-start'}
-                  enterDelay={300}
-                >
-                  <TableSortLabel
-                    active={orderBy === column.id}
-                    direction={order}
-                    onClick={this.createSortHandler(column.id)}
-                  >
-                    {column.label}
-                  </TableSortLabel>
-                </Tooltip>
-              </TableCell>
+              <CustomTableCell> {column.label}</CustomTableCell>
             );
           }, this)}
         </TableRow>
@@ -299,13 +291,13 @@ class EnhancedTable extends React.Component {
                   const isSelected = this.isSelected(n.id);
                   return ( 
                     <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
-                      <TableCell component="th" scope="row">
+                      <CustomTableCell component="th" scope="row">
                         {n.code}
-                      </TableCell>
-                      <TableCell>{n.description}</TableCell>
-                      <TableCell>{n.mode}</TableCell>
-                      <TableCell>{n.student_per_group}</TableCell>
-                      <TableCell>{n.long_description }</TableCell>
+                      </CustomTableCell>
+                      <CustomTableCell>{n.description}</CustomTableCell>
+                      <CustomTableCell>{n.mode}</CustomTableCell>
+                      <CustomTableCell>{n.student_per_group}</CustomTableCell>
+                      <CustomTableCell>{n.long_description }</CustomTableCell>
                     </TableRow>
 
 
@@ -318,7 +310,7 @@ class EnhancedTable extends React.Component {
                 })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 49 * emptyRows }}>
-                  <TableCell colSpan={6} />
+                  <CustomTableCell colSpan={6} />
                 </TableRow>
               )}
             </TableBody>

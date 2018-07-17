@@ -26,6 +26,17 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import STE from './staffView.js';
 
+const CustomTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: '#301615',
+    color: theme.palette.common.white,
+    fontSize: 14,
+  },
+  body: {
+    fontSize: 12,
+  },
+}))(TableCell);
+
 
 const columnData = [
   { id: 'Name', label: 'Staff Name' },
@@ -37,22 +48,19 @@ const columnData = [
 
 class EnhancedTableHead extends React.Component {
   render() {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount } = this.props;
     return (
-      <TableHead>
+      <TableHead style={{color: 'white'}}>
         <TableRow>          
           {columnData.map(column => {
             return (
-              <TableCell
+              <CustomTableCell
                 key={column.id}
                 numeric={column.numeric}
                 padding={column.disablePadding ? 'none' : 'default'}
               >
-                  <TableSortLabel>
                     {column.label}
-                  </TableSortLabel>
 
-              </TableCell>
+              </CustomTableCell>
             );
           }, this)}
         </TableRow>
@@ -74,22 +82,10 @@ const toolbarStyles = theme => ({
   root: {
     paddingRight: theme.spacing.unit,
   },
-  highlight:
-    theme.palette.type === 'light'
-      ? {
-          color: '#00838F',
-          backgroundColor: lighten('#00838F', 0.8),
-        }
-      : {
-          color: '#00838F',
-          backgroundColor: '#00838F',
-        },
   spacer: {
     flex: '1 1 100%',
   },
-  actions: {
-    color: '#00838F',
-  },
+
   title: {
     flex: '0 0 auto',
   },
@@ -99,7 +95,7 @@ let EnhancedTableToolbar = props => {
   const { numSelected, classes } = props;
   return (
     <Toolbar
-      className={classNames(classes.root, {
+      className={classNames(classes.tolo, {
         [classes.highlight]: numSelected > 0,
       })}
     >
@@ -278,11 +274,11 @@ class EnhancedTable extends React.Component {
                 .map(n => {
                   return (                  
                     <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
-                      <TableCell component="th" scope="row"> {n.name}</TableCell>                    
-                      <TableCell >{n.offerings_taken}</TableCell>
-                      <TableCell>{n.target}</TableCell>
-                      <TableCell style={{color: n.total_load < 0.9* n.target? 'blue' : n.total_load > 1.1*n.target? 'red' :  'green'}}>{n.total_load}</TableCell>
-                      <TableCell>{n.comments}</TableCell>
+                      <CustomTableCell component="th" scope="row"> {n.name}</CustomTableCell>                    
+                      <CustomTableCell >{n.offerings_taken}</CustomTableCell>
+                      <CustomTableCell>{n.target}</CustomTableCell>
+                      <CustomTableCell style={{color: n.total_load < 0.9* n.target? 'blue' : n.total_load > 1.1*n.target? 'red' :  'green'}}>{n.total_load}</CustomTableCell>
+                      <CustomTableCell>{n.comments}</CustomTableCell>
                     </TableRow>
                   );
                 })}
