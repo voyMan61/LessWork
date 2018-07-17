@@ -13,9 +13,10 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip'; 
-import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
-import Modal from '@material-ui/core/Modal';
+import Pa from './patternActivities';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 
 const CustomTableCell = withStyles(theme => ({
@@ -105,14 +106,6 @@ let EnhancedTableToolbar = props => {
             Pattern
           </Typography> 
       </div>
-      <div className={classes.spacer} />
-      <div className={classes.actions}>
-          <Tooltip title="Filter list">
-            <IconButton aria-label="Filter list">
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
-      </div>
     </Toolbar>
   );
 };
@@ -147,7 +140,6 @@ const styles = theme => ({
 
 });
 
-
 var url = 'http://immense-headland-42479.herokuapp.com/api/pattern';
 
 class EnhancedTable extends React.Component {
@@ -158,28 +150,47 @@ class EnhancedTable extends React.Component {
       mod: '',
       modee: false,
       open: false,
-      orderBy: 'calories',
-      checked: false,
-      selected: [],
       hits: [],
       fet: 'false',
-      page: 0,
-      rowsPerPage: 10,
+      patternLoaded: false,
+      Copen: false,
+      patterAct: false,
+      patId: 0,
+      patcode: '',
     };
   }
   handleChange = () => {
     this.setState(state => ({ checked: !state.checked }));
   };
 
-
   handleROpen = (data, e) => {
-    //const it = e.currentTarget('data-item');
-    //console.log(it.name)
-    console.log( data.name); 
-    //this.setState({open: true, mod: data, modee: true})
-    
+    console.log( data.id);
+    this.setState({patId: data.id, patcode: data.code, open: true, patterAct: true})
   };
-  handleOpen = () => {
+
+
+  handleChange = event => {
+    const patternID = this.state.patternData.find(item => item.code === event.target.value).id;
+    sessionStorage.setItem('patternCode', event.target.value);
+    sessionStorage.setItem('patternID', patternID);
+    this.setState({ [event.target.name]: event.target.value });
+};
+
+handleClick = () => {
+  this.setState(state => ({
+    Copen: !state.open,
+  }));
+};
+
+handleClickAway = () => {
+  this.setState({
+    Copen: false,
+    patterAct: false,
+  });
+};
+
+
+handleOpen = () => {
     this.setState({ open: true });
   };
 
@@ -187,108 +198,63 @@ class EnhancedTable extends React.Component {
     this.setState({ open: false });
   };
 
-
-  handleRequestSort = (event, property) => {
-    const orderBy = property;
-    let order = 'desc';
-    if (this.state.orderBy === property && this.state.order === 'desc') {
-      order = 'asc';
-    }
-    this.setState({ order, orderBy });
-  };
-
-  handleSelectAllClick = (event, checked) => {
-    if (checked) {
-      this.setState(state => ({ selected: state.data.map(n => n.id) }));
-      return;
-    }
-    this.setState({ selected: [] });
-  };
-
-  handleClick = (event, id) => {
-    const { selected } = this.state;
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
-
-    this.setState({ selected: newSelected });
-  };
-
-  handleChangePage = (event, page) => {
-    this.setState({ page });
-  };
-
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value });
-  };
-
-  isSelected = id => this.state.selected.indexOf(id) !== -1;
-  
-  componentDidMount() {
-    this.setState({ isLoading: true });
-    var f = [];
-    fetch(url)
-    .then((response) => response.json())
-    .then((responseJson) => {
-        console.table(responseJson);
-        //document.write("<h3>",url,"</h3>");
-        this.setState({ hits: responseJson, isLoading: false });
-
-    }) 
+componentDidMount() {
+  var patternObj;
+  fetch('http://immense-headland-42479.herokuapp.com/api/pattern', {
+      //mode: 'no-cors',
+      method: 'GET',
+      headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+      },
+  },
+  ).then(response => {
+      if (response.ok) {
+          response.json().then(json => {
+              patternObj = json;
+              this.setState({
+                  patternLoaded: true,
+                  patternData: patternObj,
+                  hits: json, 
+                  isLoading: false,
+              })
+          });
+      }
+  });
 }
+
   render() {
   const { classes } = this.props;
-  const { modee, mod, open, checked, isLoading, hits, fet, data, order, orderBy, selected, rowsPerPage, page } = this.state;
+  const { patId, patcode, patternLoaded, patterAct, isLoading, hits, fet, data, order, orderBy, selected, rowsPerPage, page } = this.state;
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, hits.length - page * rowsPerPage);
   if (isLoading) {
-    return <p>Loading ...</p>;
+    return (
+        <Paper className={this.state.classes.root}>
+          <LinearProgress color="secondary" variant="query" />
+        </Paper>
+      )
   }
-  if(modee){
+
+  if(patterAct){
     return(
-      <Paper className={classes.root}> 
-    <Modal
-      open={this.state.open}
-      onClose={this.handleClose}
-      hideBackdrop= {'true'}
-    >
-      <div style={getModalStyle()}>
-        <Typography variant="title" id="modal-title"> {mod.name}</Typography>
-        <Typography variant="subheading" id="simple-modal-description"> {mod.films}</Typography>
-      </div>
-    </Modal> 
-    </Paper>
+      <ClickAwayListener onClickAway={this.handleROpen} onClickAway={this.handleClickAway}>
+        <Paper className={classes.root}> 
+         <Pa Pid={this.patId} Pcode={this.state.patcode} />
+        </Paper>
+      </ClickAwayListener>
     )
   }
-  else {
+  if(patternLoaded) {
     return (
       <Paper className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar/>
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
-            <EnhancedTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={this.handleSelectAllClick}
-              onRequestSort={this.handleRequestSort}
-              rowCount={hits.length}
-            />
+            <EnhancedTableHead/>
             <TableBody>
               {hits
                 .map(n => {
-                  const isSelected = this.isSelected(n.id);
                   return ( 
                     <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
                       <CustomTableCell component="th" scope="row">
@@ -299,13 +265,6 @@ class EnhancedTable extends React.Component {
                       <CustomTableCell>{n.student_per_group}</CustomTableCell>
                       <CustomTableCell>{n.long_description }</CustomTableCell>
                     </TableRow>
-
-
-
-
-
-
-
                   );
                 })}
               {emptyRows > 0 && (
@@ -319,6 +278,13 @@ class EnhancedTable extends React.Component {
       </Paper>
     );
   }
+  else {
+    return (
+        <Paper>
+        <LinearProgress color="secondary" variant="query" />
+        </Paper>
+    )
+}
 }
 }
 

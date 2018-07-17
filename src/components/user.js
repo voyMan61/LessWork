@@ -8,7 +8,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
-import Patterns from './patternActivity'
+import Patterns from './patternDetails.js'
 import StaffTots from './staffTotals.js'
 import Offerings from './offerTable'
 import Ste from './staffView.js'
@@ -26,16 +26,16 @@ const styles = theme => ({
   },
   root: {
     flexGrow: 1,
-    height: '800px',
+    height: '1802%',
     background: 'linear-gradient(to bottom, rgb(173, 0, 37) 30%,' +
     'rgb(130, 0, 27) 40%, rgb(91, 0, 19) 100%)',
   },
   aa:{
-    background: '#b3a558',
+    
     color:'black',
   },
 });
-
+//background: '#b3a558',
 function TabContainer(props) {
   return (
     <Typography component="div" style={{ padding: 8 * 3 }}>
@@ -50,7 +50,7 @@ TabContainer.propTypes = {
 
 class USerView extends React.Component {
   state = {
-    value: 3,
+    value: 4,
   };
 
   handleChange = (event, value) => {
