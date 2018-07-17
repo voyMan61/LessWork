@@ -5,20 +5,15 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
 const styles = {
   root: {
     flexGrow: 1,
-    //background: '#007c0a',
-    background: 'linear-gradient( rgb(196, 186, 168) 17%,' +
-    'rgb(206, 186, 148) 90%, rgb(198, 179, 141) 100%)',
+    background: 'linear-gradient(   rgb(198, 179, 141) 17%,' +
+    'rgb(206, 186, 148) 90%, rgb(206, 193, 169) 100%)',
   },
   flex: {
     flexGrow: 1,

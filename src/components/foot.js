@@ -1,40 +1,35 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types'; 
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import Icon from '@material-ui/core/Icon';
-import RestoreIcon from '@material-ui/icons/Restore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+import { withStyles } from '@material-ui/core/styles';
 
+const styles = {
+  root: {
+    flexGrow: 1,
+    background: 'linear-gradient( rgb(206, 193, 169) 17%,' +
+    'rgb(206, 186, 148) 90%, rgb(198, 179, 141) 100%)',
+  },
+  flex: {
+    flexGrow: 1,
+  },
+};
 
-class LabelBottomNavigation extends React.Component {
-  state = {
-    value: 'recents',
-  };
-
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
-
+class footer extends React.Component {
   render() {
     const { classes } = this.props;
-    const { value } = this.state;
-
     return (
-      <BottomNavigation value={value} onChange={this.handleChange}>
-        <BottomNavigationAction label="few" value="recents" icon={<RestoreIcon />} />
-        <BottomNavigationAction label="Favorites" value="favorites" icon={<FavoriteIcon />} />
-        <BottomNavigationAction label="Nearby" value="nearby" icon={<LocationOnIcon />} />
-        <BottomNavigationAction label="Folder" value="folder" icon={<Icon>folder</Icon>} />
+      <BottomNavigation className={classes.root} showLabels>
+      <BottomNavigationAction label="2018 Murdoch University"/>
+      <BottomNavigationAction label="© FT05 WorkLess "/>
       </BottomNavigation>
     );
   }
 }
 
-LabelBottomNavigation.propTypes = {
+footer.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default (LabelBottomNavigation);
+export default withStyles(styles)(footer);
+
