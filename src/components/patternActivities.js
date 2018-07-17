@@ -21,9 +21,10 @@ const CustomTableCell = withStyles(theme => ({
     head: {
       backgroundColor: theme.palette.common.black,
       color: theme.palette.common.white,
+      fontSize: 13,
     },
     body: {
-      fontSize: 14,
+      fontSize: 12,
     },
   }))(TableCell);
   
@@ -38,7 +39,7 @@ const CustomTableCell = withStyles(theme => ({
     },
     row: {
       '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.background.default,
+        backgroundColor: 'theme.palette.background.default',
       },
     },
     
@@ -48,8 +49,6 @@ const CustomTableCell = withStyles(theme => ({
     constructor(props) {
         super(props);
         this.state = {
-            Pid: 0,
-            Pcode:'',
             classes: this.props.classes,
             activityLookupLoaded: false,
             activityLookupData: this.props.activityLookupData,
@@ -89,7 +88,6 @@ const CustomTableCell = withStyles(theme => ({
         var calfr=0;
         var calps=0;
         var calpt=0;
-        console.log(this.props.Pid);
         fetch('http://immense-headland-42479.herokuapp.com/api/activitylookup/' + this.props.Pid, {
             //mode: 'no-cors',
             method: 'GET',
@@ -131,9 +129,9 @@ const CustomTableCell = withStyles(theme => ({
     render() {
       const { a, classes } = this.props;
         if(this.state.activityLookupLoaded === true) {
-            console.log(this.state.frAct)
-            console.log(this.state.psAct)
-            console.log(this.state.ptAct)
+            //console.log(this.state.frAct)
+            //console.log(this.state.psAct)
+            //console.log(this.state.ptAct)
     return ( 
       <Paper className={this.state.classes.root}>
       <Dialog
@@ -162,7 +160,7 @@ const CustomTableCell = withStyles(theme => ({
                   <CustomTableCell component="th" scope="row">
                     {n.name}
                   </CustomTableCell>
-                  <CustomTableCell>Hrs:{n.hour}</CustomTableCell>
+                  <CustomTableCell>hrs: {n.hour}</CustomTableCell>
                 </TableRow>
               );
             })}
@@ -182,7 +180,7 @@ const CustomTableCell = withStyles(theme => ({
                   <CustomTableCell component="th" scope="row">
                     {n.name}
                   </CustomTableCell>
-                  <CustomTableCell>Hrs:{n.hour}</CustomTableCell>
+                  <CustomTableCell>hrs: {n.hour}</CustomTableCell>
                 </TableRow>
               );
             })}
@@ -202,7 +200,7 @@ const CustomTableCell = withStyles(theme => ({
                   <CustomTableCell component="th" scope="row">
                     {n.name}
                   </CustomTableCell>
-                  <CustomTableCell>Hrs:{n.hour}</CustomTableCell>
+                  <CustomTableCell>hrs: {n.hour}</CustomTableCell>
                 </TableRow>
               );
             })}

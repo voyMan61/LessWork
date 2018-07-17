@@ -16,6 +16,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip'; 
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 
 const CustomTableCell = withStyles(theme => ({
@@ -126,6 +127,7 @@ const styles = theme => ({
     width: '100%',
     marginTop: theme.spacing.unit * 3,
   },
+  
   table: {
     minWidth: 1020,
   },
@@ -236,7 +238,10 @@ class EnhancedTable extends React.Component {
   const { modee, mod, open, checked, isLoading, hits, fet, data, order, orderBy, selected, rowsPerPage, page } = this.state;
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, hits.length - page * rowsPerPage);
   if (isLoading) {
-    return <p>Loading ...</p>;
+    return (
+    <Paper>
+    <LinearProgress color="secondary" variant="query" />
+    </Paper>);
   }
     return (
       <Paper className={classes.root}>

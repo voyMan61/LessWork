@@ -7,16 +7,14 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip'; 
 import { lighten } from '@material-ui/core/styles/colorManipulator';
-import Pa from './patternActivities';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import LinearProgress from '@material-ui/core/LinearProgress';
+
+import PatternActivities from './patternActivities';
 
 
 const CustomTableCell = withStyles(theme => ({
@@ -146,9 +144,7 @@ class EnhancedTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      order: 'asc',
       mod: '',
-      modee: false,
       open: false,
       hits: [],
       fet: 'false',
@@ -164,8 +160,12 @@ class EnhancedTable extends React.Component {
   };
 
   handleROpen = (data, e) => {
-    console.log( data.id);
-    this.setState({patId: data.id, patcode: data.code, open: true, patterAct: true})
+    this.setState(state => ({
+      patId: data.id, 
+      patcode: data.code, 
+      open: true, 
+      patterAct: true
+    }));
   };
 
 
@@ -226,8 +226,7 @@ componentDidMount() {
 
   render() {
   const { classes } = this.props;
-  const { patId, patcode, patternLoaded, patterAct, isLoading, hits, fet, data, order, orderBy, selected, rowsPerPage, page } = this.state;
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, hits.length - page * rowsPerPage);
+  const { patId, patcode, patternLoaded, patterAct, isLoading, hits} = this.state;
   if (isLoading) {
     return (
         <Paper className={this.state.classes.root}>
@@ -235,12 +234,11 @@ componentDidMount() {
         </Paper>
       )
   }
-
   if(patterAct){
     return(
       <ClickAwayListener onClickAway={this.handleROpen} onClickAway={this.handleClickAway}>
         <Paper className={classes.root}> 
-         <Pa Pid={this.patId} Pcode={this.state.patcode} />
+         <PatternActivities Pid={patId} Pcode={patcode} />
         </Paper>
       </ClickAwayListener>
     )
@@ -266,12 +264,8 @@ componentDidMount() {
                       <CustomTableCell>{n.long_description }</CustomTableCell>
                     </TableRow>
                   );
+                  
                 })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 49 * emptyRows }}>
-                  <CustomTableCell colSpan={6} />
-                </TableRow>
-              )}
             </TableBody>
           </Table>
         </div>

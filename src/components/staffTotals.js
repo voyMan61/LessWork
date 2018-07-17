@@ -18,12 +18,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
-
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import STE from './staffView.js';
 
 const CustomTableCell = withStyles(theme => ({
@@ -232,7 +228,9 @@ class EnhancedTable extends React.Component {
   console.table(hits);
   if (isLoading) {
     return (
-    <p>Loading ...</p>
+      <Paper>
+      <LinearProgress color="secondary" variant="query" />
+      </Paper>
   );
   }
   if(modee){
