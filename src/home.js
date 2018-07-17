@@ -1,15 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Switch, Route, Redirect } from "react-router-dom";
 import withStyles from "@material-ui/core/styles/withStyles";
-import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
-import Sidebar from "./components/sidebar.js";
 import Footer from "./components/foot.js";
 
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
 import U from './components/user.js'
@@ -22,6 +16,8 @@ const styles = theme => ({
   },
   root: {
     flexGrow: 1,
+    background: 'linear-gradient(to bottom, rgba(103,120,120,0.7) 60%,' +
+    'rgba(131,210,320,0.3) 100%, rgba(210,130,130,130) 100%)',
   },
 });
 
@@ -40,8 +36,8 @@ class Home extends React.Component {
 
     return (
       <Paper className={classes.root}>
-      <U/>
-      <Footer/>
+        <U/>
+        <Footer/>
       </Paper>
     );
   }

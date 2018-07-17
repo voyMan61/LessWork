@@ -15,18 +15,12 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip'; 
-import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
-import Mod from './module.js'
 
+import STE from './staffView.js';
 
-function getSorting(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
-    : (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1);
-}
 
 const columnData = [
   { id: 'Name', label: 'Staff Name' },
@@ -36,15 +30,7 @@ const columnData = [
   { id: 'service_description',  label: 'Service Description' }
 ];
 
-
-
-
-
 class EnhancedTableHead extends React.Component {
-  createSortHandler = property => event => {
-    this.props.onRequestSort(event, property);
-  };
-
   render() {
     const { onSelectAllClick, order, orderBy, numSelected, rowCount } = this.props;
     return (
@@ -56,21 +42,11 @@ class EnhancedTableHead extends React.Component {
                 key={column.id}
                 numeric={column.numeric}
                 padding={column.disablePadding ? 'none' : 'default'}
-                sortDirection={orderBy === column.id ? order : false}
               >
-                <Tooltip
-                  title="Sort"
-                  placement={column.numeric ? 'bottom-end' : 'bottom-start'}
-                  enterDelay={300}
-                >
-                  <TableSortLabel
-                    active={orderBy === column.id}
-                    direction={order}
-                    onClick={this.createSortHandler(column.id)}
-                  >
+                  <TableSortLabel>
                     {column.label}
                   </TableSortLabel>
-                </Tooltip>
+
               </TableCell>
             );
           }, this)}
@@ -128,13 +104,6 @@ let EnhancedTableToolbar = props => {
           </Typography> 
       </div>
       <div className={classes.spacer} />
-      <div className={classes.actions}>
-          <Tooltip title="Filter list">
-            <IconButton aria-label="Filter list">
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
-      </div>
     </Toolbar>
   );
 };
@@ -149,10 +118,10 @@ EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing.unit * 2,
   },
   table: {
-    minWidth: 1020,
+    minWidth: 1000,
   },
   tableWrapper: {
     overflowX: 'auto',
@@ -162,13 +131,11 @@ const styles = theme => ({
     position: 'absolute',
     width: theme.spacing.unit * 150,
     height: theme.spacing.unit * 50,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: 'theme.palette.background.paper',
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
   },
-
 });
-
 
 var url = 'http://immense-headland-42479.herokuapp.com/api/stafftotals';
 
@@ -176,31 +143,25 @@ class EnhancedTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      order: 'asc',
-      mod: '',
-      modee: false,
       open: false,
-      orderBy: 'calories',
       checked: false,
       selected: [],
       hits: [],
       fet: 'false',
-      page: 0,
-      rowsPerPage: 10,
     };
   }
   handleChange = () => {
     this.setState(state => ({ checked: !state.checked }));
   };
 
-
   handleROpen = (data, e) => {
     //const it = e.currentTarget('data-item');
     //console.log(it.name)
     console.log( data.name); 
+
     //this.setState({open: true, mod: data, modee: true})
-    
   };
+  
   handleOpen = () => {
     this.setState({ open: true });
   };
@@ -248,14 +209,6 @@ class EnhancedTable extends React.Component {
     this.setState({ selected: newSelected });
   };
 
-  handleChangePage = (event, page) => {
-    this.setState({ page });
-  };
-
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value });
-  };
-
   isSelected = id => this.state.selected.indexOf(id) !== -1;
   
   componentDidMount() {
@@ -275,23 +228,30 @@ class EnhancedTable extends React.Component {
   const { modee, mod, open, checked, isLoading, hits, fet, data, order, orderBy, selected, rowsPerPage, page } = this.state;
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, hits.length - page * rowsPerPage);
   if (isLoading) {
-    return <p>Loading ...</p>;
+    return (
+    <p>Loading ...     <STE/></p>
+  );
   }
   if(modee){
-    return(
-      <Paper className={classes.root}> 
-    <Modal
-      open={this.state.open}
-      onClose={this.handleClose}
-      hideBackdrop= {'true'}
-    >
-      <div style={getModalStyle()}>
-        <Typography variant="title" id="modal-title"> {mod.name}</Typography>
-        <Typography variant="subheading" id="simple-modal-description"> {mod.films}</Typography>
+    return (
+      <div>
+        <Modal
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+          open={this.state.open}
+          onClose={this.handleClose}
+        >
+          <div style={getModalStyle()} className={classes.paper}>
+            <Typography variant="title" id="modal-title">
+              Text in a modal
+            </Typography>
+            <Typography variant="subheading" id="simple-modal-description">
+              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            </Typography>
+          </div>
+        </Modal>
       </div>
-    </Modal> 
-    </Paper>
-    )
+    );
   }
   else {
     return (
@@ -304,13 +264,10 @@ class EnhancedTable extends React.Component {
               order={order}
               orderBy={orderBy}
               onSelectAllClick={this.handleSelectAllClick}
-              onRequestSort={this.handleRequestSort}
               rowCount={hits.length}
             />
             <TableBody>
               {hits
-                .sort(getSorting(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(n => {
                   const isSelected = this.isSelected(n.id);
                   return ( 
@@ -323,13 +280,6 @@ class EnhancedTable extends React.Component {
                       <TableCell>{n.total_load}</TableCell>
                       <TableCell>{n.service_description}</TableCell>
                     </TableRow>
-
-
-
-
-
-
-
                   );
                 })}
               {emptyRows > 0 && (
@@ -356,6 +306,7 @@ function getModalStyle() {
     transform: `translate(-${top}%, -${left}%)`,
   };
 }
+
 
 EnhancedTable.propTypes = {
   classes: PropTypes.object.isRequired,

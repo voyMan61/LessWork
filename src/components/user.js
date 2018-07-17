@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Paper from '@material-ui/core/Paper';
 
-
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -13,7 +12,6 @@ import Patterns from './patternActivity'
 import StaffTots from './staffTotals.js'
 import Offerings from './offerTable'
 import Ste from './staffView.js'
-import Sta from './module.js'
 
 const styles = theme => ({
   Footer: {
@@ -29,11 +27,9 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     height: '800px',
-    background: 'linear-gradient(to bottom, rgba(103,120,120,0.7) 60%,' +
+    background: 'linear-gradient(to bottom, rgba(203,220,220,0.7) 60%,' +
     'rgba(131,210,320,0.3) 100%, rgba(210,130,130,130) 100%)',
-    
   },
-  
 });
 
 function TabContainer(props) {
@@ -50,7 +46,7 @@ TabContainer.propTypes = {
 
 class USerView extends React.Component {
   state = {
-    value: 0,
+    value: 3,
   };
 
   handleChange = (event, value) => {
