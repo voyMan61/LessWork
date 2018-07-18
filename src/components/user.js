@@ -8,6 +8,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
+import Dashboard from './Dashboard.js'
 import Patterns from './patternDetails.js'
 import StaffTots from './staffTotals.js'
 import Offerings from './offerTable'
@@ -50,7 +51,7 @@ TabContainer.propTypes = {
 
 class USerView extends React.Component {
   state = {
-    value: 4,
+    value: 2,
   };
 
   handleChange = (event, value) => {
@@ -72,7 +73,7 @@ class USerView extends React.Component {
             <Tab label="Patterns" href="#Patterns" />
           </Tabs>
         </AppBar>
-        {value === 0 && <TabContainer> </TabContainer>}
+        {value === 0 && <TabContainer><Dashboard/></TabContainer>}
         {value === 1 && <TabContainer><Ste/></TabContainer>}
         {value === 2 && <TabContainer><Offerings/></TabContainer>}
         {value === 3 && <TabContainer><StaffTots/></TabContainer>}

@@ -7,17 +7,14 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip'; 
-import FilterListIcon from '@material-ui/icons/FilterList';
+
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
+import OfferMake from './offerConf.js'
 
 const CustomTableCell = withStyles(theme => ({
   head: {
@@ -40,9 +37,7 @@ const columnData = [
 ];
 
 class EnhancedTableHead extends React.Component {
-
   render() {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount } = this.props;
     return (
       <TableHead>
         <TableRow>          
@@ -50,20 +45,12 @@ class EnhancedTableHead extends React.Component {
             return (
               <CustomTableCell>{column.label}</CustomTableCell>
             );
-          }, this)}
+          })}
         </TableRow>
       </TableHead>
     );
   }
 }
-
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.string.isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
 
 const toolbarStyles = theme => ({
   root: {
@@ -91,12 +78,10 @@ const toolbarStyles = theme => ({
 });
 
 let EnhancedTableToolbar = props => {
-  const { numSelected, classes } = props;
+  const {  classes } = props;
   return (
     <Toolbar
-      className={classNames(classes.root, {
-        [classes.highlight]: numSelected > 0,
-      })}
+      className={classNames(classes.root)}
     >
       <div className={classes.title}>
           <Typography variant="title" id="tableTitle">
@@ -104,20 +89,12 @@ let EnhancedTableToolbar = props => {
           </Typography> 
       </div>
       <div className={classes.spacer} />
-      <div className={classes.actions}>
-          <Tooltip title="Filter list">
-            <IconButton aria-label="Filter list">
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
-      </div>
     </Toolbar>
   );
 };
 
 EnhancedTableToolbar.propTypes = {
   classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
 };
 
 EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
@@ -155,11 +132,10 @@ class EnhancedTable extends React.Component {
       modee: false,
       open: false,
       checked: false,
-      selected: [],
       hits: [],
-      fet: 'false',
-      page: 0,
-      rowsPerPage: 10,
+      oData: '',
+      offerView: false,
+      objectLoaded: false,
     };
   }
   handleChange = () => {
@@ -167,13 +143,15 @@ class EnhancedTable extends React.Component {
   };
 
 
+ 
   handleROpen = (data, e) => {
-    //const it = e.currentTarget('data-item');
-    //console.log(it.name)
-    console.log( data.name); 
-    //this.setState({open: true, mod: data, modee: true})
-    
+    this.setState(state => ({
+      oData: data, 
+      open: true, 
+      offerView: true
+    }));
   };
+
   handleOpen = () => {
     this.setState({ open: true });
   };
@@ -182,84 +160,68 @@ class EnhancedTable extends React.Component {
     this.setState({ open: false });
   };
 
-  handleSelectAllClick = (event, checked) => {
-    if (checked) {
-      this.setState(state => ({ selected: state.data.map(n => n.id) }));
-      return;
-    }
-    this.setState({ selected: [] });
+
+  viewerClosed() {
+    this.setState({
+      currentCount: this.state.currentCount+1,
+      offerView: false
+    }),
+    console.log('rrrrr')
   };
-
-  handleClick = (event, id) => {
-    const { selected } = this.state;
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
-
-    this.setState({ selected: newSelected });
-  };
-
-  handleChangePage = (event, page) => {
-    this.setState({ page });
-  };
-
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value });
-  };
-
-  isSelected = id => this.state.selected.indexOf(id) !== -1;
   
-  componentDidMount() {
-    this.setState({ isLoading: true });
-    var f = [];
-    fetch('http://immense-headland-42479.herokuapp.com/api/offering')
-    .then((response) => response.json())
-    .then((responseJson) => {
-        console.table(responseJson);
-        //document.write("<h3>",url,"</h3>");
-        this.setState({ hits: responseJson, isLoading: false });
-
-    }) 
+componentDidMount() {
+  var offerObj;
+  fetch('http://immense-headland-42479.herokuapp.com/api/offering', {
+      //mode: 'no-cors',
+      method: 'GET',
+      headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+      },
+  },
+  ).then(response => {
+      if (response.ok) {
+          response.json().then(json => {
+            offerObj = json;
+              this.setState({
+                objectLoaded: true,
+                  patternData: offerObj,
+                  hits: offerObj, 
+                  isLoading: false,
+              })
+          });
+      }
+  });
 }
+
+
   render() {
   const { classes } = this.props;
-  const { modee, mod, open, checked, isLoading, hits, fet, data, order, orderBy, selected, rowsPerPage, page } = this.state;
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, hits.length - page * rowsPerPage);
+  const { objectLoaded, oData, offerView, isLoading, hits} = this.state;
   if (isLoading) {
     return (
     <Paper>
     <LinearProgress color="secondary" variant="query" />
     </Paper>);
   }
+  if(offerView){
+    return(
+        <Paper className={classes.root}> 
+         <OfferMake viewed={this.viewerClosed.bind(this)} od={oData}/>
+        </Paper>
+    )
+  }
+if(objectLoaded) {
     return (
       <Paper className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar/>
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
-            <EnhancedTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={this.handleSelectAllClick}
-              rowCount={hits.length}
-            />
+            <EnhancedTableHead/>
             <TableBody>
               {hits
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(n => {
-                  const isSelected = this.isSelected(n.id);
                   return ( 
                     <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
                       <CustomTableCell component="th" scope="row">
@@ -272,16 +234,19 @@ class EnhancedTable extends React.Component {
                     </TableRow>
                   );
                 })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 49 * emptyRows }}>
-                  <CustomTableCell colSpan={6} />
-                </TableRow>
-              )}
             </TableBody>
           </Table>
         </div>
       </Paper>
     );
+  }
+  else {
+    return (
+        <Paper>
+        <LinearProgress color="secondary" variant="query" />
+        </Paper>
+    )
+}
   }
 
 }

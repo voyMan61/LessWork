@@ -11,7 +11,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+//import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 import PatternActivities from './patternActivities';
@@ -189,7 +189,13 @@ handleClickAway = () => {
   });
 };
 
-
+viewerClosed() {
+  this.setState({
+    currentCount: this.state.currentCount+1,
+    patterAct: false
+  }),
+  console.log('rrrrr')
+};
 handleOpen = () => {
     this.setState({ open: true });
   };
@@ -236,11 +242,11 @@ componentDidMount() {
   }
   if(patterAct){
     return(
-      <ClickAwayListener onClickAway={this.handleROpen} onClickAway={this.handleClickAway}>
+      //<ClickAwayListener onClickAway={this.handleROpen} onClickAway={this.handleClickAway}>
         <Paper className={classes.root}> 
-         <PatternActivities Pid={patId} Pcode={patcode} />
+         <PatternActivities viewed={this.viewerClosed.bind(this)} Pid={patId} Pcode={patcode} />
         </Paper>
-      </ClickAwayListener>
+      //</ClickAwayListener>
     )
   }
   if(patternLoaded) {

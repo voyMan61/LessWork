@@ -9,13 +9,14 @@ import { withStyles } from '@material-ui/core/styles';
 
 import LinearProgress from '@material-ui/core/LinearProgress';
 
+import AddIcon from '@material-ui/icons/Add';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
-
+import Zoom from '@material-ui/core/Zoom';
 
 const CustomTableCell = withStyles(theme => ({
     head: {
@@ -42,7 +43,9 @@ const CustomTableCell = withStyles(theme => ({
         backgroundColor: 'theme.palette.background.default',
       },
     },
-    
+    button:{
+        alignContent: 'center',
+    },
   });
 
   class CustomizedTable extends React.Component {
@@ -62,7 +65,6 @@ const CustomTableCell = withStyles(theme => ({
             scroll: 'paper',
         }
     }
-
   
     progress = () => {
       const { completed } = this.state;
@@ -82,7 +84,10 @@ const CustomTableCell = withStyles(theme => ({
     handleClose = () => {
       this.setState({ open: false });
     };
-  
+    handleStuff = () => {
+        this.setState({ open: false });
+    }
+    
     componentDidMount() {
         var activityLookupObj;
         var calfr=0;
@@ -136,14 +141,13 @@ const CustomTableCell = withStyles(theme => ({
       <Paper className={this.state.classes.root}>
       <Dialog
           open={this.state.open}
-          onClose={this.handleClose}
           scroll={this.state.scroll}
           aria-labelledby="scroll-dialog-title"
         >
-          <DialogTitle id="scroll-dialog-title">Pattern Table - {this.props.Pcode}</DialogTitle>
+          <DialogTitle id="scroll-dialog-title">Pattern Activities - {this.props.Pcode}
+          </DialogTitle>
           <DialogContent>
           <DialogContentText>
-
         <Table className={this.state.classes.table}>
         {this.state.frAct.length !== 0  &&
           <TableHead>
@@ -205,10 +209,14 @@ const CustomTableCell = withStyles(theme => ({
               );
             })}
         </TableBody> 
-
         </Table>
         </DialogContentText>
         </DialogContent>
+        <DialogActions>
+        <Button variant="outlined" color="secondary"  className={classes.button} onClick={this.props.viewed}>       
+        Close
+      </Button>
+          </DialogActions>
         </Dialog>
       </Paper>
     );} 

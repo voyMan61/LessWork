@@ -26,9 +26,9 @@ class Home extends React.Component {
     const { classes } = this.props;
     return (
       <Paper className={classes.root}>
-        <Header/>
-        <Body/>
-        <Footer/>
+        <Header className={classes.he}/>
+        <Body className={classes.bo}/>
+        <Footer className={classes.hfo}/>
       </Paper>
     );
   }
