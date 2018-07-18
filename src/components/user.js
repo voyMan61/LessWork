@@ -64,13 +64,13 @@ class USerView extends React.Component {
 
     return (
       <Paper className={classes.root}>
-        <AppBar className={classes.aa} position="static" href="#" >
+        <AppBar className={classes.aa} position="static" >
           <Tabs value={value} onChange={this.handleChange}>
-            <Tab label="Dashboard" href="#Dashboard" />
-            <Tab label="    " href="#Blanked" />
-            <Tab label="Offerings" href="#Offerings" />
-            <Tab label="Staff Totals" href="#Staff-Totals" />
-            <Tab label="Patterns" href="#Patterns" />
+            <Tab label="Dashboard"/>
+            <Tab label="    "/>
+            <Tab label="Offerings"/>
+            <Tab label="Staff Totals" />
+            <Tab label="Patterns"  />
           </Tabs>
         </AppBar>
         {value === 0 && <TabContainer><Dashboard/></TabContainer>}
