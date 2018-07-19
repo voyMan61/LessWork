@@ -17,7 +17,6 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import PatternActivities from './patternActivities';
 
 import Tooltip from '@material-ui/core/Tooltip';
-import Fade from '@material-ui/core/Fade';
 import Zoom from '@material-ui/core/Zoom';
 
 const CustomTableCell = withStyles(theme => ({
@@ -263,7 +262,7 @@ componentDidMount() {
               {hits
                 .map(n => {
                   return ( 
-                    <Tooltip placement="top-end" TransitionComponent={Zoom} title="View Pattern">                  
+                    <Tooltip placement="left" TransitionComponent={Zoom} title="View Pattern">                  
                     <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
                       <CustomTableCell component="th" scope="row">
                         {n.code}

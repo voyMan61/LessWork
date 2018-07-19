@@ -16,7 +16,6 @@ class Dashboard extends React.Component {
                         chartData: {},
                         staffData: {},
                         classes: this.props.classes
-
                 }
         }
         componentDidMount() {
@@ -24,10 +23,6 @@ class Dashboard extends React.Component {
                 var myData = [];
                 var myLabel = [];
                 var myTarget = [];
-                //http://localhost:3000/Staff.json
-                //http://localhost:5000/api/stafftotals
-                //http://arcane-cove-45625.herokuapp.com/api/stafftotals
-                //http://immense-headland-42479.herokuapp.com/api/stafftotals
                 fetch('http://immense-headland-42479.herokuapp.com/api/stafftotals', {
                         //mode: 'no-cors',
                         method: 'GET',
@@ -68,23 +63,22 @@ class Dashboard extends React.Component {
         }
 
         render() {
-                return (
-                        <Paper>
-                                <div>
-                                        Dashboard - Viewing as {username} 
-                                        <Avatars/>
-                                </div>
-                                <DeanButton />
-                                <BarExample chartData={this.state.chartData} />
-                                <br />
-                                <OfferingsAssigned staffData={this.state.staffData} />
-                                <br />
+        return (
+        <Paper>
+        <div>
+        Dashboard - Viewing as {username} 
+        <Avatars/>
+        </div>
+        <BarExample chartData={this.state.chartData} />
+        <br />
+        <OfferingsAssigned staffData={this.state.staffData} />
+        <br />
 
-                        </Paper>
+        </Paper>
 
-                )
+        )
         }
-}
+        }
 
 
 

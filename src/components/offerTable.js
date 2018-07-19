@@ -14,6 +14,8 @@ import Paper from '@material-ui/core/Paper';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
+import Tooltip from '@material-ui/core/Tooltip';
+import Zoom from '@material-ui/core/Zoom';
 import OfferMake from './offerConf.js'
 
 const CustomTableCell = withStyles(theme => ({
@@ -223,6 +225,7 @@ if(objectLoaded) {
               {hits
                 .map(n => {
                   return ( 
+                    <Tooltip placement="left" TransitionComponent={Zoom} title="View/Edit offering">  
                     <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
                       <CustomTableCell component="th" scope="row">
                         {n.unit_code}
@@ -232,6 +235,7 @@ if(objectLoaded) {
                       <CustomTableCell>{n.pattern_code}</CustomTableCell>
                       <CustomTableCell>{n.type}</CustomTableCell>
                     </TableRow>
+                    </Tooltip>
                   );
                 })}
             </TableBody>

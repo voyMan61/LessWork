@@ -273,7 +273,7 @@ class EnhancedTable extends React.Component {
                 .map(n => {
                   return (     
 
-                <Tooltip placement="top-end" TransitionComponent={Zoom} title="View staff info">   
+                <Tooltip placement="left" TransitionComponent={Zoom} title="View staff info">   
                     <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
                       <CustomTableCell component="th" scope="row"> {n.name}</CustomTableCell>                    
                       <CustomTableCell >{n.offerings_taken}</CustomTableCell>
