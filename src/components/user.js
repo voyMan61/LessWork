@@ -51,7 +51,7 @@ TabContainer.propTypes = {
 
 class USerView extends React.Component {
   state = {
-    value: 3,
+    value: 2,
   };
 
   handleChange = (event, value) => {

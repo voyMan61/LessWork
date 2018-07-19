@@ -61,7 +61,14 @@ const styles = theme => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+  },
 
+  button:{
+    zindex:'21',
+    position: 'absolute',
+    left:'50%',
+    top:'2%',
+    flex: 1,
   },
   pap2er: {
     flex: 3,
@@ -82,7 +89,7 @@ const styles = theme => ({
 
 class Home extends React.Component {
   state = {
-    log: false,
+    log: true,
     logged: '',
     value: 0,
     open: true,
@@ -91,7 +98,9 @@ class Home extends React.Component {
   handleClickOpen = () => {
     this.setState({ open: true });
   };
-
+  handlelogin = () => {
+    this.setState({ open: true,log: false });
+  };
   handleClose = () => {
     this.setState({ open: false,log: true });
   };
@@ -104,7 +113,10 @@ class Home extends React.Component {
 if(log){
     return (
       <Paper className={classes.root}>
-        <Header className={classes.he}/>
+      <Header className={classes.he}/>
+        <Button variant="extendedFab" aria-label="Delete"  onClick={this.handlelogin} className={classes.button}>
+        Login Page
+      </Button>
         <Body className={classes.bo}/>
         <Footer className={classes.fo}/>
       </Paper>
@@ -117,10 +129,7 @@ if(log){
           fullScreen
           open={this.state.open}
           onClose={this.handleClose}
-          TransitionComponent={Transition}
-        >
-
-                
+          TransitionComponent={Transition}>               
         <Grid className={classes.grid} container spacing={24}>
         <Grid item xs={12} sm={3}></Grid>
         <Grid item xs={12} md={6}>         
