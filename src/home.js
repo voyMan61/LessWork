@@ -82,11 +82,12 @@ const styles = theme => ({
 
 class Home extends React.Component {
   state = {
-    log: false,
+    log: true,
     logged: '',
     value: 0,
     open: true,
   };
+  
   handleClickOpen = () => {
     this.setState({ open: true });
   };
@@ -166,7 +167,7 @@ if(log){
                 'rgb(130, 0, 27) 60%, rgb(91, 0, 19) 100%)',
               }}
             />
-
+      <img src={"/murdLogo.eps"} />
         </Dialog>
         </Paper>
 );

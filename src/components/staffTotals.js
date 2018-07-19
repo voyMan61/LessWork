@@ -23,7 +23,7 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
+import lime from '@material-ui/core/colors/lime';
 
 import STE from './staffView.js';
 
@@ -229,7 +229,7 @@ class EnhancedTable extends React.Component {
   if (isLoading) {
     return (
       <Paper>
-      <LinearProgress color="secondary" variant="query" />
+      <LinearProgress style={{ color: lime[500] }}  variant="query" />
       </Paper>
   );
   }
