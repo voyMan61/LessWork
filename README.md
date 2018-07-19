@@ -17,5 +17,4 @@ react based work load  visualization and management system hosted through netlif
                                
                                
                                
-                               
                                                   ─=≡Σ(([ ⊐•̀⌂•́]⊐
