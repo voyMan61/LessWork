@@ -21,7 +21,7 @@ class footer extends React.Component {
     return (
       <BottomNavigation className={classes.root} showLabels>
       <BottomNavigationAction label="2018 Murdoch University"/>
-      <BottomNavigationAction label="© FT05 WorkLess "/>
+      © FT05 WorkLess
       </BottomNavigation>
     );
   }

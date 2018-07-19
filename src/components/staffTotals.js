@@ -14,7 +14,6 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip'; 
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
@@ -24,7 +23,9 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import lime from '@material-ui/core/colors/lime';
-
+import Tooltip from '@material-ui/core/Tooltip';
+import Fade from '@material-ui/core/Fade';
+import Zoom from '@material-ui/core/Zoom';
 import STE from './staffView.js';
 
 const CustomTableCell = withStyles(theme => ({
@@ -271,6 +272,8 @@ class EnhancedTable extends React.Component {
               {hits
                 .map(n => {
                   return (     
+
+                <Tooltip placement="top-end" TransitionComponent={Zoom} title="View staff info">   
                     <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
                       <CustomTableCell component="th" scope="row"> {n.name}</CustomTableCell>                    
                       <CustomTableCell >{n.offerings_taken}</CustomTableCell>
@@ -278,6 +281,7 @@ class EnhancedTable extends React.Component {
                       <CustomTableCell style={{color: n.total_load < 0.9* n.target? 'blue' : n.total_load > 1.1*n.target? 'red' :  'green'}}>{n.total_load}</CustomTableCell>
                       <CustomTableCell>{n.comments}</CustomTableCell>
                     </TableRow>
+                    </Tooltip>
                   );
                 })}
 
