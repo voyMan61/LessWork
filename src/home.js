@@ -82,7 +82,7 @@ const styles = theme => ({
 
 class Home extends React.Component {
   state = {
-    log: true,
+    log: false,
     logged: '',
     value: 0,
     open: true,
