@@ -5,15 +5,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
-
+import Paper from '@material-ui/core/Paper';
 import LinearProgress from '@material-ui/core/LinearProgress';
-
-if (sessionStorage.getItem('mydata') || sessionStorage.getItem('name')) {
-    var mydata = JSON.parse(sessionStorage.getItem('mydata'))
-    var username = sessionStorage.getItem('name')
-    var userdata = mydata.find(item => item.name === username)
-    var staffID = userdata.id
-}
 
 const styles = {
     card: {
@@ -54,8 +47,10 @@ class SimpleCard1 extends React.Component {
             staffOfferingData: this.props.staffOfferingData,
             patternData: this.props.patternData,
             classes: this.props.classes,
-
+            loaded:false,
+            
         }
+
     }
 
     componentDidMount() {
@@ -64,7 +59,6 @@ class SimpleCard1 extends React.Component {
         var periodObj;
         var staffOfferingObj;
         var patternObj;
-
 
 
         //http://localhost:3000/Staff/14.json
@@ -87,14 +81,13 @@ class SimpleCard1 extends React.Component {
                     this.setState({
                         offeringLoaded: true,
                         offeringData: offeringObj,
-
                     })
 
                 });
             }
         });
 
-        fetch('http://immense-headland-42479.herokuapp.com/api/offeringlookup/' + staffID, {
+        fetch('http://immense-headland-42479.herokuapp.com/api/offeringlookup/' + this.props.staffD.id, {
             //mode: 'no-cors',
             method: 'GET',
             headers: {
@@ -117,8 +110,6 @@ class SimpleCard1 extends React.Component {
             }
         });
 
-
-
         fetch('http://immense-headland-42479.herokuapp.com/api/location', {
             //mode: 'no-cors',
             method: 'GET',
@@ -140,8 +131,6 @@ class SimpleCard1 extends React.Component {
                 });
             }
         });
-
-
 
 
         fetch('http://immense-headland-42479.herokuapp.com/api/period', {
@@ -200,13 +189,11 @@ class SimpleCard1 extends React.Component {
     };
 
 
-
-
     render() {
 
         if (this.state.offeringLoaded === true && this.state.locationLoaded === true && this.state.staffOfferingLoaded === true && this.state.periodLoaded === true) {
 
-            var singleOffering = this.state.offeringData.find(item => item.staff_id === staffID);
+            var singleOffering = this.state.offeringData.find(item => item.staff_id === this.props.staffD.id);
 
             const data1 = this.state.staffOfferingData.map((data) => {
                 var loc = this.state.locationData.find(item => item.id === singleOffering.location_id).name;
@@ -218,7 +205,6 @@ class SimpleCard1 extends React.Component {
 
                 return (
                     <div key={data.id}>
-
 
                         <Card className={this.state.classes.card}>
 
@@ -256,33 +242,33 @@ class SimpleCard1 extends React.Component {
                                 RESEARCH
                             </Typography>
                             <Typography component="p">
-                                Baseline Research: {userdata.baseline_research}
+                                Baseline Research: { this.props.staffD.baseline_research}
                             </Typography>
                             <Typography className={this.state.classes.pos} component="p">
-                                Other Research: {userdata.research} <br />
+                                Other Research: { this.props.staffD.research} <br />
                             </Typography>
-
                             <Typography gutterBottom variant="headline" component="h2">
                                 SERVICE
                             </Typography>
                             <Typography component="p">
-                                Baseline Service: {userdata.baseline_service} <br />
+                                Baseline Service: { this.props.staffD.baseline_service} <br />
                             </Typography>
                             <Typography component="p">
-                                Other Service: {userdata.service} <br />
+                                Other Service: { this.props.staffD.service} <br />
                             </Typography>
                             <Typography component="p">
-                                Service description: {userdata.service_description} <br />
+                                Service description: { this.props.staffD.service_description} <br />
                             </Typography>
                             <Typography className={this.state.classes.pos} component="p">
-                                Extra: {userdata.extra} <br />
+                                Extra: { this.props.staffD.extra} <br />
                             </Typography>
 
                         </CardContent>
                     </Card>
-                </div>)
+                </div>
+                
+                );
         }
-
 
         else {
             return (

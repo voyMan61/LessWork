@@ -18,6 +18,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
 import OfferMake from './offerConf.js'
 
+
+
 const CustomTableCell = withStyles(theme => ({
   head: {
     backgroundColor: '#301615',
@@ -167,8 +169,7 @@ class EnhancedTable extends React.Component {
     this.setState({
       currentCount: this.state.currentCount+1,
       offerView: false
-    }),
-    console.log('rrrrr')
+    })
   };
   
 componentDidMount() {
@@ -205,8 +206,10 @@ componentDidMount() {
     return (
     <Paper>
     <LinearProgress color="secondary" variant="query" />
-    </Paper>);
+    </Paper>
+    );
   }
+  
   if(offerView){
     return(
         <Paper className={classes.root}> 

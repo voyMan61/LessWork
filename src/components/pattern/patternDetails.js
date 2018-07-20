@@ -7,7 +7,6 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
@@ -15,6 +14,8 @@ import { lighten } from '@material-ui/core/styles/colorManipulator';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 import PatternActivities from './patternActivities';
+
+import Button from '@material-ui/core/Button';
 
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
@@ -40,17 +41,14 @@ const columnData = [
 ];
 
 class EnhancedTableHead extends React.Component {
-  createSortHandler = property => event => {
-    this.props.onRequestSort(event, property);
-  };
 
   render() {
     return (
-      <TableHead>
+      <TableHead >
         <TableRow>          
           {columnData.map(column => {
             return (
-              <CustomTableCell> {column.label}</CustomTableCell>
+              <CustomTableCell style={{textAlign: 'center'}}> {column.label}</CustomTableCell>
             );
           }, this)}
         </TableRow>
@@ -67,55 +65,6 @@ EnhancedTableHead.propTypes = {
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
-
-const toolbarStyles = theme => ({
-  root: {
-    paddingRight: theme.spacing.unit,
-  },
-  highlight:
-    theme.palette.type === 'light'
-      ? {
-          color: '#00838F',
-          backgroundColor: lighten('#00838F', 0.8),
-        }
-      : {
-          color: '#00838F',
-          backgroundColor: '#00838F',
-        },
-  spacer: {
-    flex: '1 1 100%',
-  },
-  actions: {
-    color: '#00838F',
-  },
-  title: {
-    flex: '0 0 auto',
-  },
-});
-
-let EnhancedTableToolbar = props => {
-  const { numSelected, classes } = props;
-  return (
-    <Toolbar
-      className={classNames(classes.root, {
-        [classes.highlight]: numSelected > 0,
-      })}
-    >
-      <div className={classes.title}>
-          <Typography variant="title" id="tableTitle">
-            Pattern
-          </Typography> 
-      </div>
-    </Toolbar>
-  );
-};
-
-EnhancedTableToolbar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
-};
-
-EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
 
 const styles = theme => ({
   root: {
@@ -253,8 +202,7 @@ componentDidMount() {
   }
   if(patternLoaded) {
     return (
-      <Paper className={classes.root}>
-        <EnhancedTableToolbar/>
+      <Paper>
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <EnhancedTableHead/>
@@ -264,13 +212,13 @@ componentDidMount() {
                   return ( 
                     <Tooltip placement="left" TransitionComponent={Zoom} title="View Pattern">                  
                     <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
-                      <CustomTableCell component="th" scope="row">
+                      <CustomTableCell style={{textAlign: 'center'}} component="th" scope="row">
                         {n.code}
                       </CustomTableCell>
-                      <CustomTableCell>{n.description}</CustomTableCell>
-                      <CustomTableCell>{n.mode}</CustomTableCell>
-                      <CustomTableCell>{n.student_per_group}</CustomTableCell>
-                      <CustomTableCell>{n.long_description }</CustomTableCell>
+                      <CustomTableCell style={ {width:'20%'}}>{n.description}</CustomTableCell>
+                      <CustomTableCell style={{textAlign: 'center'}}>{n.mode}</CustomTableCell>
+                      <CustomTableCell style={{textAlign: 'center'}}>{n.student_per_group}</CustomTableCell>
+                      <CustomTableCell style={ {width:'35%'}}> {n.long_description }</CustomTableCell>
                     </TableRow>
                     </Tooltip>
                   );

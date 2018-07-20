@@ -105,7 +105,7 @@ const CustomTableCell = withStyles(theme => ({
       const {confirm} = this.props.od.confirm;
     return ( 
       <Paper className={this.state.classes.root}>
-      <Dialog
+          <Dialog
           open={this.state.open}
           scroll={this.state.scroll}
           aria-labelledby="scroll-dialog-title"
@@ -230,9 +230,10 @@ const CustomTableCell = withStyles(theme => ({
         </DialogContentText>
         </DialogContent>
         <DialogActions>
-        <Button variant="outlined" color="secondary" className={classes.button} onClick={this.props.viewed}>       
-        <CloseIcon/>Close
-      </Button>
+            <Button variant="outlined" color="secondary" style={{position: "absolute", left: '50px'}} className={classes.button} onClick={this.props.viewed}>       
+                <CloseIcon/>Close
+            </Button>
+
       <Button variant="outlined" color="primary"  className={classes.button}>
         <SaveIcon/> Save
       </Button>
@@ -243,3 +244,7 @@ const CustomTableCell = withStyles(theme => ({
   }
 }
 export default withStyles(styles)(CustomizedTable);
+
+/* <Button style={{position: "relative", right: '30px'}} type="submit" color="primary" variant="outlined" className={this.state.classes.button}>
+<SaveIcon/>Create
+</Button>*/

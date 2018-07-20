@@ -1,105 +1,83 @@
 import React from "react";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
-import Paper from '@material-ui/core/Paper';
-
+import Header from "./components/head.js";
+import Footer from "./components/foot.js";
+import Body from './components/user.js'
 import Particles from 'react-particles-js';
 
+import Logo from './murdLogo.svg';
+import DB from './components/Dashboard.js'
 
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Dialog from '@material-ui/core/Dialog';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+
+import Dicon from '@material-ui/icons/Send'
+import Sticon from '@material-ui/icons/Sms';
+import UCicon from '@material-ui/icons/Email';
+import SAicon from '@material-ui/icons/Settings';
+
+/*
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
+;
+*/
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
-import Dialog from '@material-ui/core/Dialog';
-import ListItem from '@material-ui/core/ListItem';
-import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 
-
-import Header from "./components/head.js";
-import Footer from "./components/foot.js";
-import Body from './components/user.js'
-
+import green from '@material-ui/core/colors/green';
+import Avatar from '@material-ui/core/Avatar';
+import FolderIcon from '@material-ui/icons/BusinessCenter';
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    zindex:'-1',
-  },
-  card: { 
-    maxwidth: '50%',
-    flex: 1,
-    width: theme.spacing.unit * 55,
-    height: theme.spacing.unit * 25,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  grid: {
-    position: 'absolute',
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  button:{
-    zindex:'21',
-    position: 'absolute',
-    left:'50%',
-    top:'2%',
-    flex: 1,
-  },
-  pap2er: {
-    flex: 3,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  menuItem: {
-    '&:focus': {
-      backgroundColor: theme.palette.primary.main,
-      '& $primary, & $icon': {
-        color: theme.palette.common.white,
-      },
-    },
-  },
-  primary: {},
-  icon: {},
-});
-
 class Home extends React.Component {
   state = {
-    log: true,
+    log: false,
     logged: '',
     value: 0,
     open: true,
+    currentUser:'U',
+    test: false  ,
+    hits:[],
+    isLoading: false,
+    staVa: '',
+    staffSelect: [],
   };
   
   handleClickOpen = () => {
     this.setState({ open: true });
   };
   handlelogin = () => {
-    this.setState({ open: true,log: false });
+    this.setState({ currentUser: 'john', open: true,log: false });
   };
   handleClose = () => {
     this.setState({ open: false,log: true });
@@ -107,29 +85,60 @@ class Home extends React.Component {
   handleChange = (event, value) => {
     this.setState({ value });
   };
+
+  handleStaffChange = event => {
+    this.setState({ log: true, staffSelect: event.target.value });
+    console.log(event.target.value);
+  };
+
+  componentDidMount() {
+    this.setState({ isLoading: true });
+    fetch('http://immense-headland-42479.herokuapp.com/api/stafftotals')
+    .then((response) => response.json())
+    .then((responseJson) => {
+        this.setState({ hits: responseJson, isLoading: false });
+    }) 
+}
+
+
   render() {
     const {  classes } = this.props;
-    const{log, logged} = this.state;
+    const{    staffSelect, staVa, hits, test, currentUser, log, isLoading} = this.state;
+
+    if(test){
+      return(
+        <Paper className={classes.root}>
+          <DB/>
+        </Paper>
+      );
+    }
+
 if(log){
     return (
       <Paper className={classes.root}>
       <Header className={classes.he}/>
-        <Button variant="extendedFab" aria-label="Delete"  onClick={this.handlelogin} className={classes.button}>
-        Login Page
+      <Avatar className={classes.purpleAvatar}>{currentUser}</Avatar>
+        <Button  data={staffSelect}  onClick={this.handlelogin} className={classes.button}>
+        <FolderIcon />
       </Button>
-        <Body className={classes.bo}/>
+        <Body data = {staffSelect} className={classes.bo}/>
         <Footer className={classes.fo}/>
       </Paper>
     );
   }
-
+  if(isLoading){
+    return(
+<Paper> 
+  </Paper>
+    );
+  }
     return (
       <Paper className={classes.pap2er}>
-              <Dialog
+          <Dialog
           fullScreen
           open={this.state.open}
           onClose={this.handleClose}
-          TransitionComponent={Transition}>               
+          TransitionComponent={Transition}>          
         <Grid className={classes.grid} container spacing={24}>
         <Grid item xs={12} sm={3}></Grid>
         <Grid item xs={12} md={6}>         
@@ -138,50 +147,132 @@ if(log){
           <Typography gutterBottom variant="headline" component="h2">
             WorkLess
           </Typography>
-          <Typography component="p">
-          
-          </Typography>
-        </CardContent>
-        
+        </CardContent> 
         <CardActions>
-        <MenuList onClick={this.handleClose}>
-        <MenuItem className={classes.menuItem}>
+        <MenuList>
+        <MenuItem onClick={this.handleClose} className={classes.menuItem}>
           <ListItemIcon className={classes.icon} >
-            <SendIcon/>
+          <Dicon />
           </ListItemIcon>
           <ListItemText classes={{ primary: classes.primary }} inset primary="Dean" />
         </MenuItem>
-        <MenuItem className={classes.menuItem}>
+        <MenuItem onClick={this.handleClose} className={classes.menuItem}>
           <ListItemIcon className={classes.icon}>
-            <DraftsIcon />
+            <UCicon/>
           </ListItemIcon>
           <ListItemText classes={{ primary: classes.primary }} inset primary="Unit Coordinator" />
         </MenuItem>
-        <MenuItem className={classes.menuItem} >
+        <MenuItem onClick={this.handleClose} className={classes.menuItem} >
           <ListItemIcon className={classes.icon}>
-            <InboxIcon />
+             <SAicon/>
           </ListItemIcon>
           <ListItemText classes={{ primary: classes.primary }} inset primary="System Administrator" />
         </MenuItem>
+        <MenuItem  className={classes.menuItem} >
+        <ListItemIcon className={classes.icon}>
+             <Sticon/>
+          </ListItemIcon>
+        <form className={classes.root} autoComplete="off">
+        <FormControl className={classes.formControl}>
+          <InputLabel htmlFor="age-auto-width">Staff</InputLabel>
+          <Select
+            value={this.state.staVa}
+            onChange={this.handleStaffChange}
+            input={<Input name="staff" id="age-auto-width" />}
+            autoWidth>
+           
+            {hits
+              .map(n => {
+                return (    
+                  <MenuItem value={n}>{n.name}</MenuItem>
+                );
+              })}
+          </Select>
+          <FormHelperText>select user</FormHelperText>
+        </FormControl>
+      </form></MenuItem>
+
       </MenuList>
+
         </CardActions>
                   </Card>
         </Grid>
       </Grid>
       <Particles  params={parts}
               style={{
+                height: '100%',
                 width: '100%',
-                zindex: -999,
-                background: 'linear-gradient(to bottom, rgb(173, 0, 37) 16%,' +
-                'rgb(130, 0, 27) 60%, rgb(91, 0, 19) 100%)',
+                zindex: -1,
+                background: 'linear-gradient(160deg, #ad0025  20%, #82001b  40%, #660e04  80%)',
+                boxShadow: '0 3px 5px 2px rgba(247, 193, 0, 0.4)',
               }}
             />
-      <img src={"/murdLogo.eps"} />
         </Dialog>
         </Paper>
-);
+  );
   }
 }
+  const styles = theme => ({
+    root: {
+      flexGrow: 1,
+      zindex:'-1',
+    },
+    formControl: {
+      margin: theme.spacing.unit,
+      minWidth: 120,
+    },
+    selectEmpty: {
+      marginTop: theme.spacing.unit * 2,
+    },
+    card: { 
+      maxwidth: '50%',
+      flex: 1,
+      width: theme.spacing.unit * 55,
+      height: theme.spacing.unit * 25,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    
+    grid: {
+      position: 'absolute',
+      flex: 1,
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    purpleAvatar: {
+      margin: 10,
+      color: '#fff',
+      backgroundColor: '#82001b',
+      zindex:'21',
+      position: 'absolute',
+      right:'5%',
+      top:'1%',
+      flex: 1,
+    },
+
+    button:{
+      zindex:'21',
+      position: 'absolute',
+      left:'50%',
+      top:'2%',
+      flex: 1,
+    },
+
+  });
+
+
+Home.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Home);
+
+
+
+
+
 
 const parts = 
   {
@@ -296,12 +387,3 @@ const parts =
     },
     "retina_detect": true
   }
-
-
-Home.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(Home);
-  
-

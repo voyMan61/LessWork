@@ -8,6 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 
 import LinearProgress from '@material-ui/core/LinearProgress';
+import purple from '@material-ui/core/colors/purple';
 
 import AddIcon from '@material-ui/icons/Add';
 import Dialog from '@material-ui/core/Dialog';
@@ -18,11 +19,21 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import Zoom from '@material-ui/core/Zoom';
 
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: { main: purple[500] }, // Purple and green play nicely together.
+    secondary: { main: '#11cb5f' }, // This is just green.A700 as hex.
+  },
+});
+
 const CustomTableCell = withStyles(theme => ({
     head: {
       backgroundColor: theme.palette.common.black,
       color: theme.palette.common.white,
       fontSize: 13,
+      textAlign: 'center',
     },
     body: {
       fontSize: 12,
@@ -145,10 +156,13 @@ const CustomTableCell = withStyles(theme => ({
           aria-labelledby="scroll-dialog-title"
         >
           <DialogTitle id="scroll-dialog-title">Pattern Activities - {this.props.Pcode}
+          <Button variant="outlined" color="secondary"  style={{color: "#bf0000 ", position: "absolute", right: '5%'}} className={classes.button} onClick={this.props.viewed}>       
+            Close
+          </Button>
           </DialogTitle>
-          <DialogContent>
+          <DialogContent style={{ background: 'linear-gradient(55deg, #e2e2e2  10%, #fdfff9 90%)'}}>
           <DialogContentText>
-        <Table className={this.state.classes.table}>
+        <Table className={this.state.classes.table} style={{ background: 'linear-gradient(55deg, #f2f2f2  10%, #fdfff9 90%)'}}>
         {this.state.frAct.length !== 0  &&
           <TableHead>
             <TableRow>
@@ -164,7 +178,7 @@ const CustomTableCell = withStyles(theme => ({
                   <CustomTableCell component="th" scope="row">
                     {n.name}
                   </CustomTableCell>
-                  <CustomTableCell>hrs: {n.hour}</CustomTableCell>
+                  <CustomTableCell style={{textAlign: 'center'}} >{n.hour}</CustomTableCell>
                 </TableRow>
               );
             })}
@@ -184,17 +198,16 @@ const CustomTableCell = withStyles(theme => ({
                   <CustomTableCell component="th" scope="row">
                     {n.name}
                   </CustomTableCell>
-                  <CustomTableCell>hrs: {n.hour}</CustomTableCell>
+                  <CustomTableCell style={{textAlign: 'center'}} >{n.hour}</CustomTableCell>
                 </TableRow>
               );
             })}
         </TableBody> 
-
         {this.state.psAct.length !== 0 &&
           <TableHead>
             <TableRow>
               <CustomTableCell>Per student activities</CustomTableCell>
-              <CustomTableCell>Total Number of Hours: {this.state.totalps}</CustomTableCell>
+              <CustomTableCell style={{textAlign: 'center'}} >Total Number of Hours: {this.state.totalps}</CustomTableCell>
             </TableRow>
         </TableHead> }
           <TableBody>
@@ -204,7 +217,7 @@ const CustomTableCell = withStyles(theme => ({
                   <CustomTableCell component="th" scope="row">
                     {n.name}
                   </CustomTableCell>
-                  <CustomTableCell>hrs: {n.hour}</CustomTableCell>
+                  <CustomTableCell style={{textAlign: 'center'}} >{n.hour}</CustomTableCell>
                 </TableRow>
               );
             })}
@@ -212,20 +225,31 @@ const CustomTableCell = withStyles(theme => ({
         </Table>
         </DialogContentText>
         </DialogContent>
-        <DialogActions>
-        <Button variant="outlined" color="secondary"  className={classes.button} onClick={this.props.viewed}>       
-        Close
-      </Button>
-          </DialogActions>
         </Dialog>
-      </Paper>
+      </Paper>    
     );} 
-
     else {
         return (
-            <Paper className={this.state.classes.root}>
-            <LinearProgress color="secondary" variant="query" />
-            </Paper>
+          <Paper className={this.state.classes.root} >
+          <Dialog
+              open={this.state.open}
+              scroll={this.state.scroll}
+              aria-labelledby="scroll-dialog-title"
+            >
+              <DialogTitle id="scroll-dialog-title">Loading Pattern - {this.props.Pcode}
+              </DialogTitle>
+              <DialogContent>
+              <DialogContentText>
+
+                <LinearProgress color= "primary" variant="query" />
+                
+            </DialogContentText>
+            </DialogContent>
+            </Dialog>
+          </Paper>    
+
+
+
         )
     }
   }
@@ -233,3 +257,4 @@ const CustomTableCell = withStyles(theme => ({
 
   
   export default withStyles(styles)(CustomizedTable);
+

@@ -95,7 +95,6 @@ class BarExample extends React.Component {
         <h2>WorkLoad Distribution Graph</h2>
         {!this.state.loaded && <LinearProgress color="secondary" variant="query" />} {this.state.loaded &&
           <Bar
-
             data={this.state.chartData}
             width={100}
             height={30}

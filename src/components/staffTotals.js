@@ -26,13 +26,15 @@ import lime from '@material-ui/core/colors/lime';
 import Tooltip from '@material-ui/core/Tooltip';
 import Fade from '@material-ui/core/Fade';
 import Zoom from '@material-ui/core/Zoom';
-import STE from './staffView.js';
+import STE from './OfferingsAssigned.js';
+
 
 const CustomTableCell = withStyles(theme => ({
   head: {
     backgroundColor: '#301615',
     color: theme.palette.common.white,
     fontSize: 14,
+    textAlign: 'center',
   },
   body: {
     fontSize: 12,
@@ -158,11 +160,14 @@ class EnhancedTable extends React.Component {
       hits: [],
       fet: 'false',
       load: 'red',
+      mew: false,
+      staffSelect:[],
     };
   }
 
   handleROpen = (data, e) => {
-    console.log( data.name); 
+    console.log( data);
+    this.setState({ staffSelect: data, mew: true });
   };
   
   handleOpen = () => {
@@ -226,13 +231,18 @@ class EnhancedTable extends React.Component {
 }
   render() {
   const { classes } = this.props;
-  const { load, modee, mod, open, checked, isLoading, hits, fet, data, order, orderBy, selected, rowsPerPage, expanded } = this.state;
+
+  const { staffSelect, mew, load, modee, mod, open, checked, isLoading, hits, fet, data, order, orderBy, selected, rowsPerPage, expanded } = this.state;
   if (isLoading) {
     return (
       <Paper>
       <LinearProgress style={{ color: lime[500] }}  variant="query" />
       </Paper>
   );
+  }
+  if(mew){
+    return(
+    <STE staffD = {staffSelect}/> );
   }
   if(modee){
     return (
@@ -275,10 +285,10 @@ class EnhancedTable extends React.Component {
 
                 <Tooltip placement="left" TransitionComponent={Zoom} title="View staff info">   
                     <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
-                      <CustomTableCell component="th" scope="row"> {n.name}</CustomTableCell>                    
-                      <CustomTableCell >{n.offerings_taken}</CustomTableCell>
-                      <CustomTableCell>{n.target}</CustomTableCell>
-                      <CustomTableCell style={{color: n.total_load < 0.9* n.target? 'blue' : n.total_load > 1.1*n.target? 'red' :  'green'}}>{n.total_load}</CustomTableCell>
+                      <CustomTableCell style={{textAlign: 'center'}} component="th" scope="row"> {n.name}</CustomTableCell>                    
+                      <CustomTableCell style={{textAlign: 'center'}} >{n.offerings_taken}</CustomTableCell>
+                      <CustomTableCell style={{textAlign: 'center'}} >{n.target}</CustomTableCell>
+                      <CustomTableCell style={{textAlign: 'center', color: n.total_load < 0.9* n.target? 'blue' : n.total_load > 1.1*n.target? 'red' :  'green'}}>{n.total_load}</CustomTableCell>
                       <CustomTableCell>{n.comments}</CustomTableCell>
                     </TableRow>
                     </Tooltip>

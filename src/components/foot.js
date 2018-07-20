@@ -7,8 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 const styles = {
   root: {
     flexGrow: 1,
-    background: 'linear-gradient( rgb(206, 193, 169) 17%,' +
-    'rgb(206, 186, 148) 90%, rgb(198, 179, 141) 100%)',
+    background: 'linear-gradient(55deg, #cec1a9  10%, #c6b38d  60%, #ceba94 90%)',
   },
   flex: {
     flexGrow: 1,
@@ -20,8 +19,8 @@ class footer extends React.Component {
     const { classes } = this.props;
     return (
       <BottomNavigation className={classes.root} showLabels>
+      <BottomNavigationAction label="© FT05 WorkLess"/>
       <BottomNavigationAction label="2018 Murdoch University"/>
-      © FT05 WorkLess
       </BottomNavigation>
     );
   }
