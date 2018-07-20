@@ -184,8 +184,7 @@ class SimpleCard1 extends React.Component {
 
     }
     savePattern = value => {
-        sessionStorage.setItem('patternCode', value);
-        sessionStorage.setItem('patternID',(this.state.patternData.find(item => item.code === value).id))
+        console.log(value);
     };
 
 
@@ -206,8 +205,7 @@ class SimpleCard1 extends React.Component {
                 return (
                     <div key={data.id}>
 
-                        <Card className={this.state.classes.card}>
-
+                        <Card className={this.state.classes.card}>  
                             <CardContent>
                                 <Typography variant="headline" component="p">
                                     {singleOffering.unit_code} {singleOffering.name}
@@ -219,15 +217,11 @@ class SimpleCard1 extends React.Component {
                             <CardActions>
                                 <Button size="small" color="primary" href="/PatternDetail" onClick={() => this.savePattern(singleOffering.pattern_code)}>
                                     Pattern Detail
-          </Button>
-
+                                </Button>
                             </CardActions>
                         </Card>
                         <br />
                     </div >
-
-
-
                 )
             });
 

@@ -95,7 +95,6 @@ class USerView extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { ldata } = this.props.data;
     const { value } = this.state;
     const { Ida, currentUser, auth, anchorEl } = this.state;
     console.log(this.props.data)
@@ -110,7 +109,7 @@ class USerView extends React.Component {
             <Tab label="Patterns"  />
         </Tabs>              
         </AppBar>
-        {value === 0 && <TabContainer><O Ida={ldata}/></TabContainer>}
+        {value === 0 && <TabContainer><Dashboard /></TabContainer>}
         {value === 1 && <TabContainer><Offerings/></TabContainer>}
         {value === 2 && <TabContainer><StaffTots/></TabContainer>}
         {value === 3 && <TabContainer><Patterns/></TabContainer>}

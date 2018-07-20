@@ -2,11 +2,31 @@ import React from 'react';
 import BarExample from './Bar';
 import DeanButton from './DeanButton';
 import OfferingsAssigned from './OfferingsAssigned';
+import Paper from '@material-ui/core/Paper';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Toolbar from '@material-ui/core/Toolbar';
+import classNames from 'classnames';
+
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Sticon from '@material-ui/icons/Sms';
+import MenuList from '@material-ui/core/MenuList';
+import MenuItem from '@material-ui/core/MenuItem';
+import { lighten } from '@material-ui/core/styles/colorManipulator';
 
 
-if (sessionStorage.getItem('mydata') || sessionStorage.getItem('name')) {
-        var username = sessionStorage.getItem('name')
-}
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+
+
+
 class Dashboard extends React.Component {
 
 constructor(props) {
@@ -16,8 +36,16 @@ chartData: {},
 staffData: {},
 classes: this.props.classes,
 staffD:[],
+hits:[],
+staffSelect:[],
+log: false,
 }
 }
+
+handleStaffChange = event => {
+        this.setState({ log: true, staffSelect: event.target.value });
+        console.log(event.target.value);
+      };
 componentDidMount() {
 var obj;
 var myData = [];
@@ -27,6 +55,17 @@ var myTarget = [];
 //http://localhost:5000/api/stafftotals
 //http://arcane-cove-45625.herokuapp.com/api/stafftotals
 //http://immense-headland-42479.herokuapp.com/api/stafftotals
+
+
+
+
+this.setState({ isLoading: true });
+    fetch('http://immense-headland-42479.herokuapp.com/api/stafftotals')
+    .then((response) => response.json())
+    .then((responseJson) => {
+        this.setState({ hits: responseJson, isLoading: false });
+    }) 
+
 fetch('http://immense-headland-42479.herokuapp.com/api/stafftotals', {
 //mode: 'no-cors',
 method: 'GET',
@@ -60,21 +99,62 @@ console.log(error);
 });
 }
 
-render() {       
-const { staffSelect } = this.props.Ida;
+render() {       log
+const{hits, staffSelect,log} = this.state;
 const { classes } = this.props;
-return (
-<div>
-<div>
-<h1>Dashboard - Viewing as {username} ()</h1>
-</div>
-<DeanButton />
-<BarExample chartData={this.state.chartData} />
-<br />
-<OfferingsAssigned staffD = {staffSelect} />
-<br />
 
-</div>
+
+if(log){
+        return(
+                <Paper>
+               
+        <Toolbar>
+            <Typography style={{position: 'absolute', left: 60}} variant="title" id="tableTitle">
+                Dashboard
+            </Typography> 
+                <Typography style={{position: 'absolute', right: 60}} variant="contained" size="large" color="secondary" >
+                {staffSelect.name}
+                </Typography>
+    </Toolbar>
+                <OfferingsAssigned staffD = {staffSelect} />
+                <BarExample chartData={this.state.chartData} />
+                </Paper>
+        );
+}
+return (
+        <Paper>
+
+        <Toolbar>
+            
+            <Typography style={{position: 'absolute', left: 60}} variant="title" id="tableTitle">
+                Dashboard
+            </Typography> 
+
+                <Typography style={{position: 'absolute', right: 60}} variant="contained" size="large" color="secondary" >
+                <form  autoComplete="off">
+        <FormControl>
+        <InputLabel htmlFor="age-auto-width">Staff</InputLabel>
+        <Select
+        value={this.state.staVa}
+        onChange={this.handleStaffChange}
+        input={<Input name="staff" id="age-auto-width" />}
+        >
+        {hits
+        .map(n => {
+        return (    
+        <MenuItem value={n}>{n.name}</MenuItem>
+        );
+        })}
+        </Select>
+        <FormHelperText>select user</FormHelperText>
+        </FormControl>
+        </form>
+                </Typography>
+    </Toolbar>
+        <BarExample chartData={this.state.chartData} />
+
+
+      </Paper>
 
 )
 }

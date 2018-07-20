@@ -9,12 +9,6 @@ import Particles from 'react-particles-js';
 import Logo from './murdLogo.svg';
 import DB from './components/Dashboard.js'
 
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Dialog from '@material-ui/core/Dialog';
@@ -28,13 +22,12 @@ import Grid from '@material-ui/core/Grid';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+
 
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 import Dicon from '@material-ui/icons/Send'
-import Sticon from '@material-ui/icons/Sms';
+
 import UCicon from '@material-ui/icons/Email';
 import SAicon from '@material-ui/icons/Settings';
 
@@ -121,7 +114,7 @@ if(log){
         <Button  data={staffSelect}  onClick={this.handlelogin} className={classes.button}>
         <FolderIcon />
       </Button>
-        <Body data = {staffSelect} className={classes.bo}/>
+        <Body className={classes.bo}/>
         <Footer className={classes.fo}/>
       </Paper>
     );
@@ -168,32 +161,7 @@ if(log){
           </ListItemIcon>
           <ListItemText classes={{ primary: classes.primary }} inset primary="System Administrator" />
         </MenuItem>
-        <MenuItem  className={classes.menuItem} >
-        <ListItemIcon className={classes.icon}>
-             <Sticon/>
-          </ListItemIcon>
-        <form className={classes.root} autoComplete="off">
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="age-auto-width">Staff</InputLabel>
-          <Select
-            value={this.state.staVa}
-            onChange={this.handleStaffChange}
-            input={<Input name="staff" id="age-auto-width" />}
-            autoWidth>
-           
-            {hits
-              .map(n => {
-                return (    
-                  <MenuItem value={n}>{n.name}</MenuItem>
-                );
-              })}
-          </Select>
-          <FormHelperText>select user</FormHelperText>
-        </FormControl>
-      </form></MenuItem>
-
       </MenuList>
-
         </CardActions>
                   </Card>
         </Grid>

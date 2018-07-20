@@ -148,8 +148,6 @@ const styles = theme => ({
   },
 });
 
-var url = 'http://immense-headland-42479.herokuapp.com/api/stafftotals';
-
 class EnhancedTable extends React.Component {
   constructor(props) {
     super(props);
@@ -222,11 +220,10 @@ class EnhancedTable extends React.Component {
   componentDidMount() {
     this.setState({ isLoading: true });
     var f = [];
-    fetch(url)
+    fetch('http://immense-headland-42479.herokuapp.com/api/stafftotals')
     .then((response) => response.json())
     .then((responseJson) => {
         this.setState({ hits: responseJson, isLoading: false });
-
     }) 
 }
   render() {
@@ -235,7 +232,7 @@ class EnhancedTable extends React.Component {
   const { staffSelect, mew, load, modee, mod, open, checked, isLoading, hits, fet, data, order, orderBy, selected, rowsPerPage, expanded } = this.state;
   if (isLoading) {
     return (
-      <Paper>
+      <Paper><EnhancedTableToolbar/>
       <LinearProgress style={{ color: lime[500] }}  variant="query" />
       </Paper>
   );
