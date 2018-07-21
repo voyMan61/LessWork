@@ -1,5 +1,4 @@
 import React from 'react';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -7,18 +6,14 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import { lighten } from '@material-ui/core/styles/colorManipulator';
-//import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Tooltip from '@material-ui/core/Tooltip';
+import Zoom from '@material-ui/core/Zoom';
 
 import PatternActivities from './patternActivities';
 
-import Button from '@material-ui/core/Button';
 
-import Tooltip from '@material-ui/core/Tooltip';
-import Zoom from '@material-ui/core/Zoom';
 
 const CustomTableCell = withStyles(theme => ({
   head: {
@@ -89,7 +84,6 @@ const styles = theme => ({
 
 });
 
-var url = 'http://immense-headland-42479.herokuapp.com/api/pattern';
 
 class EnhancedTable extends React.Component {
   constructor(props) {
@@ -140,45 +134,40 @@ handleClickAway = () => {
   });
 };
 
-viewerClosed() {
-  this.setState({
-    currentCount: this.state.currentCount+1,
-    patterAct: false
-  }),
-  console.log('rrrrr')
-};
-handleOpen = () => {
-    this.setState({ open: true });
+  viewerClosed() {
+    this.setState({currentCount: this.state.currentCount+1,patterAct: false});
   };
-
+  handleOpen = () => {
+      this.setState({ open: true });
+    };
   handleClose = () => {
     this.setState({ open: false });
   };
 
 componentDidMount() {
-  var patternObj;
-  fetch('http://immense-headland-42479.herokuapp.com/api/pattern', {
-      //mode: 'no-cors',
-      method: 'GET',
-      headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-      },
-  },
-  ).then(response => {
-      if (response.ok) {
-          response.json().then(json => {
-              patternObj = json;
-              this.setState({
-                  patternLoaded: true,
-                  patternData: patternObj,
-                  hits: json, 
-                  isLoading: false,
-              })
-          });
-      }
-  });
+    var patternObj;
+    fetch('http://immense-headland-42479.herokuapp.com/api/pattern', {
+        //mode: 'no-cors',
+        method: 'GET',
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+    },
+    ).then(response => {
+        if (response.ok) {
+            response.json().then(json => {
+                patternObj = json;
+                this.setState({
+                    patternLoaded: true,
+                    patternData: patternObj,
+                    hits: json, 
+                    isLoading: false,
+                })
+            });
+        }
+   });
 }
 
   render() {
@@ -240,16 +229,6 @@ componentDidMount() {
 }
 }
 
-function getModalStyle() {
-  const top = 50 ;
-  const left = 50 ;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
 
 EnhancedTable.propTypes = {
   classes: PropTypes.object.isRequired,

@@ -6,25 +6,15 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import { lighten } from '@material-ui/core/styles/colorManipulator';
-import Button from '@material-ui/core/Button';
+
 import Modal from '@material-ui/core/Modal';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import lime from '@material-ui/core/colors/lime';
 import Tooltip from '@material-ui/core/Tooltip';
-import Fade from '@material-ui/core/Fade';
 import Zoom from '@material-ui/core/Zoom';
 import STE from './OfferingsAssigned.js';
 
@@ -218,7 +208,6 @@ class EnhancedTable extends React.Component {
   
   componentDidMount() {
     this.setState({ isLoading: true });
-    var f = [];
     fetch('http://immense-headland-42479.herokuapp.com/api/stafftotals')
     .then((response) => response.json())
     .then((responseJson) => {
@@ -228,7 +217,7 @@ class EnhancedTable extends React.Component {
   render() {
   const { classes } = this.props;
 
-  const { staffSelect, mew, load, modee, mod, open, checked, isLoading, hits, fet, data, order, orderBy, selected, rowsPerPage, expanded } = this.state;
+  const { staffSelect, mew, modee, isLoading, hits, order, orderBy, selected,} = this.state;
   if (isLoading) {
     return (
       <Paper><EnhancedTableToolbar/>

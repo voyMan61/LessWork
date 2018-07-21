@@ -1,23 +1,11 @@
 import React from 'react';
-import BarExample from './Bar';
-import DeanButton from './DeanButton';
+import Barchart from './Bar';
 import OfferingsAssigned from './OfferingsAssigned';
 import Paper from '@material-ui/core/Paper';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import Toolbar from '@material-ui/core/Toolbar';
-import classNames from 'classnames';
-import Card from '@material-ui/core/Card';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Sticon from '@material-ui/icons/Sms';
-import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
-import { lighten } from '@material-ui/core/styles/colorManipulator';
-
 
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
@@ -99,24 +87,15 @@ console.log(error);
 });
 }
 
-render() {       log
+render() {    
 const{hits, staffSelect,log} = this.state;
-const { classes } = this.props;
-
 
 if(log){
         return(
-                <Paper >
-
-
-        <Toolbar>
-            
-            <Typography style={{position: 'absolute', left: '5%'}} variant="title" id="tableTitle">
-                Dashboard
-            </Typography> 
-<Typography style={{position: 'absolute', left: '15%'}} variant="contained" size="large" color="secondary" >
-                {staffSelect.name}
-                </Typography>
+        <Paper >
+        <Toolbar><Typography style={{position: 'absolute', left: '5%'}} variant="title" id="tableTitle">
+                Dashboard</Typography> <Typography style={{position: 'absolute', left: '15%'}} variant="contained" size="large" color="secondary" >
+                {staffSelect.name}</Typography>
                 <Typography style={{position: 'fixed', right: '6%'}} variant="contained" size="large" color="secondary" >
                 <form  autoComplete="off">
                 <FormControl>
@@ -139,7 +118,7 @@ if(log){
                 </Typography>
     </Toolbar>
     <div style={{display: 'flex', justifyContent: 'center',}}>
-    <BarExample  chartData={this.state.chartData} /></div>
+    <Barchart  chartData={this.state.chartData} /></div>
     <div style={{display: 'flex', alignItems: 'center',  justifyContent: 'center'}}><OfferingsAssigned staffD = {staffSelect} /></div>
                 </Paper>
         );
@@ -171,7 +150,7 @@ return (
         </form>
                 </Typography>
     </Toolbar><div style={{display: 'flex', justifyContent: 'center'}}>
-        <BarExample chartData={this.state.chartData} />
+        <Barchart chartData={this.state.chartData} />
         </div><div style={{display: 'flex', padding: '1%', justifyContent: 'center'}}></div>
       </Paper>
 

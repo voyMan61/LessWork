@@ -8,25 +8,11 @@ import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 
 import LinearProgress from '@material-ui/core/LinearProgress';
-import purple from '@material-ui/core/colors/purple';
-
-import AddIcon from '@material-ui/icons/Add';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
-import Zoom from '@material-ui/core/Zoom';
-
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-
-const theme = createMuiTheme({
-  palette: {
-    primary: { main: purple[500] }, // Purple and green play nicely together.
-    secondary: { main: '#11cb5f' }, // This is just green.A700 as hex.
-  },
-});
 
 const CustomTableCell = withStyles(theme => ({
     head: {
@@ -143,7 +129,7 @@ const CustomTableCell = withStyles(theme => ({
     }
 
     render() {
-      const { a, classes } = this.props;
+      const { classes } = this.props;
         if(this.state.activityLookupLoaded === true) {
             //console.log(this.state.frAct)
             //console.log(this.state.psAct)

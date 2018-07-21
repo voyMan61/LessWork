@@ -1,6 +1,4 @@
 import React from 'react';
-import classNames from 'classnames';
-
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -13,7 +11,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 
-import { lighten } from '@material-ui/core/styles/colorManipulator';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 import Tooltip from '@material-ui/core/Tooltip';
@@ -57,23 +54,6 @@ class EnhancedTableHead extends React.Component {
     );
   }
 }
-
-const toolbarStyles = theme => ({
-  root: {
-    paddingRight: theme.spacing.unit,
-  },
-  spacer: {
-    flex: '1 1 100%',
-  },
-  actions: {
-    color: '#00838F',
-  },
-  title: {
-    flex: '0 0 auto',
-  },
-});
-
-
 
 
 const styles = theme => ({
@@ -174,7 +154,7 @@ componentDidMount() {
 
   render() {
   const { classes } = this.props;
-  const { objectLoaded, oData, offerView, isLoading, hits} = this.state;
+  const { objectLoaded, oData, offerView, hits} = this.state;
 
   if(offerView){
     return(

@@ -5,8 +5,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
-import Paper from '@material-ui/core/Paper';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import Toolbar from '@material-ui/core/Toolbar';
 import purple from '@material-ui/core/colors/deepPurple';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -219,7 +217,7 @@ class SimpleCard1 extends React.Component {
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                                <Button size="small" color="primary" href="/PatternDetail" onClick={() => this.savePattern(singleOffering.pattern_code)}>
+                                <Button size="small" color="primary" href="/" onClick={() => this.savePattern(singleOffering.pattern_code)}>
                                     
                                 </Button>
                             </CardActions>

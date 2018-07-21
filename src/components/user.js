@@ -2,26 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-
-
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-
-
-import IconButton from '@material-ui/core/IconButton';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import Divider from '@material-ui/core/Divider';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-
-
-import O from './OfferingsAssigned'
 
 import Dashboard from './Dashboard.js'
 import Patterns from './pattern/pattern.js'
@@ -46,14 +30,6 @@ const styles = theme => ({
   },
   
 });
-//background: '#b3a558',
-
-const options = [
-  'User',
-  'Dean',
-  'Unit Coordintator',
-  'System Administrator',
-];
 
 function TabContainer(props) {
   return (
@@ -97,7 +73,7 @@ class USerView extends React.Component {
   render() {
     const { classes } = this.props;
     const { value } = this.state;
-    const { Ida, currentUser, auth, anchorEl } = this.state;
+
     return (
       
       <Paper className={classes.root}>

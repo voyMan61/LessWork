@@ -9,30 +9,19 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Switch from '@material-ui/core/Switch';
 import MenuItem from '@material-ui/core/MenuItem';
-
-import CardContent from '@material-ui/core/CardContent';
-import LinearProgress from '@material-ui/core/LinearProgress';
-
-import Button from '@material-ui/core/Button';
-import classNames from 'classnames';
-import SaveIcon from '@material-ui/icons/Save';
-
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-
-import AddIcon from '@material-ui/icons/Add';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import Zoom from '@material-ui/core/Zoom';
-import EditIcon from '@material-ui/icons/Edit';
-import UpIcon from '@material-ui/icons/KeyboardArrowUp';
-import green from '@material-ui/core/colors/green';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Button from '@material-ui/core/Button';
 
+import Snackbar from '@material-ui/core/Snackbar';
+import SaveIcon from '@material-ui/icons/Save';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 
 
@@ -80,6 +69,7 @@ const styles = theme => ({
     },
     button:{
         alignContent: 'center',
+        margin: theme.spacing.unit,
     },
     table: {
         maxWidth: 700,
@@ -103,10 +93,6 @@ const styles = theme => ({
 
     menu: {
         width: 200,
-    },
-
-    button: {
-        margin: theme.spacing.unit,
     },
     leftIcon: {
         marginRight: theme.spacing.unit,

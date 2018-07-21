@@ -5,17 +5,11 @@ import Header from "./components/head.js";
 import Footer from "./components/foot.js";
 import Body from './components/user.js'
 import Particles from 'react-particles-js';
-
-import Logo from './assets/mLogo.svg';
-import DB from './components/Dashboard.js'
-
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import Dialog from '@material-ui/core/Dialog';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
@@ -23,38 +17,27 @@ import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
-
+import Avatar from '@material-ui/core/Avatar';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-
+import FolderIcon from '@material-ui/icons/BusinessCenter';
 import Dicon from '@material-ui/icons/Send'
-
 import UCicon from '@material-ui/icons/Email';
 import SAicon from '@material-ui/icons/Settings';
 
+import DB from './components/Dashboard.js'
 /*
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
 ;
 */
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 
-import Divider from '@material-ui/core/Divider';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Slide from '@material-ui/core/Slide';
 
-import green from '@material-ui/core/colors/green';
-import Avatar from '@material-ui/core/Avatar';
-import FolderIcon from '@material-ui/icons/BusinessCenter';
 
-function Transition(props) {
-  return <Slide direction="up" {...props} />;
-}
+
 
 class Home extends React.Component {
   state = {
-    log: true,
+    log: false,
     logged: '',
     value: 0,
     open: true,
@@ -96,7 +79,7 @@ class Home extends React.Component {
 
   render() {
     const {  classes } = this.props;
-    const{ staffSelect, staVa, hits, test, currentUser, log, isLoading} = this.state;
+    const{test, currentUser, log} = this.state;
 
     if(test){
       return(

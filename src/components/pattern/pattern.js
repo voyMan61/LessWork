@@ -1,8 +1,6 @@
 import React from 'react';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
@@ -28,21 +26,6 @@ const styles = theme => ({
   },
 
 });
-
-const toolbarStyles = theme => ({
-    root: {
-      paddingRight: theme.spacing.unit,
-    },
-    spacer: {
-      flex: '1 1 100%',
-    },
-    actions: {
-      color: '#00838F',
-    },
-    title: {
-      flex: '0 0 auto',
-    },
-  });
 
 class EnhancedTable extends React.Component {
   constructor(props) {
@@ -83,11 +66,7 @@ handleClickAway = () => {
 };
 
 viewerClosed() {
-  this.setState({
-    currentCount: this.state.currentCount+1,
-    patterAct: false
-  }),
-  console.log('rrrrr')
+  this.setState({currentCount: this.state.currentCount+1,patterAct: false});
 };
 
 handleOpen = () => {
@@ -99,19 +78,11 @@ handleOpen = () => {
   };
 
 creatorClosed() {
-    this.setState({
-      creatorOpen: false
-    }),
-    console.log('rrrrr')
+    this.setState({creatorOpen: false});
   };
-  
-componentDidMount() {
-
-}
 
   render() {
-  const { classes } = this.props;
-  const { creatorOpen, creating} = this.state;
+  const { creatorOpen} = this.state;
 
   if(creatorOpen){
       return(
