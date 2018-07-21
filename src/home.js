@@ -6,7 +6,7 @@ import Footer from "./components/foot.js";
 import Body from './components/user.js'
 import Particles from 'react-particles-js';
 
-import Logo from './murdLogo.svg';
+import Logo from './assets/mLogo.svg';
 import DB from './components/Dashboard.js'
 
 import Paper from '@material-ui/core/Paper';
@@ -54,7 +54,7 @@ function Transition(props) {
 
 class Home extends React.Component {
   state = {
-    log: false,
+    log: true,
     logged: '',
     value: 0,
     open: true,
@@ -70,7 +70,7 @@ class Home extends React.Component {
     this.setState({ open: true });
   };
   handlelogin = () => {
-    this.setState({ currentUser: 'john', open: true,log: false });
+    this.setState({ currentUser: 'NY', open: true,log: false });
   };
   handleClose = () => {
     this.setState({ open: false,log: true });
@@ -96,7 +96,7 @@ class Home extends React.Component {
 
   render() {
     const {  classes } = this.props;
-    const{    staffSelect, staVa, hits, test, currentUser, log, isLoading} = this.state;
+    const{ staffSelect, staVa, hits, test, currentUser, log, isLoading} = this.state;
 
     if(test){
       return(
@@ -109,29 +109,16 @@ class Home extends React.Component {
 if(log){
     return (
       <Paper className={classes.root}>
-      <Header className={classes.he}/>
-      <Avatar className={classes.purpleAvatar}>{currentUser}</Avatar>
-        <Button  data={staffSelect}  onClick={this.handlelogin} className={classes.button}>
-        <FolderIcon />
-      </Button>
+        <Header className={classes.he}/>
+        <Button  style={{position: 'absolute', top: '2%', right: '45%'}}  onClick={this.handlelogin} className={classes.button}><FolderIcon/></Button>
+        <Avatar style={{position: 'absolute', top: '2%', right: '3%', backgroundColor:'red'}}>{currentUser}</Avatar>
         <Body className={classes.bo}/>
         <Footer className={classes.fo}/>
       </Paper>
     );
   }
-  if(isLoading){
-    return(
-<Paper> 
-  </Paper>
-    );
-  }
     return (
-      <Paper className={classes.pap2er}>
-          <Dialog
-          fullScreen
-          open={this.state.open}
-          onClose={this.handleClose}
-          TransitionComponent={Transition}>          
+      <Paper className={classes.root}>
         <Grid className={classes.grid} container spacing={24}>
         <Grid item xs={12} sm={3}></Grid>
         <Grid item xs={12} md={6}>         
@@ -168,14 +155,13 @@ if(log){
       </Grid>
       <Particles  params={parts}
               style={{
-                height: '100%',
-                width: '100%',
-                zindex: -1,
+                zindex: -100,
+                width: '100% !important',
+                height: '100% !important',
                 background: 'linear-gradient(160deg, #ad0025  20%, #82001b  40%, #660e04  80%)',
                 boxShadow: '0 3px 5px 2px rgba(247, 193, 0, 0.4)',
               }}
             />
-        </Dialog>
         </Paper>
   );
   }
@@ -184,14 +170,9 @@ if(log){
     root: {
       flexGrow: 1,
       zindex:'-1',
-    },
-    formControl: {
-      margin: theme.spacing.unit,
-      minWidth: 120,
-    },
-    selectEmpty: {
-      marginTop: theme.spacing.unit * 2,
-    },
+      width: '100% !important',
+      height: '100% !important',
+    }, 
     card: { 
       maxwidth: '50%',
       flex: 1,
@@ -209,25 +190,6 @@ if(log){
       justifyContent: 'center',
       alignItems: 'center',
     },
-    purpleAvatar: {
-      margin: 10,
-      color: '#fff',
-      backgroundColor: '#82001b',
-      zindex:'21',
-      position: 'absolute',
-      right:'5%',
-      top:'1%',
-      flex: 1,
-    },
-
-    button:{
-      zindex:'21',
-      position: 'absolute',
-      left:'50%',
-      top:'2%',
-      flex: 1,
-    },
-
   });
 
 

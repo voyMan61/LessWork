@@ -7,6 +7,9 @@ import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
 import Paper from '@material-ui/core/Paper';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Toolbar from '@material-ui/core/Toolbar';
+import purple from '@material-ui/core/colors/deepPurple';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = {
     card: {
@@ -205,8 +208,9 @@ class SimpleCard1 extends React.Component {
                 return (
                     <div key={data.id}>
 
-                        <Card className={this.state.classes.card}>  
-                            <CardContent>
+<Card className="Bar" style={{background: 'linear-gradient(55deg, #e2e2e2  10%, #fdfff9 90%)', minHeight: 200, maxHeight: 300, minWidth: 400, maxWidth: 400}}>
+        <Toolbar><Typography style={{position: 'absolute', left: '6%'}} variant="title">Offerings assigned to {this.props.staffD.name}</Typography> </Toolbar>
+              <CardContent> 
                                 <Typography variant="headline" component="p">
                                     {singleOffering.unit_code} {singleOffering.name}
                                 </Typography>
@@ -226,12 +230,11 @@ class SimpleCard1 extends React.Component {
             });
 
             return (
-                <div>
-                    <h2>Offerings Assigned </h2>
+                <div style={{display: 'flex', alignItems: 'center', padding: '2%', justifyContent: 'center'}}>
                     {data1}
-                    <h2>Summary</h2>
-                    <Card className={this.state.classes.card}>
-                        <CardContent>
+                        <Card className="Bar" style={{background: 'linear-gradient(55deg, #e2e2e2  10%, #fdfff9 90%)', minHeight: 200, maxHeight: 300, minWidth: 400, maxWidth: 400}}>
+        <Toolbar><Typography style={{position: 'absolute', left: '6%'}} variant="title">Summary</Typography> </Toolbar>
+              <CardContent> 
                             <Typography gutterBottom variant="headline" component="h2">
                                 RESEARCH
                             </Typography>
@@ -266,16 +269,13 @@ class SimpleCard1 extends React.Component {
 
         else {
             return (
-
-                <div>
-
-                    <h2>Offerings Assigned </h2>
-                    <Card className={this.state.classes.card}>
-                        <CardContent>
-                            <LinearProgress color="secondary" variant="query" />
+                <div style={{display: 'flex', alignItems: 'center', padding: '2%', justifyContent: 'center'}}>
+<Card className="Bar" style={{background: 'linear-gradient(55deg, #e2e2e2  10%, #fdfff9 90%)', minHeight: 300, maxHeight: 300, minWidth: 300, maxWidth: 300}}>
+        <Toolbar><Typography style={{position: 'absolute', left: '6%'}} variant="title">Offerings assigned to {this.props.staffD.name}</Typography> </Toolbar>
+              <CardContent style={{ zIndex:-1}}>
+              <CircularProgress size={'160%'} style={{ color: purple[700] }} thickness={0.2} /> 
                         </CardContent>
-                    </Card>
-                </div >
+                    </Card></div>
             )
         }
     }

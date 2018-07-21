@@ -62,16 +62,6 @@ const toolbarStyles = theme => ({
   root: {
     paddingRight: theme.spacing.unit,
   },
-  highlight:
-    theme.palette.type === 'light'
-      ? {
-          color: '#00838F',
-          backgroundColor: lighten('#00838F', 0.8),
-        }
-      : {
-          color: '#00838F',
-          backgroundColor: '#00838F',
-        },
   spacer: {
     flex: '1 1 100%',
   },
@@ -83,27 +73,8 @@ const toolbarStyles = theme => ({
   },
 });
 
-let EnhancedTableToolbar = props => {
-  const {  classes } = props;
-  return (
-    <Toolbar
-      className={classNames(classes.root)}
-    >
-      <div className={classes.title}>
-          <Typography variant="title" id="tableTitle">
-            Offerings
-          </Typography> 
-      </div>
-      <div className={classes.spacer} />
-    </Toolbar>
-  );
-};
 
-EnhancedTableToolbar.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
-EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
 
 const styles = theme => ({
   root: {
@@ -204,14 +175,7 @@ componentDidMount() {
   render() {
   const { classes } = this.props;
   const { objectLoaded, oData, offerView, isLoading, hits} = this.state;
-  if (isLoading) {
-    return (
-    <Paper>
-    <LinearProgress color="secondary" variant="query" />
-    </Paper>
-    );
-  }
-  
+
   if(offerView){
     return(
         <Paper className={classes.root}> 
@@ -222,30 +186,28 @@ componentDidMount() {
 if(objectLoaded) {
     return (
       <Paper className={classes.root}>
-        <EnhancedTableToolbar/>
-        <div className={classes.tableWrapper}>
-          <Table className={classes.table} aria-labelledby="tableTitle">
-            <EnhancedTableHead/>
-            <TableBody>
-              {hits
-                .map(n => {
-                  return ( 
-                    <Tooltip placement="left" TransitionComponent={Zoom} title="View/Edit offering">  
-                    <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
-                      <CustomTableCell component="th" scope="row">
-                        {n.unit_code}
-                      </CustomTableCell>
-                      <CustomTableCell >{n.name}</CustomTableCell>
-                      <CustomTableCell>{n.enrolment}</CustomTableCell>
-                      <CustomTableCell>{n.pattern_code}</CustomTableCell>
-                      <CustomTableCell>{n.type}</CustomTableCell>
-                    </TableRow>
-                    </Tooltip>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </div>
+        <Toolbar><Typography style={{position: 'absolute', left: 60}} variant="title" id="tableTitle">Offerings</Typography> </Toolbar>
+          <div className={classes.tableWrapper}>
+            <Table className={classes.table} aria-labelledby="tableTitle">
+              <EnhancedTableHead/>
+                <TableBody>
+                  {hits
+                    .map(n => {
+                      return ( 
+                        <Tooltip placement="left" TransitionComponent={Zoom} title="View/Edit offering">  
+                        <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
+                            <CustomTableCell component="th" scope="row">{n.unit_code}</CustomTableCell>
+                            <CustomTableCell >{n.name}</CustomTableCell>
+                            <CustomTableCell>{n.enrolment}</CustomTableCell>
+                            <CustomTableCell>{n.pattern_code}</CustomTableCell>
+                            <CustomTableCell>{n.type}</CustomTableCell>
+                        </TableRow>
+                        </Tooltip>
+                      );
+                    })}
+                </TableBody>
+            </Table>
+          </div>
       </Paper>
     );
   }

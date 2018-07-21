@@ -8,6 +8,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
+
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
@@ -23,7 +24,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import O from './OfferingsAssigned'
 
 import Dashboard from './Dashboard.js'
-import Patterns from './pattern'
+import Patterns from './pattern/pattern.js'
 import StaffTots from './staffTotals.js'
 import Offerings from './offerTable.js'
 
@@ -34,9 +35,9 @@ const styles = theme => ({
     background: '#600718',
   },
   root: {
-    flexGrow: 1,
+    flexGrow: 1, 
     zindex:'-1',
-    height: '100%',
+    minHeight: 620,
     width: '100%',
     background: 'linear-gradient(155deg, #ad0025  10%, #82001b  60%, #5b0013   90%)',
   },
@@ -97,7 +98,6 @@ class USerView extends React.Component {
     const { classes } = this.props;
     const { value } = this.state;
     const { Ida, currentUser, auth, anchorEl } = this.state;
-    console.log(this.props.data)
     return (
       
       <Paper className={classes.root}>

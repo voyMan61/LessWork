@@ -1,9 +1,12 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import LinearProgress from '@material-ui/core/LinearProgress';
-
-
-
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import purple from '@material-ui/core/colors/deepPurple';
 
 class BarExample extends React.Component {
   constructor(props) {
@@ -11,9 +14,7 @@ class BarExample extends React.Component {
     this.state = {
       chartData: this.props.chartData,
       loaded: false
-
     }
-
   }
   componentDidMount() {
     var obj;
@@ -44,7 +45,6 @@ class BarExample extends React.Component {
             myData.push(obj[i].total_load)
             myTarget.push(obj[i].target)
           }
-
           this.setState({
             loaded: true,
             chartData: {
@@ -85,21 +85,20 @@ class BarExample extends React.Component {
 
     });
 
-
-
   }
   render() {
     return (
-      <div className="Bar">
-
-        <h2>WorkLoad Distribution Graph</h2>
-        {!this.state.loaded && <LinearProgress color="secondary" variant="query" />} {this.state.loaded &&
+      <Card className="Bar" style={{ background: 'linear-gradient(55deg, #e2e2e2  10%, #fdfff9 90%)', minHeight: '25%', maxHeight: '25%', minWidth: '40%', maxWidth: '40%'}}>
+        <Toolbar><Typography style={{position: 'absolute', left: '6%'}} variant="title">WorkLoad Distribution Graph</Typography> </Toolbar>
+              <CardContent> 
+        {!this.state.loaded && <CircularProgress size={'55%'} style={{  color: purple[700] }} thickness={0.1} /> } {this.state.loaded &&
+          
           <Bar
             data={this.state.chartData}
-            width={100}
-            height={30}
+            width={10}
+            height={300}
             options={{
-              maintainAspectRatio: true,
+              maintainAspectRatio: false,
               scales: {
                 yAxes: [{
                   display: true,
@@ -112,11 +111,9 @@ class BarExample extends React.Component {
                 }]
               }
             }}
-
-
           />}
-
-      </div>
+</CardContent>
+      </Card> 
     )
 
   }

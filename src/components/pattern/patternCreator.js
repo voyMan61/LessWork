@@ -400,7 +400,7 @@ class CustomizedTable extends React.Component {
         >
           <DialogTitle id="scroll-dialog-title" style={{ background: 'linear-gradient(55deg, #fff9f9  10%, #fffef4 90%)'}}>
                 Create New Pattern
-                <Button variant="outlined" color="secondary"  style={{color: "#bf0000 ", position: "absolute", right: '5%'}} onClick={this.props.cclosed}>       
+                <Button variant="outlined" color="secondary"  style={{color: "#bf0000 ", position: "absolute", top: '2%', right: '5%'}} onClick={this.props.cclosed}>       
                 Cancel<CloseIcon/>
                 </Button>
           </DialogTitle>

@@ -7,7 +7,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Toolbar from '@material-ui/core/Toolbar';
 import classNames from 'classnames';
-
+import Card from '@material-ui/core/Card';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -106,31 +106,51 @@ const { classes } = this.props;
 
 if(log){
         return(
-                <Paper>
-               
+                <Paper >
+
+
         <Toolbar>
-            <Typography style={{position: 'absolute', left: 60}} variant="title" id="tableTitle">
+            
+            <Typography style={{position: 'absolute', left: '5%'}} variant="title" id="tableTitle">
                 Dashboard
             </Typography> 
-                <Typography style={{position: 'absolute', right: 60}} variant="contained" size="large" color="secondary" >
+<Typography style={{position: 'absolute', left: '15%'}} variant="contained" size="large" color="secondary" >
                 {staffSelect.name}
                 </Typography>
+                <Typography style={{position: 'fixed', right: '6%'}} variant="contained" size="large" color="secondary" >
+                <form  autoComplete="off">
+                <FormControl>
+                <InputLabel htmlFor="age-auto-width"> {staffSelect.name}</InputLabel>
+                <Select
+                value={this.state.staVa}
+                onChange={this.handleStaffChange}
+                input={<Input name="staff" id="age-auto-width" />}
+                >
+                {hits
+                .map(n => {
+                return (    
+                <MenuItem value={n}>{n.name}</MenuItem>
+                );
+                })}
+                </Select>
+                <FormHelperText>select staff</FormHelperText>
+                </FormControl>
+                </form>
+                </Typography>
     </Toolbar>
-                <OfferingsAssigned staffD = {staffSelect} />
-                <BarExample chartData={this.state.chartData} />
+    <div style={{display: 'flex', justifyContent: 'center',}}>
+    <BarExample  chartData={this.state.chartData} /></div>
+    <div style={{display: 'flex', alignItems: 'center',  justifyContent: 'center'}}><OfferingsAssigned staffD = {staffSelect} /></div>
                 </Paper>
         );
 }
 return (
         <Paper>
-
-        <Toolbar>
-            
-            <Typography style={{position: 'absolute', left: 60}} variant="title" id="tableTitle">
+        <Toolbar >            
+            <Typography style={{position: 'absolute', left: '6%'}} variant="title" id="tableTitle">
                 Dashboard
             </Typography> 
-
-                <Typography style={{position: 'absolute', right: 60}} variant="contained" size="large" color="secondary" >
+                <Typography style={{position: 'fixed', right: '6%'}} variant="contained" size="large" color="secondary" >
                 <form  autoComplete="off">
         <FormControl>
         <InputLabel htmlFor="age-auto-width">Staff</InputLabel>
@@ -146,14 +166,13 @@ return (
         );
         })}
         </Select>
-        <FormHelperText>select user</FormHelperText>
+        <FormHelperText>select staff</FormHelperText>
         </FormControl>
         </form>
                 </Typography>
-    </Toolbar>
+    </Toolbar><div style={{display: 'flex', justifyContent: 'center'}}>
         <BarExample chartData={this.state.chartData} />
-
-
+        </div><div style={{display: 'flex', padding: '1%', justifyContent: 'center'}}></div>
       </Paper>
 
 )

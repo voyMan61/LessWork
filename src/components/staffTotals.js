@@ -164,7 +164,6 @@ class EnhancedTable extends React.Component {
   }
 
   handleROpen = (data, e) => {
-    console.log( data);
     this.setState({ staffSelect: data, mew: true });
   };
   
