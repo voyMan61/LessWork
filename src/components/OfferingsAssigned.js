@@ -271,7 +271,7 @@ class SimpleCard1 extends React.Component {
 <Card className="Bar" style={{background: 'linear-gradient(155deg, #e2e2e2  10%, #fdfff9 90%)', minHeight: 250, maxHeight: 250, minWidth: 250, maxWidth: 250}}>
         <Toolbar><Typography style={{position: 'absolute', left: '6%'}} variant="title">Offerings assigned to {this.props.staffD.name}</Typography> </Toolbar>
               <CardContent style={{ zIndex:-1}}>
-              <CircularProgress size={'160%'} style={{ color: purple[700] }} thickness={0.2} /> 
+              <CircularProgress size={'160%'} style={{color: purple[700] }} thickness={0.2} /> 
                         </CardContent>
                     </Card></div>
             )

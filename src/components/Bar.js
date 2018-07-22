@@ -90,7 +90,7 @@ class BarExample extends React.Component {
       <Card className="Bar" style={{ background: 'linear-gradient(55deg, #e2e2e2  10%, #fdfff9 90%)', minHeight: '25%', maxHeight: '25%', minWidth: '40%', maxWidth: '40%'}}>
         <Toolbar><Typography style={{position: 'absolute', left: '6%'}} variant="title">WorkLoad Distribution Graph</Typography> </Toolbar>
               <CardContent> 
-        {!this.state.loaded && <CircularProgress size={'55%'} style={{  color: purple[700] }} thickness={0.1} /> } {this.state.loaded &&
+        {!this.state.loaded && <CircularProgress size={300} style={{  marginLeft: '25%', color: purple[700] }} thickness={0.1} /> } {this.state.loaded &&
           
           <Bar
             data={this.state.chartData}

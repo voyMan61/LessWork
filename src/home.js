@@ -151,9 +151,11 @@ if(log){
   const styles = theme => ({
     root: {
       flexGrow: 1,
-      zindex:'-1',
-      width: '100% !important',
-      height: '100% !important',
+      zindex:'-1',   
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '103% !important',
+      height: '103% !important',
     }, 
     card: { 
       maxwidth: '50%',
