@@ -230,7 +230,7 @@ class SimpleCard1 extends React.Component {
             return (
                 <div style={{display: 'flex',padding: '2%', alignItems: 'center', justifyContent: 'center'}}>
                     {data1}
-                        <Card  style={{background: 'linear-gradient(155deg, #e2e2e2  10%, #fdfff9 90%)', minHeight: 300, maxHeight: 300, minWidth: 400, maxWidth: 400}}>
+                        <Card  style={{marginLeft:20, background: 'linear-gradient(155deg, #e2e2e2  10%, #fdfff9 90%)', minHeight: 300, maxHeight: 300, minWidth: 400, maxWidth: 400}}>
         <Toolbar><Typography style={{position: 'absolute', left: '6%'}} variant="title">Summary</Typography> </Toolbar>
               <CardContent> 
                             <Typography gutterBottom variant="headline" component="h2">

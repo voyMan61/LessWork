@@ -103,9 +103,8 @@ if(log){
     return (
       <Paper className={classes.root}>
         <Grid className={classes.grid} container spacing={24}>
-        <Grid item xs={12} sm={3}></Grid>
         <Grid item xs={12} md={6}>         
-          <Card className={classes.card}>
+          <Card  className={classes.card}>
         <CardContent>
           <Typography gutterBottom variant="headline" component="h2">
             WorkLess
@@ -172,6 +171,7 @@ if(log){
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
+      top: '30%'
     },
   });
 
