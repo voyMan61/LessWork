@@ -1,6 +1,5 @@
 import React from 'react';
 import Barchart from './Bar';
-import OfferingsAssigned from './OfferingsAssigned';
 import Paper from '@material-ui/core/Paper';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -13,6 +12,7 @@ import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 
+import OfferingsAssigned from './offer/OfferingsAssigned.js';
 
 
 class Dashboard extends React.Component {
@@ -31,6 +31,7 @@ log: false,
 }
 
 handleStaffChange = event => {
+        this.forceUpdate();
         this.setState({ log: true, staffSelect: event.target.value });
         console.log(event.target.value);
       };
@@ -89,54 +90,19 @@ console.log(error);
 
 render() {    
 const{hits, staffSelect,log} = this.state;
-
-if(log){
         return(
         <Paper >
         <Toolbar><Typography style={{position: 'absolute', left: '5%'}} variant="title" id="tableTitle">
                 Dashboard</Typography> <Typography style={{position: 'absolute', left: '15%'}} variant="contained" size="large" color="secondary" >
                 {staffSelect.name}</Typography>
-                <Typography style={{position: 'fixed', right: '6%'}} variant="contained" size="large" color="secondary" >
-                <form  autoComplete="off">
-                <FormControl>
-                <InputLabel htmlFor="age-auto-width"> {staffSelect.name}</InputLabel>
-                <Select
-                value={this.state.staVa}
-                onChange={this.handleStaffChange}
-                input={<Input name="staff" id="age-auto-width" />}
-                >
-                {hits
-                .map(n => {
-                return (    
-                <MenuItem value={n}>{n.name}</MenuItem>
-                );
-                })}
-                </Select>
-                <FormHelperText>select staff</FormHelperText>
-                </FormControl>
-                </form>
-                </Typography>
-    </Toolbar>
-    <div style={{display: 'flex', justifyContent: 'center',}}>
-    <Barchart  chartData={this.state.chartData} /></div>
-    <div style={{display: 'flex', alignItems: 'center',  justifyContent: 'center'}}><OfferingsAssigned staffD = {staffSelect} /></div>
-                </Paper>
-        );
-}
-return (
-        <Paper>
-        <Toolbar >            
-            <Typography style={{position: 'absolute', left: '6%'}} variant="title" id="tableTitle">
-                Dashboard
-            </Typography> 
-                <Typography style={{position: 'fixed', right: '6%'}} variant="contained" size="large" color="secondary" >
-                <form  autoComplete="off">
+        <Typography style={{position: 'fixed', right: '6%'}} variant="contained" size="large" color="secondary" >
+        <form  autoComplete="off">
         <FormControl>
-        <InputLabel htmlFor="age-auto-width">Staff</InputLabel>
+        <InputLabel htmlFor="age-auto-width"> {staffSelect.name}</InputLabel>
         <Select
         value={this.state.staVa}
         onChange={this.handleStaffChange}
-        input={<Input name="staff" id="age-auto-width" />}
+        input={<Input name="staff" id="age-auto-width"/>}
         >
         {hits
         .map(n => {
@@ -148,13 +114,13 @@ return (
         <FormHelperText>select staff</FormHelperText>
         </FormControl>
         </form>
-                </Typography>
-    </Toolbar><div style={{display: 'flex', justifyContent: 'center'}}>
-        <Barchart chartData={this.state.chartData} />
-        </div><div style={{display: 'flex', padding: '1%', justifyContent: 'center'}}></div>
-      </Paper>
-
-)
+        </Typography>
+                </Toolbar>
+        <div style={{display: 'flex', justifyContent: 'center',}}>
+        <Barchart  chartData={this.state.chartData} /></div>
+        {log ? (<div style={{padding: 33, display: 'flex', flex: 1, flexDirection: 'column', alignItems: 'center',  justifyContent: 'center', alignItems: 'center',  justifyContent: 'center'}}><OfferingsAssigned staffD = {staffSelect}/></div>) : (<div>k</div>)}
+        </Paper>         
+);
 }
 }
 

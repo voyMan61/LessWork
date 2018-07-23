@@ -15,8 +15,10 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
-import OfferMake from './offerConf.js'
-
+import OfferMake from './offer/offerConf.js'
+import OfferCreator from './offer/offerCreator.js'
+import Button from '@material-ui/core/Button';
+import OfferDetails from './offer/offerTable'
 
 
 const CustomTableCell = withStyles(theme => ({
@@ -93,6 +95,7 @@ class EnhancedTable extends React.Component {
       oData: '',
       offerView: false,
       objectLoaded: false,
+      creatorOpen: false,
     };
   }
   handleChange = () => {
@@ -124,6 +127,15 @@ class EnhancedTable extends React.Component {
       offerView: false
     })
   };
+
+  handleCreator = () => {
+    this.setState({ creatorOpen: true });
+  };
+
+  creatorClosed() {
+    this.setState({creatorOpen: false});
+  };
+
   
 componentDidMount() {
   var offerObj;
@@ -150,60 +162,31 @@ componentDidMount() {
       }
   });
 }
-
-
-  render() {
-  const { classes } = this.props;
-  const { objectLoaded, oData, offerView, hits} = this.state;
-
-  if(offerView){
-    return(
-        <Paper className={classes.root}> 
-         <OfferMake viewed={this.viewerClosed.bind(this)} od={oData}/>
-        </Paper>
-    )
+render() {
+    const { creatorOpen} = this.state;
+  
+    if(creatorOpen){
+        return(
+          <Paper>
+            <Toolbar><Typography style={{position: 'absolute', left: 60}} variant="title" id="tableTitle">Offering</Typography></Toolbar>
+            <OfferCreator cclosed={this.creatorClosed.bind(this)}/>
+            <OfferDetails/>
+          </Paper>
+        );}
+    else{
+      return (
+          <Paper>
+          <Toolbar><Typography style={{position: 'absolute', left: 60}} variant="title" id="tableTitle">Offerings</Typography> 
+            <Button style={{position: 'absolute', color: 'white', backgroundColor: '#001489', right: 60}} variant="contained" size="large" onClick={this.handleCreator}>
+              Create new offering
+            </Button>
+          </Toolbar>
+          <OfferDetails/>
+          </Paper>
+        );
+  
+      }
   }
-if(objectLoaded) {
-    return (
-      <Paper className={classes.root}>
-        <Toolbar><Typography style={{position: 'absolute', left: 60}} variant="title" id="tableTitle">Offerings</Typography> </Toolbar>
-          <div className={classes.tableWrapper}>
-            <Table className={classes.table} aria-labelledby="tableTitle">
-              <EnhancedTableHead/>
-                <TableBody>
-                  {hits
-                    .map(n => {
-                      return ( 
-                        <Tooltip placement="left" TransitionComponent={Zoom} title="View/Edit offering">  
-                        <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
-                            <CustomTableCell component="th" scope="row">{n.unit_code}</CustomTableCell>
-                            <CustomTableCell >{n.name}</CustomTableCell>
-                            <CustomTableCell>{n.enrolment}</CustomTableCell>
-                            <CustomTableCell>{n.pattern_code}</CustomTableCell>
-                            <CustomTableCell>{n.type}</CustomTableCell>
-                        </TableRow>
-                        </Tooltip>
-                      );
-                    })}
-                </TableBody>
-            </Table>
-          </div>
-      </Paper>
-    );
-  }
-  else {
-    return (
-        <Paper>        
-          <Toolbar>
-        <Typography style={{position: 'absolute', left: 60}} variant="title" id="tableTitle">
-            Offerings
-        </Typography> </Toolbar>
-        <LinearProgress color="secondary" variant="query" />
-        </Paper>
-    )
-}
-  }
-
 }
 
 EnhancedTable.propTypes = {

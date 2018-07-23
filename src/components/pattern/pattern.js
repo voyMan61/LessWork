@@ -41,7 +41,6 @@ class EnhancedTable extends React.Component {
 
 
   handleCreator = () => {
-    console.log('create');
     this.setState({ creatorOpen: true });
   };
 
@@ -96,7 +95,7 @@ creatorClosed() {
     return (
         <Paper>
         <Toolbar><Typography style={{position: 'absolute', left: 60}} variant="title" id="tableTitle">Patterns</Typography> 
-          <Button style={{position: 'absolute', right: 60}} variant="contained" size="large" color="secondary" onClick={this.handleCreator}>
+          <Button style={{position: 'absolute', color: 'white', backgroundColor: '#001489', right: 60}} variant="contained" size="large" onClick={this.handleCreator}>
             Create new pattern
           </Button>
         </Toolbar>

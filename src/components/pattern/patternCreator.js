@@ -292,10 +292,7 @@ class CustomizedTable extends React.Component {
             activity.splice(index, 1)
 
             this.setState({ activities: activity })
-
-
         }
-        console.log(this.state.activities)
     };
 
     componentDidMount() {
@@ -633,13 +630,8 @@ class CustomizedTable extends React.Component {
                 </DialogContent>
                 </Dialog>
               </Paper>
-
-
-
             )
         }
-
-
     }
 }
 

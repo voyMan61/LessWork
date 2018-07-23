@@ -10,13 +10,21 @@ import TableRow from '@material-ui/core/TableRow';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-
+import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import lime from '@material-ui/core/colors/lime';
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
-import STE from './OfferingsAssigned.js';
+import STE from './offer/OfferingsAssigned';
+import CloseIcon from '@material-ui/icons/Close';
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
+
 
 
 const CustomTableCell = withStyles(theme => ({
@@ -149,12 +157,14 @@ class EnhancedTable extends React.Component {
       fet: 'false',
       load: 'red',
       mew: false,
+      open: true,
       staffSelect:[],
+      load:true,
     };
   }
 
   handleROpen = (data, e) => {
-    this.setState({ staffSelect: data, mew: true });
+    this.setState({ staffSelect: data, mew: true ,open:true});
   };
   
   handleOpen = () => {
@@ -162,7 +172,7 @@ class EnhancedTable extends React.Component {
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({ load:true, mew:false, open: false });
   };
 
 
@@ -206,6 +216,10 @@ class EnhancedTable extends React.Component {
 
   isSelected = id => this.state.selected.indexOf(id) !== -1;
   
+  viewerClosed() {
+    this.setState({load:true, mew: false});
+  };
+
   componentDidMount() {
     this.setState({ isLoading: true });
     fetch('http://immense-headland-42479.herokuapp.com/api/stafftotals')
@@ -217,44 +231,14 @@ class EnhancedTable extends React.Component {
   render() {
   const { classes } = this.props;
 
-  const { staffSelect, mew, modee, isLoading, hits, order, orderBy, selected,} = this.state;
-  if (isLoading) {
-    return (
-      <Paper><EnhancedTableToolbar/>
-      <LinearProgress style={{ color: lime[500] }}  variant="query" />
-      </Paper>
-  );
-  }
-  if(mew){
-    return(
-    <STE staffD = {staffSelect}/> );
-  }
-  if(modee){
-    return (
-      <div>
-        <Modal
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-          open={this.state.open}
-          onClose={this.handleClose}
-        >
-          <div style={getModalStyle()} className={classes.paper}>
-            <Typography variant="title" id="modal-title">
-              Text in a modal
-            </Typography>
-            <Typography variant="subheading" id="simple-modal-description">
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
-          </div>
-        </Modal>
-      </div>
-    );
-  }
-  else {
+  const { load, staffSelect, mew, modee, isLoading, hits, order, orderBy, selected,} = this.state;
+
+
     return (
       <Paper className={classes.root}>
         <EnhancedTableToolbar numSelected={selected.length} />
-        <div className={classes.tableWrapper}>
+        {isLoading ? (<LinearProgress style={{ color: lime[500] }}  variant="query" />) :
+        (<div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <EnhancedTableHead
               numSelected={selected.length}
@@ -267,7 +251,6 @@ class EnhancedTable extends React.Component {
               {hits
                 .map(n => {
                   return (     
-
                 <Tooltip placement="left" TransitionComponent={Zoom} title="View staff info">   
                     <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
                       <CustomTableCell style={{textAlign: 'center'}} component="th" scope="row"> {n.name}</CustomTableCell>                    
@@ -282,11 +265,30 @@ class EnhancedTable extends React.Component {
 
             </TableBody>
           </Table>
-        </div>
+        </div>)}
+        {mew ? (
+
+        <Dialog
+          open={this.state.open}
+          scroll={this.state.scroll}
+          aria-labelledby="scroll-dialog-title"
+        >
+          <DialogTitle id="scroll-dialog-title">Offerings assigned to {staffSelect.name}
+          <Button variant="outlined" color="secondary"  style={{color: "#bf0000 ", position: "absolute", right: '5%'}}  onClick={this.handleClose.bind(this)}>       
+            Close
+          </Button>
+          </DialogTitle>
+          <DialogContent style={{ minWidth:500, minHeight:250, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(55deg, #e2e2e2  10%, #fdfff9 90%)'}}>
+          <DialogContentText>
+            <STE staffD = {staffSelect}/> 
+        </DialogContentText>
+        </DialogContent>
+        </Dialog>
+
+        ) : (<div></div>)}
+        
       </Paper>
-    );
-  }
-}
+    );}
 }
 
 

@@ -8,23 +8,33 @@ import Particles from 'react-particles-js';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 
 import MenuList from '@material-ui/core/MenuList';
-import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import Avatar from '@material-ui/core/Avatar';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import FolderIcon from '@material-ui/icons/BusinessCenter';
+import Sticon from '@material-ui/icons/Message'
 import Dicon from '@material-ui/icons/Send'
 import UCicon from '@material-ui/icons/Email';
 import SAicon from '@material-ui/icons/Settings';
 
-import DB from './components/Dashboard.js'
+import TextField from '@material-ui/core/TextField';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
+
+import LogoM from './components/assets/mLogo2.png';
+import Part from './components/parts.js';
 /*
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
@@ -38,7 +48,7 @@ import DraftsIcon from '@material-ui/icons/Drafts';
 class Home extends React.Component {
   state = {
     log: false,
-    logged: '',
+    logged: true,
     value: 0,
     open: true,
     currentUser:'U',
@@ -47,13 +57,19 @@ class Home extends React.Component {
     isLoading: false,
     staVa: '',
     staffSelect: [],
+    expanded: null,
+    colour:'white',
+    r: 255,
+    g:255,
+    b:255,
+
   };
   
   handleClickOpen = () => {
     this.setState({ open: true });
   };
-  handlelogin = () => {
-    this.setState({ currentUser: 'NY', open: true,log: false });
+  handlelogO = () => {
+    this.setState({ r: 255, g:230, b:230, logged: true, open: true,log: false });
   };
   handleClose = () => {
     this.setState({ open: false,log: true });
@@ -62,9 +78,39 @@ class Home extends React.Component {
     this.setState({ value });
   };
 
+  handleLogChange = event => {
+
+if(event.target.id === '1')
+{    if(window.btoa( event.target.value) === 'c3RhZmYx') {
+    this.setState({currentUser: 'Staff', logged:false, expanded: null, log: true,  });
+    }}
+    else if(event.target.id === '2')
+    {    if(window.btoa( event.target.value) === 'ZGVhbjI=') {
+        this.setState({currentUser: 'Dean', logged:false, expanded: null, log: true,  });
+        }}
+        if(event.target.id === '3')
+{    if(window.btoa( event.target.value) === 'dWMz') {
+    this.setState({currentUser: 'UC', logged:false, expanded: null, log: true,  });
+    }}
+    if(event.target.id === "4")
+{    if(window.btoa( event.target.value) === 'c2E=') {
+    this.setState({currentUser: 'SA', logged:false, expanded: null, log: true,  });
+    }
+  }
+    if(event.target.value === '') {    this.setState({ r: 255, g:255, b:255, }); }
+  else 
+  {this.setState({ b: this.state.b-20, g:this.state.g-20, });}
+  };
+
   handleStaffChange = event => {
     this.setState({ log: true, staffSelect: event.target.value });
     console.log(event.target.value);
+  };
+
+  handleExpandChange = panel => (event, expanded) => {
+    this.setState({
+      expanded: expanded ? panel : false,
+    });
   };
 
   componentDidMount() {
@@ -79,101 +125,128 @@ class Home extends React.Component {
 
   render() {
     const {  classes } = this.props;
-    const{test, currentUser, log} = this.state;
-
-    if(test){
-      return(
-        <Paper className={classes.root}>
-          <DB/>
-        </Paper>
-      );
-    }
-
-if(log){
+    const{r,g,b,expanded, test, currentUser, log, colour,logged} = this.state;
+   
     return (
       <Paper className={classes.root}>
-        <Header className={classes.he}/>
-        <Button  style={{position: 'absolute', top: '2%', right: '45%'}}  onClick={this.handlelogin} className={classes.button}><FolderIcon/></Button>
-        <Avatar style={{position: 'absolute', top: '2%', right: '3%', backgroundColor:'red'}}>{currentUser}</Avatar>
-        <Body className={classes.bo}/>
-        <Footer className={classes.fo}/>
-      </Paper>
-    );
-  }
-    return (
-      <Paper className={classes.root}>
-        <Grid className={classes.grid} container spacing={24}>
-        <Grid item xs={12} md={6}>         
-          <Card  className={classes.card}>
-        <CardContent>
-          <Typography gutterBottom variant="headline" component="h2">
+      {log ? ( <div>
+              <Header className={classes.he}/>
+              <Typography style={{ position: 'absolute', top: '3%', right: '3%',color:'#d6e9ff'}} gutterBottom variant="headline">
+              {currentUser}
+                </Typography>
+              <Button  style={{position: 'absolute', top: '2%', right: '45%'}}  onClick={this.handlelogO} className={classes.button}><FolderIcon/></Button>
+              <Body className={classes.bo}/>
+              <Footer className={classes.fo}/> </div>)  
+              : (<div>            
+                  <Part/>
+        <Card  className={classes.card1}>
+        <CardContent ><p>
+        <Typography gutterBottom variant="headline">
             WorkLess
           </Typography>
-        </CardContent> 
-        <CardActions>
-        <MenuList>
-        <MenuItem onClick={this.handleClose} className={classes.menuItem}>
-          <ListItemIcon className={classes.icon} >
-          <Dicon />
-          </ListItemIcon>
-          <ListItemText classes={{ primary: classes.primary }} inset primary="Dean" />
-        </MenuItem>
-        <MenuItem onClick={this.handleClose} className={classes.menuItem}>
-          <ListItemIcon className={classes.icon}>
-            <UCicon/>
-          </ListItemIcon>
-          <ListItemText classes={{ primary: classes.primary }} inset primary="Unit Coordinator" />
-        </MenuItem>
-        <MenuItem onClick={this.handleClose} className={classes.menuItem} >
-          <ListItemIcon className={classes.icon}>
-             <SAicon/>
-          </ListItemIcon>
-          <ListItemText classes={{ primary: classes.primary }} inset primary="System Administrator" />
-        </MenuItem>
-      </MenuList>
-        </CardActions>
-                  </Card>
-        </Grid>
-      </Grid>
-      <Particles  params={parts}
-              style={{
-                zindex: -100,
-                width: '100% !important',
-                height: '100% !important',
-                background: 'linear-gradient(160deg, #ad0025  20%, #82001b  40%, #660e04  80%)',
-                boxShadow: '0 3px 5px 2px rgba(247, 193, 0, 0.4)',
-              }}
-            />
-        </Paper>
-  );
+          
+</p>
+<p >          <Card  className={classes.card2}>
+        <CardContent style={{backgroundColor: 'rgb('+ r +','+ g +','+ b +')',}}>
+        
+        <ExpansionPanel expanded={expanded === 'Staff'} onChange={this.handleExpandChange('Staff')}>
+          <ExpansionPanelSummary expandIcon={<Sticon />}>
+          <Typography style={{textAlign: 'right', fontSize:15,}}>Staff</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+          <FormControl className={classes.formControl}>
+          <TextField
+          id="1"
+          label="Password"
+          type="password"
+          autoComplete="current-password"
+          onChange={this.handleLogChange}
+          />       </FormControl>
+          </ExpansionPanelDetails>
+
+        </ExpansionPanel>
+        
+        <ExpansionPanel expanded={expanded === 'Dean'} onChange={this.handleExpandChange('Dean')}>
+          <ExpansionPanelSummary expandIcon={<Dicon />}>
+          <Typography style={{fontSize:15,}}>Dean </Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+          <FormControl className={classes.formControl}>
+          <TextField
+          id="2"
+          label="Password"
+          type="password"
+          autoComplete="current-password"
+          onChange={this.handleLogChange}
+          />       </FormControl>
+          </ExpansionPanelDetails>
+
+        </ExpansionPanel>
+
+                <ExpansionPanel expanded={expanded === 'Unit Coordinator'} onChange={this.handleExpandChange('Unit Coordinator')}>
+          <ExpansionPanelSummary expandIcon={<UCicon />}>
+          <Typography style={{fontSize:15,}}>Unit Coordinator</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+          <FormControl className={classes.formControl}>
+          <TextField
+          id="3"
+          label="Password"
+          type="password"
+          autoComplete="current-password"
+          onChange={this.handleLogChange}
+          />       </FormControl>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+        <ExpansionPanel expanded={expanded === 'System Administrator'} onChange={this.handleExpandChange('System Administrator')}>
+          <ExpansionPanelSummary expandIcon={<SAicon />}>
+          <Typography style={{justifyContent: 'center',fontSize:15,}}>System Administrator </Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+          <FormControl className={classes.formControl}>
+          <TextField
+          id="4"
+          label="Password"
+          type="password"
+          autoComplete="current-password"
+          onChange={this.handleLogChange}
+          />       </FormControl>
+          </ExpansionPanelDetails>
+   
+        </ExpansionPanel>
+        </CardContent>
+                  </Card></p>
+</CardContent>
+          </Card>  
+              </div>)}
+    </Paper>
+    );
   }
 }
   const styles = theme => ({
     root: {
       flexGrow: 1,
-      zindex:'-1',   
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: '103% !important',
-      height: '103% !important',
+      zindex:1,   
+      width: '100% !important',
+      height: '100% !important',
+      minHeight:'10%',
     }, 
-    card: { 
-      maxwidth: '50%',
-      flex: 1,
-      width: theme.spacing.unit * 55,
-      height: theme.spacing.unit * 25,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    
-    grid: {
-      position: 'absolute',
+    formControl: {
       flex: 1,
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      top: '30%'
+    },
+    card1: { 
+      top: '20%',
+      left: '40%',
+      right: '40%',
+      flex: 1,
+      position: 'absolute',
+      minWidth: '25%',
+      minHeight: '25%',
+      background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',
+
     },
   });
 
@@ -302,3 +375,27 @@ const parts =
     },
     "retina_detect": true
   }
+
+
+  /*
+      <Particles  params={parts}
+              style={{
+                zindex: -100,
+                width: '100% !important',
+                height: '100% !important',
+                background: 'linear-gradient(160deg, #ad0025  20%, #82001b  40%, #660e04  80%)',
+                boxShadow: '0 3px 5px 2px rgba(247, 193, 0, 0.4)',
+              }}
+            />
+
+
+
+
+           
+
+
+
+
+
+
+  */

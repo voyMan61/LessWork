@@ -7,6 +7,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import purple from '@material-ui/core/colors/deepPurple';
 
+const url = 'http://immense-headland-42479.herokuapp.com/api/';
+
 class BarExample extends React.Component {
   constructor(props) {
     super(props);
@@ -24,7 +26,7 @@ class BarExample extends React.Component {
     //http://localhost:5000/api/stafftotals
     //http://arcane-cove-45625.herokuapp.com/api/stafftotals
     //http://immense-headland-42479.herokuapp.com/api/stafftotals
-    fetch('http://immense-headland-42479.herokuapp.com/api/stafftotals', {
+    fetch(url+'stafftotals', {
       //mode: 'no-cors',
       method: 'GET',
       headers: {

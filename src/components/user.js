@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Dashboard from './Dashboard.js'
 import Patterns from './pattern/pattern.js'
 import StaffTots from './staffTotals.js'
-import Offerings from './offerTable.js'
+import Offerings from './offer.js'
 
 const styles = theme => ({
   AppBar: {
