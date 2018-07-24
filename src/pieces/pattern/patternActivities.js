@@ -13,6 +13,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
+import URL from '../ui/url.json'
 
 const CustomTableCell = withStyles(theme => ({
     head: {
@@ -90,7 +91,7 @@ const CustomTableCell = withStyles(theme => ({
         var calfr=0;
         var calps=0;
         var calpt=0;
-        fetch('http://immense-headland-42479.herokuapp.com/api/activitylookup/' + this.props.Pid, {
+        fetch(URL.url+'activitylookup/' + this.props.Pid, {
             //mode: 'no-cors',
             method: 'GET',
             headers: {

@@ -22,7 +22,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import SaveIcon from '@material-ui/icons/Save';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-
+import URL from '../ui/url.json'
 
 
 if (sessionStorage.getItem('calfr')) {
@@ -152,13 +152,13 @@ class CustomizedTable extends React.Component {
         e.preventDefault();
         //http://immense-headland-42479.herokuapp.com/api/new/pattern
         //https://jsonplaceholder.typicode.com/posts
-        fetch('http://immense-headland-42479.herokuapp.com/api/new/pattern', {
+      console.log(URL.url+'new/pattern')
+        fetch(URL.url+'new/pattern', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-
             body: JSON.stringify({
 
                 code: this.state.code,
@@ -302,7 +302,7 @@ class CustomizedTable extends React.Component {
         var calps = 0;
         var calpt = 0;
 
-        fetch('http://immense-headland-42479.herokuapp.com/api/activity', {
+        fetch(URL.url+'activity', {
             //mode: 'no-cors',
             method: 'GET',
             headers: {
@@ -338,7 +338,7 @@ class CustomizedTable extends React.Component {
             }
         });
 
-        fetch('http://immense-headland-42479.herokuapp.com/api/location', {
+        fetch(URL.url+'location', {
             //mode: 'no-cors',
             method: 'GET',
             headers: {
@@ -383,7 +383,7 @@ class CustomizedTable extends React.Component {
         >
           <DialogTitle id="scroll-dialog-title" style={{ background: 'linear-gradient(55deg, #fff9f9  10%, #fffef4 90%)'}}>
                 Create New Pattern
-                <Button variant="outlined" color="secondary"  style={{color: "#bf0000 ", position: "absolute", top: '2%', right: '5%'}} onClick={this.props.cclosed}>       
+                <Button variant="outlined" color="secondary"  style={{color: "#bf0000 ", position: "absolute", top: '2%', right: '5%'}} onClick={this.props.cclosed}>
                 Cancel<CloseIcon/>
                 </Button>
           </DialogTitle>
@@ -561,40 +561,18 @@ class CustomizedTable extends React.Component {
                                 })}
                             </TableBody>
                         </Table>
-
+                        <p style={{textAlign: 'center'}} >
+                        <Button type="submit" variant="contained" size="large"  className={this.state.classes.button} style={{ color: "#0f6600"}} type="submit" variant="outlined" >
+                                <SaveIcon/>
+                                Create
+                        </Button></p>
       {isloading ?  <Paper className={this.state.classes.root}>
           <LinearProgress color="secondary" variant="query" />
         </Paper> : isloading}
-
-                        <Snackbar
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
-                            }}
-                            open={this.state.postPassed}
-                            autoHideDuration={6000}
-                            onClose={this.handleClose}
-                            ContentProps={{
-                                'aria-describedby': 'message-id',
-                            }}
-                            message={<span id="message-id">{this.state.message}</span>}
-                            action={[
-
-                                <IconButton
-                                    key="close"
-                                    aria-label="Close"
-                                    color="inherit"
-                                    className={this.state.classes.close}
-                                    onClick={this.handleClose}
-                                >
-                                    <CloseIcon />
-                                </IconButton>,
-                            ]}
-                        />
                     </form>
                     </DialogContent>
         <DialogActions style={{ color: "#005e5e", background: 'linear-gradient(55deg, #fffef9  10%, #fffbf9 90%)'}}>
-                        <Button  size="small" style ={{color: "#002b68", width: 160, position: 'relative'}} variant="outlined" color={'secondary'}>
+                          <p style={{textAlign: 'center'}} ><Button  size="small" style ={{color: "#002b68", width: 160, position: 'relative'}} variant="outlined" color={'secondary'}>
                         Flat rate: {this.state.totalfr}
                         </Button>
                         <Button size="small" style ={{color: "#002b68", width: 200, position: 'relative'}} variant="outlined" color={'secondary'}>
@@ -602,12 +580,33 @@ class CustomizedTable extends React.Component {
                         </Button>
                         <Button size="small" style ={{color: "#002b68", width: 160, position: 'relative'}} variant="outlined" color={'secondary'}>
                             Per student: {this.state.totalps}
-                        </Button>
-                        <Button  size="large" style={{color: "#0f6600"}} type="submit" color="primary" variant="outlined" className={this.state.classes.button}>
-                    <SaveIcon/>Create
-            </Button>
+                        </Button></p>
         </DialogActions>
         </Dialog>
+        <Snackbar
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+            }}
+            open={this.state.postPassed}
+            autoHideDuration={6000}
+            onClose={this.handleClose}
+            ContentProps={{
+                'aria-describedby': 'message-id',
+            }}
+            message={<span id="message-id">{this.state.message}</span>}
+            action={[
+                <IconButton
+                    key="close"
+                    aria-label="Close"
+                    color="inherit"
+                    className={this.state.classes.close}
+                    onClick={this.handleClose}
+                >
+                    <CloseIcon />
+                </IconButton>,
+            ]}
+        />
         </Paper>
             );
         }

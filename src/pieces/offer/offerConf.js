@@ -29,7 +29,7 @@ const CustomTableCell = withStyles(theme => ({
       fontSize: 12,
     },
   }))(TableCell);
-  
+
   const styles = theme => ({
     root: {
       width: '100%',
@@ -61,7 +61,7 @@ const CustomTableCell = withStyles(theme => ({
             ptAct: [],
             totalfr:0,
             totalps:0,
-            totalpt:0, 
+            totalpt:0,
             open: true,
             scroll: 'paper',
             dd:'',
@@ -69,7 +69,7 @@ const CustomTableCell = withStyles(theme => ({
             confirme:'not confirmed',
         }
     }
-  
+
     progress = () => {
       const { completed } = this.state;
       if (completed > 100) {
@@ -80,7 +80,7 @@ const CustomTableCell = withStyles(theme => ({
         this.setState({ completed: completed + diff, buffer: completed + diff + diff2 });
       }
     };
-  
+
     handleClickOpen = scroll => () => {
       this.setState({ open: true, scroll });
     };
@@ -95,11 +95,11 @@ const CustomTableCell = withStyles(theme => ({
     handleStuff = () => {
         this.setState({ open: false });
     }
-    
+
 
     render() {
       const {classes } = this.props;
-    return ( 
+    return (
       <Paper className={this.state.classes.root}>
           <Dialog
           open={this.state.open}
@@ -110,7 +110,7 @@ const CustomTableCell = withStyles(theme => ({
           </DialogTitle>
           <DialogContent>
           <DialogContentText>
-                     
+
         <Table className={this.state.classes.table}>
           <TableHead>
             <TableRow>
@@ -118,7 +118,7 @@ const CustomTableCell = withStyles(theme => ({
               <CustomTableCell>Value</CustomTableCell>
             </TableRow>
         </TableHead>
-          <TableBody> 
+          <TableBody>
                 <TableRow>
                   <CustomTableCell component="th" scope="row">Confirmed</CustomTableCell>
                   <CustomTableCell>
@@ -151,7 +151,7 @@ const CustomTableCell = withStyles(theme => ({
                 </TableRow>
 
 
-        </TableBody> 
+        </TableBody>
         </Table>
 
         <Table className={this.state.classes.table}>
@@ -161,7 +161,7 @@ const CustomTableCell = withStyles(theme => ({
               <CustomTableCell>Value</CustomTableCell>
             </TableRow>
         </TableHead>
-          <TableBody> 
+          <TableBody>
                 <TableRow>
                   <CustomTableCell component="th" scope="row">Enrolments</CustomTableCell>
                   <CustomTableCell>{this.props.od.enrolment}</CustomTableCell>
@@ -178,7 +178,7 @@ const CustomTableCell = withStyles(theme => ({
                   <CustomTableCell component="th" scope="row">Tutorials to casual</CustomTableCell>
                   <CustomTableCell>{this.props.od.tutorial_to_casual}</CustomTableCell>
                 </TableRow>
-        </TableBody> 
+        </TableBody>
         </Table>
 
         <Table className={this.state.classes.table}>
@@ -188,7 +188,7 @@ const CustomTableCell = withStyles(theme => ({
                 <CustomTableCell>Hours</CustomTableCell>
                 </TableRow>
             </TableHead>
-            <TableBody> 
+            <TableBody>
                 <TableRow>
                   <CustomTableCell component="th" scope="row">Students in a group</CustomTableCell>
                   <CustomTableCell>{this.props.od.student_per_group}</CustomTableCell>
@@ -220,13 +220,13 @@ const CustomTableCell = withStyles(theme => ({
                 <TableRow>
                   <CustomTableCell component="th" scope="row">Casual staff hours billable</CustomTableCell>
                   <CustomTableCell>{this.props.od.casual_hours_billable}</CustomTableCell>
-                </TableRow>   
-        </TableBody> 
+                </TableRow>
+        </TableBody>
         </Table>
         </DialogContentText>
         </DialogContent>
         <DialogActions>
-            <Button variant="outlined" color="secondary" style={{position: "absolute", left: '50px'}} className={classes.button} onClick={this.props.viewed}>       
+            <Button variant="outlined" color="secondary" style={{position: "absolute", left: '50px'}} className={classes.button} onClick={this.props.viewed}>
                 <CloseIcon/>Close
             </Button>
 

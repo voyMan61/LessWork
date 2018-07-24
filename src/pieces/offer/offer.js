@@ -15,10 +15,10 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
-import OfferMake from './offer/offerConf.js'
-import OfferCreator from './offer/offerCreator.js'
+import OfferMake from './offerConf.js'
+import OfferCreator from './offerCreator.js'
 import Button from '@material-ui/core/Button';
-import OfferDetails from './offer/offerTable'
+import OfferDetails from './offerTable'
 
 
 const CustomTableCell = withStyles(theme => ({
@@ -45,7 +45,7 @@ class EnhancedTableHead extends React.Component {
   render() {
     return (
       <TableHead>
-        <TableRow>          
+        <TableRow>
           {columnData.map(column => {
             return (
               <CustomTableCell>{column.label}</CustomTableCell>
@@ -63,7 +63,7 @@ const styles = theme => ({
     width: '100%',
     marginTop: theme.spacing.unit * 3,
   },
-  
+
   table: {
     minWidth: 1020,
   },
@@ -98,28 +98,6 @@ class EnhancedTable extends React.Component {
       creatorOpen: false,
     };
   }
-  handleChange = () => {
-    this.setState(state => ({ checked: !state.checked }));
-  };
-
-
- 
-  handleROpen = (data, e) => {
-    this.setState(state => ({
-      oData: data, 
-      open: true, 
-      offerView: true
-    }));
-  };
-
-  handleOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
-  };
-
 
   viewerClosed() {
     this.setState({
@@ -136,35 +114,10 @@ class EnhancedTable extends React.Component {
     this.setState({creatorOpen: false});
   };
 
-  
-componentDidMount() {
-  var offerObj;
-  fetch('http://immense-headland-42479.herokuapp.com/api/offering', {
-      //mode: 'no-cors',
-      method: 'GET',
-      headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-      },
-  },
-  ).then(response => {
-      if (response.ok) {
-          response.json().then(json => {
-            offerObj = json;
-              this.setState({
-                objectLoaded: true,
-                  patternData: offerObj,
-                  hits: offerObj, 
-                  isLoading: false,
-              })
-          });
-      }
-  });
-}
+
 render() {
     const { creatorOpen} = this.state;
-  
+console.log(this.props.paa)
     if(creatorOpen){
         return(
           <Paper>
@@ -176,15 +129,14 @@ render() {
     else{
       return (
           <Paper>
-          <Toolbar><Typography style={{position: 'absolute', left: 60}} variant="title" id="tableTitle">Offerings</Typography> 
-            <Button style={{position: 'absolute', color: 'white', backgroundColor: '#001489', right: 60}} variant="contained" size="large" onClick={this.handleCreator}>
+          <Toolbar><Typography style={{position: 'absolute', left: 60}} variant="title" id="tableTitle">Offerings</Typography>
+          { this.props.paa ? ( <div></div>  ) : (<Button style={{position: 'absolute', color: 'white', backgroundColor: '#001489', right: '5%'}} variant="contained" size="large" onClick={this.handleCreator}>
               Create new offering
-            </Button>
+            </Button>)}
           </Toolbar>
           <OfferDetails/>
           </Paper>
         );
-  
       }
   }
 }

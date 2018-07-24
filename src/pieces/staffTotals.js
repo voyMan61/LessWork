@@ -18,7 +18,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
 import STE from './offer/OfferingsAssigned';
 import CloseIcon from '@material-ui/icons/Close';
-
+import URL from './ui/url.json'
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
@@ -80,43 +80,6 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-const toolbarStyles = theme => ({
-  root: {
-    paddingRight: theme.spacing.unit,
-  },
-  spacer: {
-    flex: '1 1 100%',
-  },
-
-  title: {
-    flex: '0 0 auto',
-  },
-});
-
-let EnhancedTableToolbar = props => {
-  const { numSelected, classes } = props;
-  return (
-    <Toolbar
-      className={classNames(classes.tolo, {
-        [classes.highlight]: numSelected > 0,
-      })}
-    >
-      <div className={classes.title}>
-          <Typography variant="title" id="tableTitle">
-            Staff Totals
-          </Typography> 
-      </div>
-      <div className={classes.spacer} />
-    </Toolbar>
-  );
-};
-
-EnhancedTableToolbar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
-};
-
-EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
 
 const styles = theme => ({
   root: {
@@ -222,7 +185,7 @@ class EnhancedTable extends React.Component {
 
   componentDidMount() {
     this.setState({ isLoading: true });
-    fetch('http://immense-headland-42479.herokuapp.com/api/stafftotals')
+    fetch(URL.url+'stafftotals')
     .then((response) => response.json())
     .then((responseJson) => {
         this.setState({ hits: responseJson, isLoading: false });
@@ -236,7 +199,11 @@ class EnhancedTable extends React.Component {
 
     return (
       <Paper className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <Toolbar><Typography style={{position: 'absolute', left: 60}} variant="title" id="tableTitle">Staff totals</Typography> 
+        </Toolbar>
+
+
+
         {isLoading ? (<LinearProgress style={{ color: lime[500] }}  variant="query" />) :
         (<div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
@@ -262,7 +229,6 @@ class EnhancedTable extends React.Component {
                     </Tooltip>
                   );
                 })}
-
             </TableBody>
           </Table>
         </div>)}

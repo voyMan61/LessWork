@@ -10,16 +10,15 @@ import Typography from '@material-ui/core/Typography';
 import Dashboard from './Dashboard.js'
 import Patterns from './pattern/pattern.js'
 import StaffTots from './staffTotals.js'
-import Offerings from './offer.js'
+import Offerings from './offer/offer.js'
 
 const styles = theme => ({
   AppBar: {
     position: 'absolute',
-    height:'100px',
     background: '#600718',
   },
   root: {
-    flexGrow: 1, 
+    flexGrow: 1,
     zindex:'-1',
     minHeight: 620,
     width: '100%',
@@ -28,7 +27,7 @@ const styles = theme => ({
   aa:{
     background: 'linear-gradient(55deg, #003796  10%, #004b96  60%,  #003296 90%)',
   },
-  
+
 });
 
 function TabContainer(props) {
@@ -73,9 +72,9 @@ class USerView extends React.Component {
   render() {
     const { classes } = this.props;
     const { value } = this.state;
-
+    console.log(this.props.pa)
     return (
-      
+
       <Paper className={classes.root}>
         <AppBar className={classes.aa} position="static" >
           <Tabs value={value} onChange={this.handleChange}>
@@ -83,13 +82,12 @@ class USerView extends React.Component {
             <Tab label="Offerings"/>
             <Tab label="Staff Totals" />
             <Tab label="Patterns"  />
-        </Tabs>              
+        </Tabs>
         </AppBar>
         {value === 0 && <TabContainer><Dashboard /></TabContainer>}
-        {value === 1 && <TabContainer><Offerings/></TabContainer>}
+        {value === 1 && <TabContainer><Offerings paa ={this.props.pa}/></TabContainer>}
         {value === 2 && <TabContainer><StaffTots/></TabContainer>}
-        {value === 3 && <TabContainer><Patterns/></TabContainer>}
-        {value === 4 && <TabContainer> </TabContainer>}
+        {value === 3 && <TabContainer><Patterns pab ={this.props.pa}/></TabContainer>}
       </Paper>
     );
   }
@@ -100,4 +98,3 @@ USerView.propTypes = {
 };
 
 export default withStyles(styles)(USerView);
-  

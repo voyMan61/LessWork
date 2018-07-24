@@ -12,7 +12,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
 
 import PatternActivities from './patternActivities';
-
+import URL from '../ui/url.json'
 
 
 const CustomTableCell = withStyles(theme => ({
@@ -146,7 +146,7 @@ handleClickAway = () => {
 
 componentDidMount() {
     var patternObj;
-    fetch('http://immense-headland-42479.herokuapp.com/api/pattern', {
+    fetch(URL.url+'pattern', {
         //mode: 'no-cors',
         method: 'GET',
         headers: {

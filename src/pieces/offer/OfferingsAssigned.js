@@ -8,6 +8,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Toolbar from '@material-ui/core/Toolbar';
 import purple from '@material-ui/core/colors/deepPurple';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import URL from '../ui/url.json'
 
 const styles = {
     card: {
@@ -66,7 +67,7 @@ class SimpleCard1 extends React.Component {
         //http://localhost:5000/api/offering
         //http://arcane-cove-45625.herokuapp.com/api/offering
         //http://immense-headland-42479.herokuapp.com/api/offering
-        fetch('http://immense-headland-42479.herokuapp.com/api/offering', {
+        fetch(URL.url+'offering', {
             //mode: 'no-cors',
             method: 'GET',
             headers: {
@@ -88,7 +89,7 @@ class SimpleCard1 extends React.Component {
             }
         });
 
-        fetch('http://immense-headland-42479.herokuapp.com/api/offeringlookup/' + this.props.staffD.id, {
+        fetch(URL.url+'offeringlookup/' + this.props.staffD.id, {
             //mode: 'no-cors',
             method: 'GET',
             headers: {
@@ -111,7 +112,7 @@ class SimpleCard1 extends React.Component {
             }
         });
 
-        fetch('http://immense-headland-42479.herokuapp.com/api/location', {
+        fetch(URL.url+'location', {
             //mode: 'no-cors',
             method: 'GET',
             headers: {
@@ -134,7 +135,7 @@ class SimpleCard1 extends React.Component {
         });
 
 
-        fetch('http://immense-headland-42479.herokuapp.com/api/period', {
+        fetch(URL.url+'period', {
             //mode: 'no-cors',
             method: 'GET',
             headers: {
@@ -158,7 +159,7 @@ class SimpleCard1 extends React.Component {
             }
         });
 
-        fetch('http://immense-headland-42479.herokuapp.com/api/pattern', {
+        fetch(URL.url+'pattern', {
             //mode: 'no-cors',
             method: 'GET',
             headers: {
@@ -194,7 +195,6 @@ class SimpleCard1 extends React.Component {
         if (this.state.offeringLoaded === true && this.state.locationLoaded === true && this.state.staffOfferingLoaded === true && this.state.periodLoaded === true) {
 
             var singleOffering = this.state.offeringData.find(item => item.staff_id === this.props.staffD.id);
-            console.log('r')
             const data1 = this.state.staffOfferingData.map((data) => {
                 var loc = this.state.locationData.find(item => item.id === singleOffering.location_id).name;
                 var periodCode = this.state.periodData.find(item => item.id === data.period_id).code;
@@ -204,8 +204,7 @@ class SimpleCard1 extends React.Component {
                 //console.log(this.state.period_code);
 
                 return (
-                    <div key={data.id} style={{flex: 3, flexDirection: 'row', alignItems: 'center',  justifyContent: 'center'}}>
-    <Toolbar><Typography style={{position: 'relative', left: '6%'}} variant="title">Offerings</Typography> </Toolbar>
+                    <div key={data.id}>
         <Card style={{background: 'linear-gradient(90deg, #e2e2e2  10%, #fdfff9 90%)', minHeight: 180, maxHeight: 180, minWidth: 300, maxWidth: 300}}>
                 <CardContent> 
                                 <Typography variant="headline" component="p">
@@ -216,21 +215,20 @@ class SimpleCard1 extends React.Component {
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                                <Button size="small" color="primary" href="/lols">
+                                <Button size="small" color="primary" href="/">
                                 Pattern details
                                 </Button>
                             </CardActions>
                         </Card>
-                        <br />
                     </div >
                 )
             });
 
             return (
-                <div style={{padding: 33, flex: 3, flexDirection: 'row', alignItems: 'center',  justifyContent: 'center'}}>
+                <div>
                     {data1}
-                        <Card  style={{background: 'linear-gradient(155deg, #e2e2e2  10%, #fdfff9 90%)', minHeight: 300, maxHeight: 300, minWidth: 400, maxWidth: 400}}>
-                    <Toolbar><Typography style={{position: 'relative'}} variant="title">Summary</Typography> </Toolbar>
+                        <Card  style={{paddingBlockEnd:'33%', background: 'linear-gradient(155deg, #e2e2e2  10%, #fdfff9 90%)', minHeight: 300, maxHeight: 300, minWidth: 400, maxWidth: 400}}>
+                    <Toolbar><Typography  variant="title">Summary</Typography> </Toolbar>
                         <CardContent> 
                             <Typography gutterBottom variant="headline" component="h2">
                                 RESEARCH
@@ -256,7 +254,6 @@ class SimpleCard1 extends React.Component {
                             <Typography className={this.state.classes.pos} component="p">
                                 Extra: { this.props.staffD.extra} <br />
                             </Typography>
-
                         </CardContent>
                     </Card>
                 </div>
@@ -266,22 +263,17 @@ class SimpleCard1 extends React.Component {
 
         else {
             return (
-<div style={{padding: 33, display: 'flex', alignItems: 'center',  justifyContent: 'center'}}>
-<Card className="Bar" style={{background: 'linear-gradient(155deg, #e2e2e2  10%, #fdfff9 90%)', minHeight: 20, maxHeight: 250, minWidth: 250, maxWidth: 250}}>
-    <Toolbar><Typography style={{position: 'relative', left: '6%'}} variant="title">Offerings</Typography> </Toolbar>
-        <CardContent style={{ zIndex:-1}}>
-        <CircularProgress size={'160%'} style={{color: purple[700] }} thickness={0.2} /> 
-    </CardContent>
-</Card></div>
-                        )
-                    }
-
-
+                <div >
+                <Card className="Bar" style={{background: 'linear-gradient(155deg, #e2e2e2  10%, #fdfff9 90%)', minHeight: 20, maxHeight: 250, minWidth: 250, maxWidth: 250}}>
+                    <Toolbar><Typography style={{ left: '6%'}} variant="title">Offerings</Typography> </Toolbar>
+                        <CardContent style={{ zIndex:-1}}>
+                        <CircularProgress size={'160%'} style={{color: purple[700] }} thickness={0.2} /> 
+                    </CardContent>
+                </Card></div>
+            )
+        }
     }
 }
-
-
-
 
 
 export default withStyles(styles)(SimpleCard1)

@@ -16,7 +16,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
 import OfferMake from './offerConf.js'
 import Button from '@material-ui/core/Button';
-
+import URL from '../ui/url.json'
 
 const CustomTableCell = withStyles(theme => ({
   head: {
@@ -137,7 +137,7 @@ class EnhancedTable extends React.Component {
   
 componentDidMount() {
   var offerObj;
-  fetch('http://immense-headland-42479.herokuapp.com/api/offering', {
+  fetch(URL.url+'offering', {
       //mode: 'no-cors',
       method: 'GET',
       headers: {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Barchart from './Bar';
+import Barchart from './ui/Bar';
 import Paper from '@material-ui/core/Paper';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -13,6 +13,10 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 
 import OfferingsAssigned from './offer/OfferingsAssigned.js';
+import URL from './ui/url.json'
+
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 
 
 class Dashboard extends React.Component {
@@ -27,12 +31,19 @@ staffD:[],
 hits:[],
 staffSelect:[],
 log: false,
+mits:false,
+key:1,
 }
 }
 
 handleStaffChange = event => {
         this.forceUpdate();
-        this.setState({ log: true, staffSelect: event.target.value });
+        this.setState({ mits: false, log: true, staffSelect: event.target.value });
+        console.log(event.target.value);
+      };
+      handleStaffBChange = event => {
+        this.forceUpdate();
+        this.setState({ key: this.state.key+1,mits: true, log: true, staffSelect: event.target.value });
         console.log(event.target.value);
       };
 componentDidMount() {
@@ -49,13 +60,13 @@ var myTarget = [];
 
 
 this.setState({ isLoading: true });
-    fetch('http://immense-headland-42479.herokuapp.com/api/stafftotals')
+    fetch(URL.url+'stafftotals')
     .then((response) => response.json())
     .then((responseJson) => {
         this.setState({ hits: responseJson, isLoading: false });
-    }) 
+    })
 
-fetch('http://immense-headland-42479.herokuapp.com/api/stafftotals', {
+fetch(URL.url+'stafftotals', {
 //mode: 'no-cors',
 method: 'GET',
 headers: {
@@ -88,8 +99,8 @@ console.log(error);
 });
 }
 
-render() {    
-const{hits, staffSelect,log} = this.state;
+render() {
+const{mits, hits, staffSelect,log} = this.state;
         return(
         <Paper >
         <Toolbar><Typography style={{position: 'absolute', left: '5%'}} variant="title" id="tableTitle">
@@ -101,12 +112,12 @@ const{hits, staffSelect,log} = this.state;
         <InputLabel htmlFor="age-auto-width"> {staffSelect.name}</InputLabel>
         <Select
         value={this.state.staVa}
-        onChange={this.handleStaffChange}
+        onChange={this.handleStaffBChange}
         input={<Input name="staff" id="age-auto-width"/>}
         >
         {hits
         .map(n => {
-        return (    
+        return (
         <MenuItem value={n}>{n.name}</MenuItem>
         );
         })}
@@ -116,13 +127,31 @@ const{hits, staffSelect,log} = this.state;
         </form>
         </Typography>
                 </Toolbar>
-        <div style={{display: 'flex', justifyContent: 'center',}}>
+        {log ? (<div style={{padding: 33, }}>
+<Card style={{
+  padding:14,
+      right: '40%',
+      flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems:'center',
+
+      background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',}}>
+        <CardContent style={{ left: '36%'}} >
+        <Toolbar><Typography variant="title">Offerings  -  {staffSelect.name}</Typography> </Toolbar>
+                <OfferingsAssigned key={this.state.key} staffD = {staffSelect}/>
+
+        </CardContent ></Card > </div>) : (<div></div>)}
+        <div style={{ padding:22,}}>
         <Barchart  chartData={this.state.chartData} /></div>
-        {log ? (<div style={{padding: 33, display: 'flex', flex: 1, flexDirection: 'column', alignItems: 'center',  justifyContent: 'center', alignItems: 'center',  justifyContent: 'center'}}><OfferingsAssigned staffD = {staffSelect}/></div>) : (<div>k</div>)}
-        </Paper>         
+        </Paper>
 );
 }
+
+
+
 }
+
 
 
 
