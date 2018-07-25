@@ -128,7 +128,7 @@ console.log(this.props.paa)
       return (
           <Paper>
           <Toolbar><Typography style={{position: 'absolute', left: 60}} variant="title" id="tableTitle">Offerings</Typography>
-          { this.props.paa ? ( <div></div>  ) : (<Button style={{position: 'absolute', color: 'white', backgroundColor: '#001489', right: '5%'}} variant="contained" size="large" onClick={this.handleCreator}>
+          { this.props.lin < 3 ? ( <div></div>  ) : (<Button style={{position: 'absolute', color: 'white', backgroundColor: '#001489', right: '5%'}} variant="contained" size="large" onClick={this.handleCreator}>
               Create new offering
             </Button>)}
           </Toolbar>

@@ -69,7 +69,7 @@ class Home extends React.Component {
     this.setState({ open: true });
   };
   handlelogO = () => {
-    this.setState({ r: 255, g:255, b:255, logged: true, open: true,log: false });
+    this.setState({lvalue:0, s:null, r: 255, g:255, b:255, logged: true, open: true,log: false });
   };
   handleClose = () => {
     this.setState({ open: false,log: true });
@@ -83,28 +83,22 @@ class Home extends React.Component {
 
   };
 
-
-
-
-
-
   handleLogChange = event => {
-
 if(event.target.id === '1')
 {    if(window.btoa( event.target.value) === 'c3RhZmYx') {
     this.setState({ currentUser: 'Staff', logged:false, expanded: null, log: true,  });
     }}
     else if(event.target.id === '2')
     {    if(window.btoa( event.target.value) === 'ZGVhbjI=') {
-        this.setState({currentUser: 'Dean', logged:false, expanded: null, log: true,  });
+        this.setState({lvalue:2, currentUser: 'Dean', logged:false, expanded: null, log: true,  });
         }}
         if(event.target.id === '3')
 {    if(window.btoa( event.target.value) === 'dWMz') {
-    this.setState({currentUser: 'UC', logged:false, expanded: null, log: true,  });
+    this.setState({lvalue:3,currentUser: 'UC', logged:false, expanded: null, log: true,  });
     }}
     if(event.target.id === "4")
 {    if(window.btoa( event.target.value) === 'c2E=') {
-    this.setState({icurrentUser: 'SA', logged:false, expanded: null, log: true,  });
+    this.setState({lvalue:5,currentUser: 'SA', logged:false, expanded: null, log: true,  });
     }
   }
     if(event.target.value === '') { this.setState({r: 255, g:255, b:255, }); }
@@ -130,7 +124,7 @@ if(event.target.id === '1')
   };
 
   handleExpandChange = panel => (event, expanded) => {
-    this.setState({lvalue:0,
+    this.setState({lvalue:0, s:null,
       expanded: expanded ? panel : false, b: 255, g:255,});
   };
 
@@ -156,9 +150,6 @@ if(event.target.id === '1')
     const{ s, lid,lvalue, value,r,g,b,expanded, test, currentUser, log, colour,logged} = this.state;
     const { height, width } = this.state;
     const isMobile = width <= 700;
-    console.log(this.props.containerWidth)
-
-  // the rest is the same...
 
   if (isMobile) {
     return (

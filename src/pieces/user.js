@@ -82,14 +82,14 @@ class USerView extends React.Component {
           <Tabs value={value} onChange={this.handleChange}>
             <Tab label="Dashboard"/>
             <Tab label="Offerings"/>
-            <Tab label="Staff Totals" />
+            {this.props.linfo > 2 ? (<Tab label="Staff Totals" />):(<div></div>)}
             <Tab label="Patterns"/>
         </Tabs>
         </AppBar>
         {value === 0 && <TabContainer><Dashboard lin ={this.props.linfo} sid = {this.props.ls} /></TabContainer>}
-        {value === 1 && <TabContainer><Offerings paa ={this.props.pa}/></TabContainer>}
-        {value === 2 && <TabContainer><StaffTots/></TabContainer>}
-        {value === 3 && <TabContainer><Patterns pab ={this.props.pa}/></TabContainer>}
+        {value === 1 && <TabContainer><Offerings lin ={this.props.linfo}/></TabContainer>}
+        { this.props.linfo > 2 && value === 2 && <TabContainer><StaffTots/></TabContainer>}
+        {value === 3 && <TabContainer><Patterns lin ={this.props.linfo}/></TabContainer>}
       </Paper>
     );
   }
