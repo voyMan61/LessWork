@@ -46,7 +46,7 @@ TabContainer.propTypes = {
 
 class USerView extends React.Component {
   state = {
-    value: 1,
+    value: 0,
     auth: true,
     anchorEl: null,
     currentUser: "user",

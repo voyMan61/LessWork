@@ -43,7 +43,7 @@ import DraftsIcon from '@material-ui/icons/Drafts';
 
 class Home extends React.Component {
   state = {
-    log: true,
+    log: false,
     logged: true,
     value: 0,
     open: true,
