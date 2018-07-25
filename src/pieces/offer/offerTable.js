@@ -14,7 +14,8 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
-import OfferMake from './offerConf.js'
+import OfferEdit from './offerEditor.js'
+import OfferViewer from './offerViewer.js'
 import Button from '@material-ui/core/Button';
 import URL from '../ui/url.json'
 
@@ -167,18 +168,18 @@ componentDidMount() {
   const { objectLoaded, oData, offerView, hits} = this.state;
   if(offerView){
     return(
-         <OfferMake viewed={this.viewerClosed.bind(this)} od={oData}/>
+         <OfferViewer viewed={this.viewerClosed.bind(this)} od={oData}/>
     )
   }
 if(objectLoaded) {
     return (
-
           <div className={classes.tableWrapper}>
             <Table className={classes.table} aria-labelledby="tableTitle">
               <EnhancedTableHead/>
                 <TableBody>
                   {hits
                     .map(n => {
+                      if(n.id>24 || n.id<16){
                       return (
                         <Tooltip placement="left" TransitionComponent={Zoom} title="View/Edit offering">
                         <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
@@ -189,7 +190,7 @@ if(objectLoaded) {
                             <CustomTableCell>{n.type}</CustomTableCell>
                         </TableRow>
                         </Tooltip>
-                      );
+                      );}
                     })}
                 </TableBody>
             </Table>
@@ -200,7 +201,7 @@ if(objectLoaded) {
   else {
     return (
         <Paper>
-        <LinearProgress color="secondary" variant="query" />
+        <LinearProgress variant="query" />
         </Paper>
     )
 }

@@ -1,264 +1,257 @@
-import React from "react";
-import PropTypes from "prop-types";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Header from "./pieces/ui/head.js";
-import Footer from "./pieces/ui/foot.js";
-import Body from './pieces/user.js'
+import React from 'react';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import { withStyles } from '@material-ui/core/styles';
+
+import SaveIcon from '@material-ui/icons/Save';
+import CloseIcon from '@material-ui/icons/Close';
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
-
-import MenuList from '@material-ui/core/MenuList';
-import ListItemText from '@material-ui/core/ListItemText';
-
-import Avatar from '@material-ui/core/Avatar';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import FolderIcon from '@material-ui/icons/BusinessCenter';
-import Sticon from '@material-ui/icons/Message'
-import Dicon from '@material-ui/icons/Send'
-import UCicon from '@material-ui/icons/Email';
-import SAicon from '@material-ui/icons/Settings';
-import Person from '@material-ui/icons/PersonPin';
-import TextField from '@material-ui/core/TextField';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
-import Seletctor from './pieces/sSelect.js'
-import LogoM from './pieces/ui/mLogo2.png';
-import Part from './pieces/ui/parts.js';
-/*
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-;
-*/
+import Switch from '@material-ui/core/Switch';
 
 
+const CustomTableCell = withStyles(theme => ({
+    head: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+      fontSize: 13,
+    },
+    body: {
+      fontSize: 12,
+    },
+  }))(TableCell);
 
-
-
-class Home extends React.Component {
-  state = {
-    log: false  ,
-    logged: true,
-    value: 0,
-    open: true,
-    currentUser:'sudowoodo',
-    test: false  ,
-    hits:[],
-    isLoading: false,
-    staVa: '',
-    staffSelect: [],
-    expanded: null,
-    colour:'white',
-    r: 255,
-    g:255,
-    b:255,
-    value:0,
-    lvalue: null,
-    s: null,
-    width: window.innerWidth,
-  };
-
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
-  handlelogO = () => {
-    this.setState({ r: 255, g:255, b:255, logged: true, open: true,log: false });
-  };
-  handleClose = () => {
-    this.setState({ open: false,log: true });
-  };
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
-
-  handleStChangeValue = e => {
-    this.setState({lvalue: 1, expanded: null, log: true, currentUser: e.target.value.name, s: e.target.value});
-
-  };
-
-  handleLogChange = event => {
-
-if(event.target.id === '1')
-{    if(window.btoa( event.target.value) === 'c3RhZmYx') {
-    this.setState({ currentUser: 'Staff', logged:false, expanded: null, log: true,  });
-    }}
-    else if(event.target.id === '2')
-    {    if(window.btoa( event.target.value) === 'ZGVhbjI=') {
-        this.setState({currentUser: 'Dean', logged:false, expanded: null, log: true,  });
-        }}
-        if(event.target.id === '3')
-{    if(window.btoa( event.target.value) === 'dWMz') {
-    this.setState({currentUser: 'UC', logged:false, expanded: null, log: true,  });
-    }}
-    if(event.target.id === "4")
-{    if(window.btoa( event.target.value) === 'c2E=') {
-    this.setState({icurrentUser: 'SA', logged:false, expanded: null, log: true,  });
-    }
-  }
-    if(event.target.value === '') { this.setState({r: 255, g:255, b:255, }); }
-  else
-  {this.setState({  b: this.state.b-13, g:this.state.g-20, });}
-  };
-
-  handleStaffChange = event => {
-    this.setState({ log: true, staffSelect: event.target.value });
-    console.log(event.target.value);
-  };
-
-  componentWillMount() {
-    window.addEventListener('resize', this.handleWindowSizeChange);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowSizeChange);
-  }
-
-  handleWindowSizeChange = () => {
-    this.setState({ width: window.innerWidth });
-  };
-
-  handleExpandChange = panel => (event, expanded) => {
-    this.setState({lvalue:0,
-      expanded: expanded ? panel : false,
-      b: 255, g:255,});
-  };
-
-
-
-  render() {
-    const {  classes } = this.props;
-    const{ s, lid,lvalue, value,r,g,b,expanded, test, currentUser, log, colour,logged} = this.state;
-    const { width } = this.state;
-    const isMobile = width <= 500;
-    console.log(value)
-    return (
-      <Paper className={classes.root}>
-      {log ? ( <div>
-              <Header className={classes.he}/>
-              <Typography style={{ position: 'absolute', top: '3%', right: '3%',color:'#d6e9ff'}} gutterBottom variant="headline" > <Person/>
-              {currentUser}
-                </Typography>
-              <Button  style={{position: 'absolute', top: '2%', right: '45%'}}  onClick={this.handlelogO} className={classes.button}><FolderIcon/></Button>
-              <Body ls={s} linfo ={lvalue} className={classes.bo}/>
-              <Footer className={classes.fo}/> </div>)
-              : (<div>
-                  <Part/>
-        <Card  className={classes.card1}>
-        <CardContent ><p>
-        <Typography gutterBottom variant="headline">
-            WorkLess
-          </Typography>
-</p>
-<p >          <Card  className={classes.card2}>
-        <CardContent style={{backgroundColor: 'rgb('+ r +','+ g +','+ b +')',}}>
-        <ExpansionPanel expanded={expanded === 'Staff'} onChange={this.handleExpandChange('Staff')}>
-          <ExpansionPanelSummary expandIcon={<Sticon />}>
-          <Typography style={{textAlign: 'right', fontSize:15,}}>Staff</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails style={{justifyContent: 'center'}}>
-          <Seletctor
-          value={this.state.value}
-          onChangeValue={this.handleStChangeValue}
-          />
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-
-        <ExpansionPanel expanded={expanded === 'Dean'} onChange={this.handleExpandChange('Dean')}>
-          <ExpansionPanelSummary expandIcon={<Dicon />}>
-          <Typography style={{fontSize:15,}}>Dean </Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-          <FormControl className={classes.formControl}>
-          <TextField
-          id="2"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-          onChange={this.handleLogChange}
-          />       </FormControl>
-          </ExpansionPanelDetails>
-
-        </ExpansionPanel>
-
-            <ExpansionPanel expanded={expanded === 'Unit Coordinator'} onChange={this.handleExpandChange('Unit Coordinator')}>
-          <ExpansionPanelSummary expandIcon={<UCicon />}>
-          <Typography style={{fontSize:15,}}>Unit Coordinator</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-          <FormControl className={classes.formControl}>
-          <TextField
-          id="3"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-          onChange={this.handleLogChange}
-          />       </FormControl>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-        <ExpansionPanel expanded={expanded === 'System Administrator'} onChange={this.handleExpandChange('System Administrator')}>
-          <ExpansionPanelSummary expandIcon={<SAicon />}>
-          <Typography style={{justifyContent: 'center',fontSize:15,}}>System Administrator </Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-          <FormControl className={classes.formControl}>
-          <TextField
-          id="4"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-          onChange={this.handleLogChange}
-          />       </FormControl>
-          </ExpansionPanelDetails>
-
-        </ExpansionPanel>
-        </CardContent>
-                  </Card></p>
-</CardContent>
-          </Card>
-              </div>)}
-    </Paper>
-    );
-  }
-}
   const styles = theme => ({
     root: {
-      flexGrow: 1,
-      zindex:1,
-      width: '100% !important',
-      height: '100% !important',
-      minHeight:'10%',
+      width: '100%',
+      marginTop: theme.spacing.unit * 2,
+      overflowX: 'auto',
     },
-    formControl: {
-      flex: 1,
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
+    table: {
+      maxWidth: 700,
     },
-    card1: {
-      top: '15%',
-      left: '35%',
-      right: '45%',
-      flex: 1,
-      position: 'absolute',
-      minWidth: '30%',
-      minHeight: '25%',
-      background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',
-
+    row: {
+      '&:nth-of-type(odd)': {
+        backgroundColor: 'theme.palette.background.default',
+      },
+    },
+    button:{
+        alignContent: 'center',
     },
   });
 
+  class CustomizedTable extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            classes: this.props.classes,
+            activityLookupLoaded: false,
+            activityLookupData: this.props.activityLookupData,
+            frAct: [],
+            psAct: [],
+            ptAct: [],
+            totalfr:0,
+            totalps:0,
+            totalpt:0,
+            open: true,
+            scroll: 'paper',
+            dd:'',
+            confirm: this.props.od.confirm,
+            confirme:'not confirmed',
+        }
+    }
 
-Home.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+    progress = () => {
+      const { completed } = this.state;
+      if (completed > 100) {
+        this.setState({ completed: 0, buffer: 10 });
+      } else {
+        const diff = Math.random() * 10;
+        const diff2 = Math.random() * 10;
+        this.setState({ completed: completed + diff, buffer: completed + diff + diff2 });
+      }
+    };
 
-export default withStyles(styles)(Home);
+    handleClickOpen = scroll => () => {
+      this.setState({ open: true, scroll });
+    };
+    handleConfirmation = name => event => {
+        this.setState({ confirm: event.target.checked });
+        console.log('confirmed');
+      };
+
+    handleClose = () => {
+      this.setState({ open: false });
+    };
+    handleStuff = () => {
+        this.setState({ open: false });
+    }
+
+
+    render() {
+      const {classes } = this.props;
+    return (
+      <Paper className={this.state.classes.root}>
+          <Dialog
+          open={this.state.open}
+          scroll={this.state.scroll}
+          aria-labelledby="scroll-dialog-title"
+        >
+          <DialogTitle id="scroll-dialog-title">{this.props.od.unit_code} {this.props.od.name}
+          </DialogTitle>
+          <DialogContent>
+          <DialogContentText>
+
+        <Table className={this.state.classes.table}>
+          <TableHead>
+            <TableRow>
+              <CustomTableCell>Rows</CustomTableCell>
+              <CustomTableCell>Value</CustomTableCell>
+            </TableRow>
+        </TableHead>
+          <TableBody>
+                <TableRow>
+                  <CustomTableCell component="th" scope="row">Confirmed</CustomTableCell>
+                  <CustomTableCell>
+                  <Switch
+                checked={this.state.confirm}
+                onChange={this.handleConfirmation('confirm')}
+                value="confirm"
+              />
+              </CustomTableCell>
+                </TableRow>
+                <TableRow>
+                  <CustomTableCell component="th" scope="row">CASUAL TUTORIAL</CustomTableCell>
+                  <CustomTableCell>{this.props.od.tutorial_to_casual}</CustomTableCell>
+                </TableRow>
+                <TableRow>
+                  <CustomTableCell component="th" scope="row">Projected Enrolments</CustomTableCell>
+                  <CustomTableCell>{this.props.od.enrolment}</CustomTableCell>
+                </TableRow>
+                {/*  <TableRow>
+
+
+              add staff drop down list here
+                  <CustomTableCell component="th" scope="row">ENTER COORDINATOR</CustomTableCell>
+                  <CustomTableCell>{this.props.od.type}</CustomTableCell>
+                </TableRow>
+
+
+                <TableRow>
+                  <CustomTableCell component="th" scope="row">COORDINATOR TUTORIALS</CustomTableCell>
+                  <CustomTableCell>{this.props.od.tutorial_to_staff}</CustomTableCell>
+                </TableRow>
+
+                ``
+*/}
+
+
+
+                <TableRow>
+                  <CustomTableCell component="th" scope="row">CASUAL TUTORIAL</CustomTableCell>
+                  <CustomTableCell>{this.props.od.tutorial_to_casual}</CustomTableCell>
+                </TableRow>
+
+
+        </TableBody>
+        </Table>
+
+        <Table className={this.state.classes.table}>
+          <TableHead>
+            <TableRow>
+              <CustomTableCell>Rows</CustomTableCell>
+              <CustomTableCell>Value</CustomTableCell>
+            </TableRow>
+        </TableHead>
+          <TableBody>
+                <TableRow>
+                  <CustomTableCell component="th" scope="row">Enrolments</CustomTableCell>
+                  <CustomTableCell>{this.props.od.enrolment}</CustomTableCell>
+                </TableRow>
+                {/*<TableRow>
+                  <CustomTableCell component="th" scope="row">Type</CustomTableCell>
+                  <CustomTableCell>{this.props.od.type}</CustomTableCell>
+                </TableRow>   */}
+                <TableRow>
+                  <CustomTableCell component="th" scope="row">Tutorials to staff</CustomTableCell>
+                  <CustomTableCell>{this.props.od.tutorial_to_staff}</CustomTableCell>
+                </TableRow>
+                <TableRow>
+                  <CustomTableCell component="th" scope="row">Tutorials to casual</CustomTableCell>
+                  <CustomTableCell>{this.props.od.tutorial_to_casual}</CustomTableCell>
+                </TableRow>
+        </TableBody>
+        </Table>
+
+        <Table className={this.state.classes.table}>
+            <TableHead>
+                <TableRow>
+                <CustomTableCell>Fixed load</CustomTableCell>
+                <CustomTableCell>Hours</CustomTableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                <TableRow>
+                  <CustomTableCell component="th" scope="row">Students in a group</CustomTableCell>
+                  <CustomTableCell>{this.props.od.student_per_group}</CustomTableCell>
+                </TableRow>
+                <TableRow>
+                  <CustomTableCell component="th" scope="row">Base hours</CustomTableCell>
+                  <CustomTableCell>{this.props.od.base}</CustomTableCell>
+                </TableRow>
+                <TableRow>
+                  <CustomTableCell component="th" scope="row">Per student hours</CustomTableCell>
+                  <CustomTableCell>{this.props.od.student}</CustomTableCell>
+                </TableRow>
+                <TableRow>
+                  <CustomTableCell component="th" scope="row">Per period hours</CustomTableCell>
+                  <CustomTableCell>{this.props.od.hour_per_period}</CustomTableCell>
+                </TableRow>
+                <TableRow>
+                  <CustomTableCell component="th" scope="row">Total Work load</CustomTableCell>
+                  <CustomTableCell>{this.props.od.total_workload}</CustomTableCell>
+                </TableRow>
+                <TableRow>
+                  <CustomTableCell component="th" scope="row">Regular staff hours</CustomTableCell>
+                  <CustomTableCell>{this.props.od.hours_to_staff}</CustomTableCell>
+                </TableRow>
+                <TableRow>
+                  <CustomTableCell component="th" scope="row">Casual staff hours</CustomTableCell>
+                  <CustomTableCell>{this.props.od.hours_to_casual}</CustomTableCell>
+                </TableRow>
+                <TableRow>
+                  <CustomTableCell component="th" scope="row">Casual staff hours billable</CustomTableCell>
+                  <CustomTableCell>{this.props.od.casual_hours_billable}</CustomTableCell>
+                </TableRow>
+        </TableBody>
+        </Table>
+        </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+            <Button variant="outlined" color="secondary" style={{position: "absolute", left: '50px'}} className={classes.button} onClick={this.props.viewed}>
+                <CloseIcon/>Close
+            </Button>
+
+      <Button variant="outlined" color="primary"  className={classes.button}>
+        <SaveIcon/> Save
+      </Button>
+          </DialogActions>
+        </Dialog>
+      </Paper>
+    );
+  }
+}
+export default withStyles(styles)(CustomizedTable);
+
+/* <Button style={{position: "relative", right: '30px'}} type="submit" color="primary" variant="outlined" className={this.state.classes.button}>
+<SaveIcon/>Create
+</Button>*/

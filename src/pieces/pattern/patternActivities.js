@@ -14,6 +14,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import URL from '../ui/url.json'
+import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons/Close';
+
 
 const CustomTableCell = withStyles(theme => ({
     head: {
@@ -26,7 +29,7 @@ const CustomTableCell = withStyles(theme => ({
       fontSize: 12,
     },
   }))(TableCell);
-  
+
   const styles = theme => ({
     root: {
       width: '100%',
@@ -58,12 +61,12 @@ const CustomTableCell = withStyles(theme => ({
             ptAct: [],
             totalfr:0,
             totalps:0,
-            totalpt:0, 
+            totalpt:0,
             open: true,
             scroll: 'paper',
         }
     }
-  
+
     progress = () => {
       const { completed } = this.state;
       if (completed > 100) {
@@ -74,18 +77,18 @@ const CustomTableCell = withStyles(theme => ({
         this.setState({ completed: completed + diff, buffer: completed + diff + diff2 });
       }
     };
-  
+
     handleClickOpen = scroll => () => {
       this.setState({ open: true, scroll });
     };
-  
+
     handleClose = () => {
       this.setState({ open: false });
     };
     handleStuff = () => {
         this.setState({ open: false });
     }
-    
+
     componentDidMount() {
         var activityLookupObj;
         var calfr=0;
@@ -135,20 +138,32 @@ const CustomTableCell = withStyles(theme => ({
             //console.log(this.state.frAct)
             //console.log(this.state.psAct)
             //console.log(this.state.ptAct)
-    return ( 
+    return (
       <Paper className={this.state.classes.root}>
+
       <Dialog
           open={this.state.open}
           scroll={this.state.scroll}
           aria-labelledby="scroll-dialog-title"
         >
-          <DialogTitle id="scroll-dialog-title">Pattern Activities - {this.props.Pcode}
-          <Button variant="outlined" color="secondary"  style={{color: "#bf0000 ", position: "absolute", right: '5%'}} className={classes.button} onClick={this.props.viewed}>       
-            Close
+
+        <DialogTitle id="scroll-dialog-title">
+        <div style={{padding:1,maxWidth:300,}} >
+        <Typography variant="subheading" gutterBottom noWrap>
+              Pattern Activities
+          </Typography>
+        <Typography style={{position: 'absolute', top:'2%', left: '33%'}} gutterBottom align="right" variant="display1">
+          {this.props.Pcode}
+          </Typography>    </div>
+
+        <Button  variant="fab" color="secondary"  style={{position: 'absolute', top:'1%', right: '2%'}} className={classes.button} onClick={this.props.viewed}>
+              <CloseIcon/>
           </Button>
-          </DialogTitle>
-          <DialogContent style={{ background: 'linear-gradient(55deg, #e2e2e2  10%, #fdfff9 90%)'}}>
-          <DialogContentText>
+
+        </DialogTitle>
+        <DialogContent style={{padding:4, minWidth:400, background: 'linear-gradient(55deg, #e2e2e2  10%, #fdfff9 90%)',}}>
+        <DialogContentText>
+
         <Table className={this.state.classes.table} style={{ background: 'linear-gradient(55deg, #f2f2f2  10%, #fdfff9 90%)'}}>
         {this.state.frAct.length !== 0  &&
           <TableHead>
@@ -159,7 +174,7 @@ const CustomTableCell = withStyles(theme => ({
         </TableHead> }
           <TableBody>
              {this.state.frAct.map(n => {
-                
+
               return (
                 <TableRow className={this.state.classes.row} key={n.id}>
                   <CustomTableCell component="th" scope="row">
@@ -169,7 +184,7 @@ const CustomTableCell = withStyles(theme => ({
                 </TableRow>
               );
             })}
-        </TableBody> 
+        </TableBody>
 
         {this.state.ptAct.length !== 0  &&
           <TableHead>
@@ -189,7 +204,7 @@ const CustomTableCell = withStyles(theme => ({
                 </TableRow>
               );
             })}
-        </TableBody> 
+        </TableBody>
         {this.state.psAct.length !== 0 &&
           <TableHead>
             <TableRow>
@@ -208,13 +223,13 @@ const CustomTableCell = withStyles(theme => ({
                 </TableRow>
               );
             })}
-        </TableBody> 
+        </TableBody>
         </Table>
         </DialogContentText>
         </DialogContent>
         </Dialog>
-      </Paper>    
-    );} 
+      </Paper>
+    );}
     else {
         return (
           <Paper className={this.state.classes.root} >
@@ -229,11 +244,11 @@ const CustomTableCell = withStyles(theme => ({
               <DialogContentText>
 
                 <LinearProgress color= "primary" variant="query" />
-                
+
             </DialogContentText>
             </DialogContent>
             </Dialog>
-          </Paper>    
+          </Paper>
 
 
 
@@ -242,6 +257,5 @@ const CustomTableCell = withStyles(theme => ({
   }
 }
 
-  
-  export default withStyles(styles)(CustomizedTable);
 
+  export default withStyles(styles)(CustomizedTable);

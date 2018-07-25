@@ -199,38 +199,36 @@ class SimpleCard1 extends React.Component {
                 //this.fetchPeriod(data.location_id, data.period_ID)
                 //console.log(this.state.period_code);
 
-                return (
-                    <div style={{alignItems: 'center', padding: '1%', justifyContent: 'center'}} key={data.id}>
+                return ( 
+                    <div style={{alignItems: 'center', padding: '1%', }} key={data.id}>
       <Card style={{ maxWidth: '60%', background: 'linear-gradient(90deg, #e2e2e2  10%, #fdfff9 90%)', }}>
               <CardContent>
+                                <Typography variant="display1" component="p">
+                                    {singleOffering.unit_code}
+                                </Typography>
                                 <Typography variant="headline" component="p">
-                                    {singleOffering.unit_code} {singleOffering.name}
+                                  {singleOffering.name}
                                 </Typography>
                                 <Typography component="p">
                                     {loc} | {periodCode} | {singleOffering.pattern_code}
                                 </Typography>
                             </CardContent>
-
                         </Card>
-
                     </div >
                 )
             });
-
             return (
-                <div style={{ padding: '2%', alignItems: 'center', justifyContent: 'center'}}>
+                <div style={{ padding: '2%', }}>
                     {data1}
                 </div>
                 );
         }
-
         else {
             return (
                 <div style={{alignItems: 'center', padding: '1%', justifyContent: 'center'}}>
-              <Card className="Bar" style={{maxHeight: '40%', background: 'linear-gradient(155deg, #e2e2e2  10%, #fdfff9 90%)', }}>
-              <CardContent style={{ maxWidth: '33%', maxHeight: '40%', zIndex:-1}}>
-              <Toolbar><Typography style={{position: 'absolute', left: '6%'}} variant="title">loading</Typography> </Toolbar>
-              <CircularProgress  size={'120%'} style={{ color: purple[700] }} thickness={0.2} />
+              <Card className="Bar" style={{ background: 'linear-gradient(155deg, #e2e2e2  10%, #fdfff9 90%)', }}>
+              <CardContent >
+              <CircularProgress  size={'40%'} style={{ position: 'relative', bottom:'5%', left: '35%', color: purple[700] }} thickness={0.3} />
               </CardContent>
               </Card></div>
             )

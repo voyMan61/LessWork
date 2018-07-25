@@ -41,12 +41,9 @@ import DraftsIcon from '@material-ui/icons/Drafts';
 */
 
 
-
-
-
 class Home extends React.Component {
   state = {
-    log: false  ,
+    log: true,
     logged: true,
     value: 0,
     open: true,
@@ -158,7 +155,7 @@ if(event.target.id === '1')
     const {  classes } = this.props;
     const{ s, lid,lvalue, value,r,g,b,expanded, test, currentUser, log, colour,logged} = this.state;
     const { height, width } = this.state;
-    const isMobile = width <= 900;
+    const isMobile = width <= 700;
     console.log(this.props.containerWidth)
 
   // the rest is the same...
@@ -188,10 +185,7 @@ background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',}}>
   } else {
 
     return (
-      <Paper style={{
-        minHeight:height,
-            minWidth:width,
-}}className={classes.root}>
+      <Paper className={classes.root}>
       {log ? ( <div>
               <Header className={classes.he}/>
               <Typography style={{ position: 'absolute', top: '3%', right: '3%',color:'#d6e9ff'}} gutterBottom variant="headline" > <Person/>
@@ -284,6 +278,9 @@ background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',}}>
     root: {
       flexGrow: 1,
       zindex:1,
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     formControl: {
       flex: 1,
@@ -292,9 +289,8 @@ background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',}}>
       alignItems: 'center',
     },
     card1: {
-      top: '15%',
-      left: '40%',
-      right: '45%',
+      top: '20%',
+      left: '38%',
       flex: 1,
       position: 'absolute',
       minWidth: '25%',

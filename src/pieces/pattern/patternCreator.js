@@ -18,6 +18,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Button from '@material-ui/core/Button';
 
+import Typography from '@material-ui/core/Typography';
 import Snackbar from '@material-ui/core/Snackbar';
 import SaveIcon from '@material-ui/icons/Save';
 import IconButton from '@material-ui/core/IconButton';
@@ -370,7 +371,6 @@ class CustomizedTable extends React.Component {
 
                 <Paper className={this.state.classes.root}>
 
-
             <Dialog
           open={this.state.open}
           scroll={this.state.scroll}
@@ -382,14 +382,17 @@ class CustomizedTable extends React.Component {
             contentStyle={{width: "100%", maxWidth: "none"}}
         >
           <DialogTitle id="scroll-dialog-title" style={{ background: 'linear-gradient(55deg, #fff9f9  10%, #fffef4 90%)'}}>
+          <div style={{padding:1,maxWidth:300,}} >
+          <Typography variant="display1" gutterBottom noWrap>
                 Create New Pattern
-                <Button variant="outlined" color="secondary"  style={{color: "#bf0000 ", position: "absolute", top: '2%', right: '5%'}} onClick={this.props.cclosed}>
-                Cancel<CloseIcon/>
-                </Button>
-          </DialogTitle>
-          <DialogContent style={{ background: 'linear-gradient(55deg, #e2e2e2  10%, #fdfff9 90%)'}}>
+            </Typography></div>
+<Button  variant="fab" color="secondary"  style={{position: 'absolute', top:'1%', right: '2%'}} onClick={this.props.cclosed}>
+<CloseIcon/></Button>
+</DialogTitle>
+<DialogContent style={{padding:4, minWidth:400, background: 'linear-gradient(55deg, #e2e2e2  10%, #fdfff9 90%)',}}>
+
                     <form onSubmit={this.handleSubmit}>
-                    <p style={{textAlign: 'center'}} >
+                    <p style={{position: 'relative',color:'#d6e9ff', textAlign: 'center'}} >
                         <TextField
                             required
                             id="code"
@@ -404,7 +407,7 @@ class CustomizedTable extends React.Component {
                             value={this.state.code}
 
                         />
-                        </p><p style={{textAlign: 'center'}}>
+
                         <TextField
                             id="location_id"
                             select
@@ -426,7 +429,20 @@ class CustomizedTable extends React.Component {
                                 {option.name}
                             </MenuItem>
                         ))}
-                        </TextField></p><p style={{textAlign: 'center'}}>
+                        </TextField></p>
+                        <p style={{position: 'relative',color:'#d6e9ff', textAlign: 'center'}} >
+                        <TextField
+                            id="description"
+                            label="Short Description"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            placeholder="E.g LT, Internal"
+                            className={this.state.classes.textField}
+                            margin="normal"
+                            onChange={this.handleDesc('sdesc')}
+                            value={this.state.sdesc}
+                        />
                         <TextField
                             id="mode"
                             select
@@ -449,20 +465,8 @@ class CustomizedTable extends React.Component {
                             </MenuItem>
                         ))}
                         </TextField>
-                        </p><p style={{textAlign: 'center'}}>
-                        <TextField
-                            id="description"
-                            label="Short Description"
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            placeholder="E.g LT, Internal"
-                            className={this.state.classes.textField}
-                            margin="normal"
-                            onChange={this.handleDesc('sdesc')}
-                            value={this.state.sdesc}
-                        />
-                        </p><p style={{textAlign: 'center'}}>
+
+                        </p><p style={{position: 'relative', textAlign: 'center'}} >
                         <TextField
                             id="long_description"
                             label="Long Description"
@@ -477,8 +481,7 @@ class CustomizedTable extends React.Component {
                             onChange={this.handleDesc('ldesc')}
                             value={this.state.ldesc}
 
-                        />
-                        </p>
+                        /></p>
 
                         <Table className={this.state.classes.table}>
                             {this.state.frAct.length !== 0 &&
@@ -563,8 +566,7 @@ class CustomizedTable extends React.Component {
                         </Table>
                         <p style={{textAlign: 'center'}} >
                         <Button type="submit" variant="contained" size="large"  className={this.state.classes.button} style={{ color: "#0f6600"}} type="submit" variant="outlined" >
-                                <SaveIcon/>
-                                Create
+                                <SaveIcon/>    Create
                         </Button></p>
       {isloading ?  <Paper className={this.state.classes.root}>
           <LinearProgress color="secondary" variant="query" />

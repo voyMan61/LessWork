@@ -40,7 +40,7 @@ class EnhancedTableHead extends React.Component {
   render() {
     return (
       <TableHead >
-        <TableRow>          
+        <TableRow>
           {columnData.map(column => {
             return (
               <CustomTableCell style={{textAlign: 'center'}}> {column.label}</CustomTableCell>
@@ -106,9 +106,9 @@ class EnhancedTable extends React.Component {
 
   handleROpen = (data, e) => {
     this.setState(state => ({
-      patId: data.id, 
-      patcode: data.code, 
-      open: true, 
+      patId: data.id,
+      patcode: data.code,
+      open: true,
       patterAct: true
     }));
   };
@@ -162,7 +162,7 @@ componentDidMount() {
                 this.setState({
                     patternLoaded: true,
                     patternData: patternObj,
-                    hits: json, 
+                    hits: json,
                     isLoading: false,
                 })
             });
@@ -183,7 +183,7 @@ componentDidMount() {
   if(patterAct){
     return(
       //<ClickAwayListener onClickAway={this.handleROpen} onClickAway={this.handleClickAway}>
-        <Paper className={classes.root}> 
+        <Paper className={classes.root}>
          <PatternActivities viewed={this.viewerClosed.bind(this)} Pid={patId} Pcode={patcode} />
         </Paper>
       //</ClickAwayListener>
@@ -198,8 +198,10 @@ componentDidMount() {
             <TableBody>
               {hits
                 .map(n => {
-                  return ( 
-                    <Tooltip placement="left" TransitionComponent={Zoom} title="View Pattern">                  
+
+                    if(n.id>22 || n.id<11 ){
+                  return (
+                    <Tooltip placement="left" TransitionComponent={Zoom} title="View Pattern">
                     <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
                       <CustomTableCell style={{textAlign: 'center'}} component="th" scope="row">
                         {n.code}
@@ -210,8 +212,8 @@ componentDidMount() {
                       <CustomTableCell style={ {width:'35%'}}> {n.long_description }</CustomTableCell>
                     </TableRow>
                     </Tooltip>
-                  );
-                  
+                  );}
+
                 })}
             </TableBody>
           </Table>
@@ -222,7 +224,7 @@ componentDidMount() {
   else {
     return (
         <Paper>
-        <LinearProgress color="secondary" variant="query" />
+        <LinearProgress variant="query" />
         </Paper>
     )
 }

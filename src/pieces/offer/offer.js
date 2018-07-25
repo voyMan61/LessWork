@@ -11,11 +11,9 @@ import TableRow from '@material-ui/core/TableRow';
 import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 
-import LinearProgress from '@material-ui/core/LinearProgress';
 
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
-import OfferMake from './offerConf.js'
 import OfferCreator from './offerCreator.js'
 import Button from '@material-ui/core/Button';
 import OfferDetails from './offerTable'
