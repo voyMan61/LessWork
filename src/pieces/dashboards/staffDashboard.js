@@ -28,7 +28,7 @@ classes: this.props.classes,
 staffD:[],
 hits:[],
 staffSelect:[],
-log: true,
+log: false,
 mits:false,
 key:1,
 }
@@ -99,41 +99,52 @@ console.log(error);
 
 render() {
 const{mits, hits, staffSelect,log} = this.state;
-  if(this.props.lin === 1){
-    return(
-    <Paper>
-    <Toolbar><Typography style={{position: 'absolute', left: '5%'}} variant="title" id="tableTitle">
-            Dashboard  </Typography> <Typography style={{marginLeft:33, position: 'absolute', left: '15%'}} variant="contained" size="large" color="secondary" >
-            {this.props.sid.name}</Typography>
-    <Typography style={{position: 'fixed', right: '6%'}} variant="contained" size="large" color="secondary" >
-    </Typography>
-            </Toolbar>
-            <div style={{ padding:2,}}>
-          <Card style={{
-          top:'32%',
-          position:'auto',
-          left:'44%',
-          maxWidth: '30%',
-          position:'absolute',
-          alignItems:'center',
-          background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',}}>
-          <CardContent style={{ left: '36%'}} >
-          <Toolbar><Typography variant="title">Offerings </Typography> </Toolbar>
-          <OfferingsAssigned key={this.props.sid} staffD = {this.props.sid}/>
-          </CardContent ><div> . </div>
-          </Card ></div>
-          <Barchart  style={{position:'auto'}} chartData={this.state.chartData} />
-          </Paper>);
-  }
 
-else{ return( <Paper style={{left:'333%'}} >
-<Toolbar><Typography style={{position: 'absolute', left: '5%'}} variant="title" id="tableTitle">
-        Dashboard</Typography> <Typography style={{position: 'absolute', left: '15%'}} variant="contained" size="large" color="secondary" >
-          {staffSelect.name}</Typography>
-<Typography style={{position: 'fixed', right: '6%'}} variant="contained" size="large" color="secondary" >
-</Typography> </Toolbar>
-  <Barchart  chartData={this.state.chartData} />
-</Paper>);}
+if(log){
+          return(
+          <Paper style={{position:'auto', }}>
+          <Toolbar><Typography style={{position: 'absolute', left: '5%'}} variant="title" id="tableTitle">
+                  Dashboard</Typography> <Typography style={{position: 'absolute', left: '15%'}} variant="contained" size="large" color="secondary" >
+                  {staffSelect.name}</Typography>
+          <Typography style={{position: 'fixed', right: '6%'}} variant="contained" size="large" color="secondary" >
+          <form  autoComplete="off">
+          <FormControl>
+          <InputLabel htmlFor="age-auto-width"> {staffSelect.name}</InputLabel>
+          <Select
+          value={this.state.staVa}
+          onChange={this.handleStaffBChange}
+          input={<Input name="staff" id="age-auto-width"/>}
+          >
+          {hits
+          .map(n => {
+          return (
+          <MenuItem value={n}>{n.name}</MenuItem>
+          );
+          })}
+          </Select>
+          <FormHelperText>select staff</FormHelperText>
+          </FormControl>
+          </form>
+          </Typography>
+                  </Toolbar>
+                  <div style={{ padding:2,}}>
+                  <Barchart  style={{position:'auto'}} chartData={this.state.chartData} />
+
+  <Card style={{
+      top:'32%',
+      position:'auto',
+      left:'44%',
+      maxWidth: '30%',
+      position:'absolute',
+      alignItems:'center',
+      background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',}}>
+      <CardContent style={{ left: '36%'}} >
+      <Toolbar><Typography variant="title">Offerings  -  {staffSelect.name}</Typography> </Toolbar>
+                  <OfferingsAssigned key={this.state.key} staffD = {staffSelect}/>
+          </CardContent ></Card ></div><div> .</div>
+          </Paper>
+  );
+}
 
         return(
         <Paper >
@@ -168,6 +179,8 @@ else{ return( <Paper style={{left:'333%'}} >
 
 }
 }
+
+
 
 
 export default Dashboard

@@ -12,6 +12,8 @@ import Patterns from './pattern/pattern.js'
 import StaffTots from './staffTotals.js'
 import Offerings from './offer/offer.js'
 
+import SDB from './sSelect.js'
+
 const styles = theme => ({
   AppBar: {
     position: 'absolute',
@@ -72,7 +74,7 @@ class USerView extends React.Component {
   render() {
     const { classes } = this.props;
     const { value } = this.state;
-    console.log(this.props.pa)
+    console.log(this.props.ls)
     return (
 
       <Paper className={classes.root}>
@@ -81,10 +83,10 @@ class USerView extends React.Component {
             <Tab label="Dashboard"/>
             <Tab label="Offerings"/>
             <Tab label="Staff Totals" />
-            <Tab label="Patterns"  />
+            <Tab label="Patterns"/>
         </Tabs>
         </AppBar>
-        {value === 0 && <TabContainer><Dashboard /></TabContainer>}
+        {value === 0 && <TabContainer><Dashboard lin ={this.props.linfo} sid = {this.props.ls} /></TabContainer>}
         {value === 1 && <TabContainer><Offerings paa ={this.props.pa}/></TabContainer>}
         {value === 2 && <TabContainer><StaffTots/></TabContainer>}
         {value === 3 && <TabContainer><Patterns pab ={this.props.pa}/></TabContainer>}

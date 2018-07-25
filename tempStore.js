@@ -65,7 +65,6 @@ class Home extends React.Component {
     lvalue: null,
     s: null,
     width: window.innerWidth,
-    height: window.innerHeight,
   };
 
   handleClickOpen = () => {
@@ -85,11 +84,6 @@ class Home extends React.Component {
     this.setState({lvalue: 1, expanded: null, log: true, currentUser: e.target.value.name, s: e.target.value});
 
   };
-
-
-
-
-
 
   handleLogChange = event => {
 
@@ -129,69 +123,25 @@ if(event.target.id === '1')
   }
 
   handleWindowSizeChange = () => {
-    this.setState({     height: window.innerHeight,width: window.innerWidth });
+    this.setState({ width: window.innerWidth });
   };
 
   handleExpandChange = panel => (event, expanded) => {
     this.setState({lvalue:0,
-      expanded: expanded ? panel : false, b: 255, g:255,});
+      expanded: expanded ? panel : false,
+      b: 255, g:255,});
   };
-
-
-  componentDidMount() {
-      window.addEventListener('resize', this.handleResize);
-  }
-
-  componentWillUnmount(){
-      window.removeEventListener('resize', this.handleResize);
-  }
-
-  handleResize = () => {
-      this.forceUpdate();
-  };
-
-
 
 
 
   render() {
     const {  classes } = this.props;
     const{ s, lid,lvalue, value,r,g,b,expanded, test, currentUser, log, colour,logged} = this.state;
-    const { height, width } = this.state;
-    const isMobile = width <= 900;
-    console.log(this.props.containerWidth)
-
-  // the rest is the same...
-
-  if (isMobile) {
+    const { width } = this.state;
+    const isMobile = width <= 500;
+    console.log(value)
     return (
-<Paper style={{
-}}>
-
-<Part style={{minHeight:33,}}/>
-<Card style={{top: '15%',
-flex: 1,
-position: 'absolute',
-margin: '20%',
-padding: 1,
-background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',}}>
-<CardContent >
-<Typography gutterBottom variant="display2">
-    WorkLess
-  </Typography><Typography gutterBottom variant="display1">
-      mobile site not here
-    </Typography>
-  </CardContent>
-  </Card>
-</Paper>
-      );
-  } else {
-
-    return (
-      <Paper style={{
-        minHeight:height,
-            minWidth:width,
-}}className={classes.root}>
+      <Paper className={classes.root}>
       {log ? ( <div>
               <Header className={classes.he}/>
               <Typography style={{ position: 'absolute', top: '3%', right: '3%',color:'#d6e9ff'}} gutterBottom variant="headline" > <Person/>
@@ -204,7 +154,7 @@ background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',}}>
                   <Part/>
         <Card  className={classes.card1}>
         <CardContent ><p>
-        <Typography gutterBottom variant="display2">
+        <Typography gutterBottom variant="headline">
             WorkLess
           </Typography>
 </p>
@@ -278,12 +228,14 @@ background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',}}>
     </Paper>
     );
   }
-  }
 }
   const styles = theme => ({
     root: {
       flexGrow: 1,
       zindex:1,
+      width: '100% !important',
+      height: '100% !important',
+      minHeight:'10%',
     },
     formControl: {
       flex: 1,
@@ -293,11 +245,11 @@ background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',}}>
     },
     card1: {
       top: '15%',
-      left: '40%',
+      left: '35%',
       right: '45%',
       flex: 1,
       position: 'absolute',
-      minWidth: '25%',
+      minWidth: '30%',
       minHeight: '25%',
       background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',
 

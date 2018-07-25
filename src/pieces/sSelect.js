@@ -16,8 +16,7 @@ import URL from './ui/url.json'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
-
-class Dashboard extends React.Component {
+class Sselect extends React.Component {
 
 constructor(props) {
 super(props);
@@ -28,7 +27,7 @@ classes: this.props.classes,
 staffD:[],
 hits:[],
 staffSelect:[],
-log: true,
+log: false,
 mits:false,
 key:1,
 }
@@ -99,54 +98,14 @@ console.log(error);
 
 render() {
 const{mits, hits, staffSelect,log} = this.state;
-  if(this.props.lin === 1){
-    return(
-    <Paper>
-    <Toolbar><Typography style={{position: 'absolute', left: '5%'}} variant="title" id="tableTitle">
-            Dashboard  </Typography> <Typography style={{marginLeft:33, position: 'absolute', left: '15%'}} variant="contained" size="large" color="secondary" >
-            {this.props.sid.name}</Typography>
-    <Typography style={{position: 'fixed', right: '6%'}} variant="contained" size="large" color="secondary" >
-    </Typography>
-            </Toolbar>
-            <div style={{ padding:2,}}>
-          <Card style={{
-          top:'32%',
-          position:'auto',
-          left:'44%',
-          maxWidth: '30%',
-          position:'absolute',
-          alignItems:'center',
-          background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',}}>
-          <CardContent style={{ left: '36%'}} >
-          <Toolbar><Typography variant="title">Offerings </Typography> </Toolbar>
-          <OfferingsAssigned key={this.props.sid} staffD = {this.props.sid}/>
-          </CardContent ><div> . </div>
-          </Card ></div>
-          <Barchart  style={{position:'auto'}} chartData={this.state.chartData} />
-          </Paper>);
-  }
-
-else{ return( <Paper style={{left:'333%'}} >
-<Toolbar><Typography style={{position: 'absolute', left: '5%'}} variant="title" id="tableTitle">
-        Dashboard</Typography> <Typography style={{position: 'absolute', left: '15%'}} variant="contained" size="large" color="secondary" >
-          {staffSelect.name}</Typography>
-<Typography style={{position: 'fixed', right: '6%'}} variant="contained" size="large" color="secondary" >
-</Typography> </Toolbar>
-  <Barchart  chartData={this.state.chartData} />
-</Paper>);}
-
         return(
-        <Paper >
-        <Toolbar><Typography style={{position: 'absolute', left: '5%'}} variant="title" id="tableTitle">
-                Dashboard</Typography> <Typography style={{position: 'absolute', left: '15%'}} variant="contained" size="large" color="secondary" >
-                {staffSelect.name}</Typography>
-        <Typography style={{position: 'fixed', right: '6%'}} variant="contained" size="large" color="secondary" >
+        <div >
         <form  autoComplete="off">
         <FormControl>
         <InputLabel htmlFor="age-auto-width"> {staffSelect.name}</InputLabel>
         <Select
-        value={this.state.staVa}
-        onChange={this.handleStaffBChange}
+        value= {this.props.value}
+        onChange={this.props.onChangeValue}
         input={<Input name="staff" id="age-auto-width"/>}
         >
         {hits
@@ -159,15 +118,11 @@ else{ return( <Paper style={{left:'333%'}} >
         <FormHelperText>select staff</FormHelperText>
         </FormControl>
         </form>
-        </Typography>
-                </Toolbar>
-                <div style={{ padding:2,}}>
-                <Barchart  style={{position:'auto'}} chartData={this.state.chartData} /></div>
-        </Paper>
+        </div>
 );
 
 }
 }
 
 
-export default Dashboard
+export default Sselect

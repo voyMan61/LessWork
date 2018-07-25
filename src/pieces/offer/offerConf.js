@@ -137,14 +137,25 @@ const CustomTableCell = withStyles(theme => ({
                   <CustomTableCell component="th" scope="row">Projected Enrolments</CustomTableCell>
                   <CustomTableCell>{this.props.od.enrolment}</CustomTableCell>
                 </TableRow>
-                <TableRow>
+                {/*  <TableRow>
+
+
+              add staff drop down list here
                   <CustomTableCell component="th" scope="row">ENTER COORDINATOR</CustomTableCell>
                   <CustomTableCell>{this.props.od.type}</CustomTableCell>
                 </TableRow>
+
+
                 <TableRow>
                   <CustomTableCell component="th" scope="row">COORDINATOR TUTORIALS</CustomTableCell>
                   <CustomTableCell>{this.props.od.tutorial_to_staff}</CustomTableCell>
                 </TableRow>
+
+                ``
+*/}
+
+
+
                 <TableRow>
                   <CustomTableCell component="th" scope="row">CASUAL TUTORIAL</CustomTableCell>
                   <CustomTableCell>{this.props.od.tutorial_to_casual}</CustomTableCell>
@@ -166,10 +177,10 @@ const CustomTableCell = withStyles(theme => ({
                   <CustomTableCell component="th" scope="row">Enrolments</CustomTableCell>
                   <CustomTableCell>{this.props.od.enrolment}</CustomTableCell>
                 </TableRow>
-                <TableRow>
+                {/*<TableRow>
                   <CustomTableCell component="th" scope="row">Type</CustomTableCell>
                   <CustomTableCell>{this.props.od.type}</CustomTableCell>
-                </TableRow>
+                </TableRow>   */}
                 <TableRow>
                   <CustomTableCell component="th" scope="row">Tutorials to staff</CustomTableCell>
                   <CustomTableCell>{this.props.od.tutorial_to_staff}</CustomTableCell>

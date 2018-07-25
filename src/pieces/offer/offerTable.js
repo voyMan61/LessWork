@@ -42,7 +42,7 @@ class EnhancedTableHead extends React.Component {
   render() {
     return (
       <TableHead>
-        <TableRow>          
+        <TableRow>
           {columnData.map(column => {
             return (
               <CustomTableCell>{column.label}</CustomTableCell>
@@ -60,7 +60,7 @@ const styles = theme => ({
     width: '100%',
     marginTop: theme.spacing.unit * 3,
   },
-  
+
   table: {
     minWidth: 1020,
   },
@@ -100,11 +100,11 @@ class EnhancedTable extends React.Component {
   };
 
 
- 
+
   handleROpen = (data, e) => {
     this.setState(state => ({
-      oData: data, 
-      open: true, 
+      oData: data,
+      open: true,
       offerView: true
     }));
   };
@@ -134,7 +134,7 @@ class EnhancedTable extends React.Component {
     this.setState({creatorOpen: false});
   };
 
-  
+
 componentDidMount() {
   var offerObj;
   fetch(URL.url+'offering', {
@@ -153,7 +153,7 @@ componentDidMount() {
               this.setState({
                 objectLoaded: true,
                   patternData: offerObj,
-                  hits: offerObj, 
+                  hits: offerObj,
                   isLoading: false,
               })
           });
@@ -165,25 +165,22 @@ componentDidMount() {
   render() {
   const { classes } = this.props;
   const { objectLoaded, oData, offerView, hits} = this.state;
-
   if(offerView){
     return(
-        <Paper className={classes.root}> 
          <OfferMake viewed={this.viewerClosed.bind(this)} od={oData}/>
-        </Paper>
     )
   }
 if(objectLoaded) {
     return (
-      <Paper className={classes.root}>
+
           <div className={classes.tableWrapper}>
             <Table className={classes.table} aria-labelledby="tableTitle">
               <EnhancedTableHead/>
                 <TableBody>
                   {hits
                     .map(n => {
-                      return ( 
-                        <Tooltip placement="left" TransitionComponent={Zoom} title="View/Edit offering">  
+                      return (
+                        <Tooltip placement="left" TransitionComponent={Zoom} title="View/Edit offering">
                         <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
                             <CustomTableCell component="th" scope="row">{n.unit_code}</CustomTableCell>
                             <CustomTableCell >{n.name}</CustomTableCell>
@@ -197,12 +194,12 @@ if(objectLoaded) {
                 </TableBody>
             </Table>
           </div>
-      </Paper>
+
     );
   }
   else {
     return (
-        <Paper>        
+        <Paper>
         <LinearProgress color="secondary" variant="query" />
         </Paper>
     )

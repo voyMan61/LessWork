@@ -5,18 +5,13 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
+import Paper from '@material-ui/core/Paper';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Toolbar from '@material-ui/core/Toolbar';
 import purple from '@material-ui/core/colors/deepPurple';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import URL from '../ui/url.json'
 
 const styles = {
-    card: {
-        minWidth: 275,
-        borderStyle: 'solid',
-        maxWidth: 750,
-
-    },
     bullet: {
         display: 'inline-block',
         margin: '0 2px',
@@ -50,7 +45,7 @@ class SimpleCard1 extends React.Component {
             patternData: this.props.patternData,
             classes: this.props.classes,
             loaded:false,
-            
+
         }
 
     }
@@ -67,7 +62,7 @@ class SimpleCard1 extends React.Component {
         //http://localhost:5000/api/offering
         //http://arcane-cove-45625.herokuapp.com/api/offering
         //http://immense-headland-42479.herokuapp.com/api/offering
-        fetch(URL.url+'offering', {
+        fetch('http://immense-headland-42479.herokuapp.com/api/offering', {
             //mode: 'no-cors',
             method: 'GET',
             headers: {
@@ -89,7 +84,7 @@ class SimpleCard1 extends React.Component {
             }
         });
 
-        fetch(URL.url+'offeringlookup/' + this.props.staffD.id, {
+        fetch('http://immense-headland-42479.herokuapp.com/api/offeringlookup/' + this.props.staffD.id, {
             //mode: 'no-cors',
             method: 'GET',
             headers: {
@@ -112,7 +107,7 @@ class SimpleCard1 extends React.Component {
             }
         });
 
-        fetch(URL.url+'location', {
+        fetch('http://immense-headland-42479.herokuapp.com/api/location', {
             //mode: 'no-cors',
             method: 'GET',
             headers: {
@@ -135,7 +130,7 @@ class SimpleCard1 extends React.Component {
         });
 
 
-        fetch(URL.url+'period', {
+        fetch('http://immense-headland-42479.herokuapp.com/api/period', {
             //mode: 'no-cors',
             method: 'GET',
             headers: {
@@ -159,7 +154,7 @@ class SimpleCard1 extends React.Component {
             }
         });
 
-        fetch(URL.url+'pattern', {
+        fetch('http://immense-headland-42479.herokuapp.com/api/pattern', {
             //mode: 'no-cors',
             method: 'GET',
             headers: {
@@ -195,6 +190,7 @@ class SimpleCard1 extends React.Component {
         if (this.state.offeringLoaded === true && this.state.locationLoaded === true && this.state.staffOfferingLoaded === true && this.state.periodLoaded === true) {
 
             var singleOffering = this.state.offeringData.find(item => item.staff_id === this.props.staffD.id);
+
             const data1 = this.state.staffOfferingData.map((data) => {
                 var loc = this.state.locationData.find(item => item.id === singleOffering.location_id).name;
                 var periodCode = this.state.periodData.find(item => item.id === data.period_id).code;
@@ -204,9 +200,9 @@ class SimpleCard1 extends React.Component {
                 //console.log(this.state.period_code);
 
                 return (
-                    <div key={data.id}>
-        <Card style={{background: 'linear-gradient(90deg, #e2e2e2  10%, #fdfff9 90%)', minHeight: 180, maxHeight: 180, minWidth: 300, maxWidth: 300}}>
-                <CardContent> 
+                    <div style={{alignItems: 'center', padding: '1%', justifyContent: 'center'}} key={data.id}>
+      <Card style={{ maxWidth: '60%', background: 'linear-gradient(90deg, #e2e2e2  10%, #fdfff9 90%)', }}>
+              <CardContent>
                                 <Typography variant="headline" component="p">
                                     {singleOffering.unit_code} {singleOffering.name}
                                 </Typography>
@@ -214,66 +210,36 @@ class SimpleCard1 extends React.Component {
                                     {loc} | {periodCode} | {singleOffering.pattern_code}
                                 </Typography>
                             </CardContent>
-                            <CardActions>
-                                <Button size="small" color="primary" href="/">
-                                Pattern details
-                                </Button>
-                            </CardActions>
+
                         </Card>
+
                     </div >
                 )
             });
 
             return (
-                <div>
+                <div style={{ padding: '2%', alignItems: 'center', justifyContent: 'center'}}>
                     {data1}
-                        <Card  style={{paddingBlockEnd:'33%', background: 'linear-gradient(155deg, #e2e2e2  10%, #fdfff9 90%)', minHeight: 300, maxHeight: 300, minWidth: 400, maxWidth: 400}}>
-                    <Toolbar><Typography  variant="title">Summary</Typography> </Toolbar>
-                        <CardContent> 
-                            <Typography gutterBottom variant="headline" component="h2">
-                                RESEARCH
-                            </Typography>
-                            <Typography component="p">
-                                Baseline Research: { this.props.staffD.baseline_research}
-                            </Typography>
-                            <Typography className={this.state.classes.pos} component="p">
-                                Other Research: { this.props.staffD.research} <br />
-                            </Typography>
-                            <Typography gutterBottom variant="headline" component="h2">
-                                SERVICE
-                            </Typography>
-                            <Typography component="p">
-                                Baseline Service: { this.props.staffD.baseline_service} <br />
-                            </Typography>
-                            <Typography component="p">
-                                Other Service: { this.props.staffD.service} <br />
-                            </Typography>
-                            <Typography component="p">
-                                Service description: { this.props.staffD.service_description} <br />
-                            </Typography>
-                            <Typography className={this.state.classes.pos} component="p">
-                                Extra: { this.props.staffD.extra} <br />
-                            </Typography>
-                        </CardContent>
-                    </Card>
                 </div>
-                
                 );
         }
 
         else {
             return (
-                <div >
-                <Card className="Bar" style={{background: 'linear-gradient(155deg, #e2e2e2  10%, #fdfff9 90%)', minHeight: 20, maxHeight: 250, minWidth: 250, maxWidth: 250}}>
-                    <Toolbar><Typography style={{ left: '6%'}} variant="title">Offerings</Typography> </Toolbar>
-                        <CardContent style={{ zIndex:-1}}>
-                        <CircularProgress size={'160%'} style={{color: purple[700] }} thickness={0.2} /> 
-                    </CardContent>
-                </Card></div>
+                <div style={{alignItems: 'center', padding: '1%', justifyContent: 'center'}}>
+              <Card className="Bar" style={{maxHeight: '40%', background: 'linear-gradient(155deg, #e2e2e2  10%, #fdfff9 90%)', }}>
+              <CardContent style={{ maxWidth: '33%', maxHeight: '40%', zIndex:-1}}>
+              <Toolbar><Typography style={{position: 'absolute', left: '6%'}} variant="title">loading</Typography> </Toolbar>
+              <CircularProgress  size={'120%'} style={{ color: purple[700] }} thickness={0.2} />
+              </CardContent>
+              </Card></div>
             )
         }
     }
 }
+
+
+
 
 
 export default withStyles(styles)(SimpleCard1)

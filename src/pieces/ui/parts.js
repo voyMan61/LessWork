@@ -3,26 +3,47 @@ import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 import Particles from 'react-particles-js';
+import Dimensions from 'react-dimensions'
 
 
 class Parts extends React.Component {
   state = {
-
+    width: window.innerWidth,
+    height: window.innerHeight,
   };
-  
+
+
+    componentWillMount() {
+      window.addEventListener('resize', this.handleWindowSizeChange);
+    }
+
+    componentWillUnmount() {
+      window.removeEventListener('resize', this.handleWindowSizeChange);
+    }
+
+    handleWindowSizeChange = () => {
+      this.setState({height: window.innerHeight, width: window.innerWidth });
+    };
+
   render() {
-   
+    const { height, width } = this.state;
+    const isMobile = width <= 900;
+
     return (
-          
     <Particles  params={parts}
               style={{
                 zindex: -1,
-                width: '100% !important',
-                height: '100% !important',
+                minHeight:height,
+                minWidth:1.1*width,
+                top:1,
+                left:1,
+                right:1,
+                bottom:4,
+                position:'fixed',
                 background: 'linear-gradient(160deg, #ad0025  20%, #82001b  40%, #660e04  80%)',
-                boxShadow: '0 3px 5px 2px rgba(247, 193, 0, 0.4)',
               }}
-            />   );
+            />
+             );
   }
 }
 
@@ -37,7 +58,7 @@ export default (Parts);
 
 
 
-const parts = 
+const parts =
   {
     "particles": {
       "number": {
@@ -166,7 +187,7 @@ const parts =
 
 
 
-           
+
 
 
 
