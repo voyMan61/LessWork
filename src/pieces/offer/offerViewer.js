@@ -125,49 +125,6 @@ const CustomTableCell = withStyles(theme => ({
           <DialogContentText>
 
 
-          {editMode ? (<div>
-            <Table style={{background:'red'}} className={this.state.classes.table}>
-              <TableHead>
-                <TableRow>
-                  <CustomTableCell>modify offering </CustomTableCell>
-                  <CustomTableCell></CustomTableCell>
-                </TableRow>
-            </TableHead>
-              <TableBody>
-                    <TableRow>
-                      <CustomTableCell component="th" scope="row">Enrolments</CustomTableCell>
-                      <CustomTableCell>{this.props.od.enrolment}</CustomTableCell>
-                    </TableRow>
-                    {/*<TableRow>
-                      <CustomTableCell component="th" scope="row">Type</CustomTableCell>
-                      <CustomTableCell>{this.props.od.type}</CustomTableCell>
-                    </TableRow>   */}
-                    <TableRow>
-                      <CustomTableCell component="th" scope="row">Tutorials to staff</CustomTableCell>
-                      <CustomTableCell>{this.props.od.tutorial_to_staff}</CustomTableCell>
-                    </TableRow>
-                    <TableRow>
-                      <CustomTableCell component="th" scope="row">Tutorials to casual</CustomTableCell>
-                      <CustomTableCell>{this.props.od.tutorial_to_casual}</CustomTableCell>
-                    </TableRow>
-                    <TableRow>
-                      <CustomTableCell component="th" scope="row">CASUAL TUTORIAL</CustomTableCell>
-                      <CustomTableCell>{this.props.od.tutorial_to_casual}</CustomTableCell>
-                    </TableRow>
-            </TableBody>
-            </Table>
-
-            </div>):(<div></div>)}
-
-
-
-
-
-
-
-
-
-
         <Table className={this.state.classes.table}>
           <TableHead>
             <TableRow>
