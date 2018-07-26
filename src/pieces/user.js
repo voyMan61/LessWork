@@ -74,7 +74,6 @@ class USerView extends React.Component {
   render() {
     const { classes } = this.props;
     const { value } = this.state;
-    console.log(this.props.ls)
     return (
 
       <Paper className={classes.root}>

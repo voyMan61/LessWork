@@ -1,15 +1,17 @@
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
+
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import SaveIcon from '@material-ui/icons/Save';
 
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 import Button from '@material-ui/core/Button';
 import classNames from 'classnames';
-import SaveIcon from '@material-ui/icons/Save';
+
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -121,7 +123,6 @@ class CustomizedTable extends React.Component {
         e.preventDefault();
         //http://immense-headland-42479.herokuapp.com/api/new/pattern
         //https://jsonplaceholder.typicode.com/posts
-        console.log(URL.url+'new/offering')
         fetch(URL.url+'new/offering', {
             method: 'POST',
             headers: {
@@ -130,11 +131,9 @@ class CustomizedTable extends React.Component {
             },
 
             body: JSON.stringify({
-
                 unit_id: this.state.unit,
                 pattern_id: this.state.pattern,
                 period_id: this.state.period
-
             })
         }).then(response => {
             if (response.ok) {
@@ -152,7 +151,6 @@ class CustomizedTable extends React.Component {
 
     handleLoc = name => event => {
         var periodObj;
-
 
 
         fetch(URL.url+'periodoptions/' + event.target.value, {
@@ -424,7 +422,6 @@ class CustomizedTable extends React.Component {
                                 ))
                             }
                         </TextField></p>
-
 
                         {isloading ? <Paper className={this.state.classes.root}>
                             <LinearProgress color="secondary" variant="query" />

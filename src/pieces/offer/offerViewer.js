@@ -101,6 +101,7 @@ const CustomTableCell = withStyles(theme => ({
     render() {
       const {classes,  } = this.props;
       const{editMode} = this.state;
+      console.log(this.props.epriv)
     return (
       <Paper className={this.state.classes.root}>
           <Dialog style={{ minWidth:500, }}

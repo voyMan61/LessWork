@@ -115,13 +115,12 @@ class EnhancedTable extends React.Component {
 
 render() {
     const { creatorOpen} = this.state;
-console.log(this.props.paa)
     if(creatorOpen){
         return(
           <Paper>
             <Toolbar><Typography style={{position: 'absolute', left: 60}} variant="title" id="tableTitle">Offering</Typography></Toolbar>
             <OfferCreator cclosed={this.creatorClosed.bind(this)}/>
-            <OfferDetails/>
+            <OfferDetails  priv ={this.props.lin } />
           </Paper>
         );}
     else{
@@ -132,7 +131,7 @@ console.log(this.props.paa)
               Create new offering
             </Button>)}
           </Toolbar>
-          <OfferDetails/>
+          <OfferDetails  priv ={this.props.lin } />
           </Paper>
         );
       }

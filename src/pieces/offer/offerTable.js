@@ -96,6 +96,7 @@ class EnhancedTable extends React.Component {
       creatorOpen: false,
     };
   }
+
   handleChange = () => {
     this.setState(state => ({ checked: !state.checked }));
   };
@@ -166,11 +167,7 @@ componentDidMount() {
   render() {
   const { classes } = this.props;
   const { objectLoaded, oData, offerView, hits} = this.state;
-  if(offerView){
-    return(
-         <OfferViewer viewed={this.viewerClosed.bind(this)} od={oData}/>
-    )
-  }
+
 if(objectLoaded) {
     return (
           <div className={classes.tableWrapper}>
@@ -194,8 +191,8 @@ if(objectLoaded) {
                     })}
                 </TableBody>
             </Table>
+            {offerView ? ( <OfferViewer epriv={this.props.priv} viewed={this.viewerClosed.bind(this)} od={oData}/>):(<div></div>)}
           </div>
-
     );
   }
   else {

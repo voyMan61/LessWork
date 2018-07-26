@@ -120,7 +120,6 @@ const{mits, hits, staffSelect,log} = this.state;
         </form>
         </div>
 );
-
 }
 }
 

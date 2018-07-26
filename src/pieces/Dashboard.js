@@ -10,6 +10,7 @@ import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 
+import Assigner from './offer/assignOfferings.js'
 import OfferingsAssigned from './offer/OfferingsAssigned.js';
 import URL from './ui/url.json'
 
@@ -99,40 +100,79 @@ console.log(error);
 
 render() {
 const{mits, hits, staffSelect,log} = this.state;
+
+
+
   if(this.props.lin === 1){
     return(
-    <Paper>
+    <Paper style={{height:'100%'}}>
     <Toolbar><Typography style={{position: 'absolute', left: '5%'}} variant="title" id="tableTitle">
             Dashboard  </Typography> <Typography style={{marginLeft:33, position: 'absolute', left: '15%'}} variant="contained" size="large" color="secondary" >
             {this.props.sid.name}</Typography>
     <Typography style={{position: 'fixed', right: '6%'}} variant="contained" size="large" color="secondary" >
     </Typography>
             </Toolbar>
-            <div style={{ padding:2,}}>
-          <Card style={{
-          top:'32%',
-          position:'auto',
-          left:'44%',
-          maxWidth: '30%',
-          position:'absolute',
-          alignItems:'center',
-          background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',}}>
-          <CardContent style={{ left: '36%'}} >
-          <Toolbar><Typography variant="title">Offerings </Typography> </Toolbar>
-          <OfferingsAssigned key={this.props.sid} staffD = {this.props.sid}/>
-          </CardContent ><div> . </div>
-          </Card ></div>
-          <Barchart  style={{position:'auto'}} chartData={this.state.chartData} />
-          </Paper>);
-  }
 
-else{ return( <Paper style={{left:'333%'}} >
+            <div style={{ background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)', alignItems:'center', maxWidth: '20%', padding:4,}}>
+            <Toolbar><Typography variant="title">Offerings </Typography> </Toolbar>
+            <OfferingsAssigned key={this.props.sid} staffD = {this.props.sid}/>
+            </div>
+            <div style={{ position:'relative', left:'30%', bottom:'15%'}}>
+                    <Barchart  chartData={this.state.chartData} /></div>
+          </Paper>);
+
+
+  }
+//this.props.lin === 5
+
+    if(true){
+      return(
+      <Paper>
+      <Toolbar><Typography style={{position: 'absolute', left: '5%'}} variant="title" id="tableTitle">
+              Dashboard  </Typography> <Typography style={{marginLeft:33, position: 'absolute', left: '15%'}} variant="contained" size="large" color="secondary" >
+              </Typography>
+      <Typography style={{position: 'fixed', right: '6%'}} variant="contained" size="large" color="secondary" >
+      </Typography>
+              </Toolbar>
+
+              <div style={{padding: 30, display: 'flex', justifyContent: 'center',}}>
+                      <Barchart  chartData={this.state.chartData} /></div>
+              <div style={{
+                alignItems:'center',padding:2,}}>
+
+            <Card style={{
+            top:'28%',
+            alignItems:'center',
+            display: 'flex', justifyContent: 'center',
+            right:'10%',
+            background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',}}>
+            <CardContent style={{ left: '36%'}} >
+            <Toolbar><Typography variant="title">Offerings to be assigned </Typography> </Toolbar>
+            <Assigner/>
+            </CardContent >
+            <div> . </div>
+            </Card ></div>
+            </Paper>);
+    }
+
+
+
+
+
+
+
+
+
+
+
+else{ return( <Paper>
 <Toolbar><Typography style={{position: 'absolute', left: '5%'}} variant="title" id="tableTitle">
         Dashboard</Typography> <Typography style={{position: 'absolute', left: '15%'}} variant="contained" size="large" color="secondary" >
           {staffSelect.name}</Typography>
 <Typography style={{position: 'fixed', right: '6%'}} variant="contained" size="large" color="secondary" >
 </Typography> </Toolbar>
-  <Barchart  chartData={this.state.chartData} />
+<div style={{display: 'flex', justifyContent: 'center',}}>
+        <Barchart  chartData={this.state.chartData} /></div>
 </Paper>);}
 
         return(
@@ -161,8 +201,8 @@ else{ return( <Paper style={{left:'333%'}} >
         </form>
         </Typography>
                 </Toolbar>
-                <div style={{ padding:2,}}>
-                <Barchart  style={{position:'auto'}} chartData={this.state.chartData} /></div>
+                <div style={{display: 'flex', justifyContent: 'center',}}>
+                        <Barchart  chartData={this.state.chartData} /></div>
         </Paper>
 );
 

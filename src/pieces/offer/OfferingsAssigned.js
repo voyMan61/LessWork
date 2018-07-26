@@ -199,9 +199,9 @@ class SimpleCard1 extends React.Component {
                 //this.fetchPeriod(data.location_id, data.period_ID)
                 //console.log(this.state.period_code);
 
-                return ( 
-                    <div style={{alignItems: 'center', padding: '1%', }} key={data.id}>
-      <Card style={{ maxWidth: '60%', background: 'linear-gradient(90deg, #e2e2e2  10%, #fdfff9 90%)', }}>
+                return (
+                    <div style={{display:'flex',alignItems: 'center', padding: '1%', }} key={data.id}>
+      <Card style={{  background: 'linear-gradient(90deg, #e2e2e2  10%, #fdfff9 90%)', }}>
               <CardContent>
                                 <Typography variant="display1" component="p">
                                     {singleOffering.unit_code}

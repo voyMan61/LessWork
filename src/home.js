@@ -88,14 +88,16 @@ if(event.target.id === '1')
 {    if(window.btoa( event.target.value) === 'c3RhZmYx') {
     this.setState({ currentUser: 'Staff', logged:false, expanded: null, log: true,  });
     }}
-    else if(event.target.id === '2')
-    {    if(window.btoa( event.target.value) === 'ZGVhbjI=') {
-        this.setState({lvalue:2, currentUser: 'Dean', logged:false, expanded: null, log: true,  });
-        }}
-        if(event.target.id === '3')
+    if(event.target.id === '2')
 {    if(window.btoa( event.target.value) === 'dWMz') {
-    this.setState({lvalue:3,currentUser: 'UC', logged:false, expanded: null, log: true,  });
-    }}
+this.setState({lvalue:2,currentUser: 'UC', logged:false, expanded: null, log: true,  });
+}}
+
+     if(event.target.id === '3')
+    {    if(window.btoa( event.target.value) === 'ZGVhbjI=') {
+        this.setState({lvalue:3, currentUser: 'Dean', logged:false, expanded: null, log: true,  });
+        }}
+
     if(event.target.id === "4")
 {    if(window.btoa( event.target.value) === 'c2E=') {
     this.setState({lvalue:5,currentUser: 'SA', logged:false, expanded: null, log: true,  });
@@ -207,9 +209,10 @@ background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',}}>
           </ExpansionPanelDetails>
         </ExpansionPanel>
 
-        <ExpansionPanel expanded={expanded === 'Dean'} onChange={this.handleExpandChange('Dean')}>
-          <ExpansionPanelSummary expandIcon={<Dicon />}>
-          <Typography style={{fontSize:15,}}>Dean </Typography>
+
+            <ExpansionPanel expanded={expanded === 'Unit Coordinator'} onChange={this.handleExpandChange('Unit Coordinator')}>
+          <ExpansionPanelSummary expandIcon={<UCicon />}>
+          <Typography style={{fontSize:15,}}>Unit Coordinator</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
           <FormControl className={classes.formControl}>
@@ -221,24 +224,26 @@ background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',}}>
           onChange={this.handleLogChange}
           />       </FormControl>
           </ExpansionPanelDetails>
-
         </ExpansionPanel>
 
-            <ExpansionPanel expanded={expanded === 'Unit Coordinator'} onChange={this.handleExpandChange('Unit Coordinator')}>
-          <ExpansionPanelSummary expandIcon={<UCicon />}>
-          <Typography style={{fontSize:15,}}>Unit Coordinator</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-          <FormControl className={classes.formControl}>
-          <TextField
-          id="3"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-          onChange={this.handleLogChange}
-          />       </FormControl>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
+
+                <ExpansionPanel expanded={expanded === 'Dean'} onChange={this.handleExpandChange('Dean')}>
+                  <ExpansionPanelSummary expandIcon={<Dicon />}>
+                  <Typography style={{fontSize:15,}}>Dean </Typography>
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails>
+                  <FormControl className={classes.formControl}>
+                  <TextField
+                  id="3"
+                  label="Password"
+                  type="password"
+                  autoComplete="current-password"
+                  onChange={this.handleLogChange}
+                  />       </FormControl>
+                  </ExpansionPanelDetails>
+
+                </ExpansionPanel>
+
         <ExpansionPanel expanded={expanded === 'System Administrator'} onChange={this.handleExpandChange('System Administrator')}>
           <ExpansionPanelSummary expandIcon={<SAicon />}>
           <Typography style={{justifyContent: 'center',fontSize:15,}}>System Administrator </Typography>
