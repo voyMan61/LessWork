@@ -11,6 +11,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import purple from '@material-ui/core/colors/deepPurple';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import Grid from '@material-ui/core/Grid';
+
+
 const styles = {
     bullet: {
         display: 'inline-block',
@@ -200,7 +203,10 @@ class SimpleCard1 extends React.Component {
                 //console.log(this.state.period_code);
 
                 return (
-                    <div style={{display:'flex',alignItems: 'center', padding: '1%', }} key={data.id}>
+                  <Grid container spacing={24}>
+                    <div key={data.id}>
+
+                    <Grid item xs={6} spacing={16}>
       <Card style={{  background: 'linear-gradient(90deg, #e2e2e2  10%, #fdfff9 90%)', }}>
               <CardContent>
                                 <Typography variant="display1" component="p">
@@ -214,7 +220,9 @@ class SimpleCard1 extends React.Component {
                                 </Typography>
                             </CardContent>
                         </Card>
+                        </Grid>
                     </div >
+                    </Grid>
                 )
             });
             return (

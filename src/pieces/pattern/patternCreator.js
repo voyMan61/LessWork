@@ -541,7 +541,7 @@ class CustomizedTable extends React.Component {
                                 <TableHead>
                                     <TableRow>
                                         <CustomTableCell>Per student activities</CustomTableCell>
-                                        <CustomTableCell>Hours}</CustomTableCell>
+                                        <CustomTableCell>Hours</CustomTableCell>
                                         <CustomTableCell>Confirm</CustomTableCell>
                                     </TableRow>
                                 </TableHead>}

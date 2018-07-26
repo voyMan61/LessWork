@@ -21,7 +21,8 @@ import URL from '../ui/url.json'
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import SaveIcon from '@material-ui/icons/Save';
-
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import classNames from 'classnames';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -166,6 +167,11 @@ class EnhancedTable extends React.Component {
       expanded: null,
       postPassed: false,
       enrols:0,
+      sopen: false,
+      r: 255,
+      g:255,
+      b:255,
+      d:'',
     };
   }
 
@@ -291,6 +297,12 @@ fetch(URL.url+'stafftotals', {
       }
   });
 }
+
+handleClick = () => {
+    this.setState({ sopen: true });
+  };
+
+
 handleClose = (event, reason) => {
     if (reason === 'clickaway') {
         return;
@@ -352,18 +364,19 @@ handleClose = (event, reason) => {
 
   render() {
   const { classes } = this.props;
-  const { postPassed, expanded, currentID, catg, enrols, cotg, loadD, confirmed, staffSelect, staffData, staffLoaded, h, d, da, objectLoaded, oData, offerView, hits} = this.state;
+  const { r,g,b, sopen, postPassed, expanded, currentID, catg, enrols, cotg, loadD, confirmed, staffSelect, staffData, staffLoaded, h, d, da, objectLoaded, oData, offerView, hits} = this.state;
   if(objectLoaded && staffLoaded) {
       return (
             <div>
     <Grid container spacing={24}>
+
                     {hits
                       .map(n => {
                         if(n.enrolment === 0){
                         return (
                         <Grid item xs={3} spacing={40}>
                           <div>
-                          <ExpansionPanel expanded={expanded === n.id} onChange={this.handleEChange(n.id)}>
+                          <ExpansionPanel style={{backgroundColor:d }} expanded={expanded === n.id} onChange={this.handleEChange(n.id)}>
                             <ExpansionPanelSummary style={{ padding:5, flexGrow: 1,}}expandIcon={<ExpandMoreIcon />}>
                             <Typography className={classes.heading}>{n.unit_code}</Typography>
                                         <Typography className={classes.secondaryHeading}> - {n.name}</Typography>
@@ -381,13 +394,12 @@ handleClose = (event, reason) => {
                                 color="primary"  />
                           </p>
 
-
-                          <p style={{ top:'12%', textAlign:'center', position: 'relative',}} >select staff
+                          <p style={{ top:'12%', textAlign:'center', position: 'relative',}} >
                           <Select
                           id={n.id}
                           value= {staffSelect}
                           onChange={this.handleStaff()}
-                          input={<Input name="staff" id="age-auto-width"/>}
+                          input={<Input name="staff" id="age-helper" />}
                           >
                           {staffData
                           .map(m => {
@@ -395,13 +407,11 @@ handleClose = (event, reason) => {
                           <MenuItem value={m}>{m.name}</MenuItem>
                           );
                           })}
-                          </Select>
+                          </Select><FormHelperText style={{ textAlign:'center'}}>Select Staff</FormHelperText>
                           </p>
 
-
-
-
-
+{this.state.loadD/this.state.loadT > 1 ? (<p style={{textAlign:'center', backgroundColor:'rgb(255, 17, 61)'}}>Staff is overworked </p>):(<p> </p>)
+}
                           <p style={{position: 'relative',color:'#d6e9ff', textAlign: 'center'}} >
                             <TextField
                                 id={n.id}
@@ -440,43 +450,25 @@ handleClose = (event, reason) => {
 />
 </p>
 
-                            <Button type="submit" variant="outlined" size="large" style={{ position:'relative', left:'33%', textAlign:'center',  color: "#0f6600"}} >
-                            <SaveIcon/> Save
-                            </Button>
-                            </form>
-                            <div style={{ textAlign:'center', alignItems:'center'}} ></div>
-                            </ExpansionPanelDetails>
-                            <Divider />
-                          </ExpansionPanel>
-                          </div>
-                          </Grid>
-                        );}
-                      })}
-                      </Grid>
+          <Button type="submit" variant="outlined" size="large" style={{ position:'relative', left:'30%', textAlign:'center',  color: "#0f6600"}} >
+          <SaveIcon/> Save
+          </Button>
+          </form>
+          <div style={{ textAlign:'left', alignItems:'center'}} ></div>
+          </ExpansionPanelDetails>
+          <Divider />
+        </ExpansionPanel>
+        </div>
+        </Grid>
+      );}
+    })}
+    </Grid>
 
-                      <Snackbar
-                          anchorOrigin={{
-                              vertical: 'bottom',
-                              horizontal: 'left',
-                          }}
-                          open={this.state.postPassed}
-                          autoHideDuration={6000}
-                          onClose={this.handleClose}
-                          ContentProps={{
-                              'aria-describedby': 'message-id',
-                          }}
-                          message={<span id="message-id">{this.state.message}</span>}
-                          action={[
-                              <IconButton
-                                  key="close"
-                                  aria-label="Close"
-                                  color="inherit"
-                                  onClick={this.handleClose}
-                              >
-                                  <CloseIcon />
-                              </IconButton>,
-                          ]}
-                      />
+
+
+
+
+
 
 
 

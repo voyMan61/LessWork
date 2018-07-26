@@ -55,22 +55,22 @@ class BarExample extends React.Component {
               datasets: [
                 {
                   label: 'Total Load',
-                  backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                  backgroundColor: 'rgba(0, 177, 237, 0.3)',
                   borderColor: 'rgba(54, 162, 235,1)',
-                  borderWidth: 1,
-                  hoverBackgroundColor: 'rgba(54, 162, 235,0.4)',
+                  borderWidth: 1.4,
+                  hoverBackgroundColor: 'rgba(0, 177, 237, 0.5)',
                   hoverBorderColor: 'rgba(54, 162, 235,1)',
                   data: myData,
                   //data: [99, 59, 80, 81, 56, 55, 40]
-                }, {
+                },
+                {
                   label: 'Target',
-                  backgroundColor: 'rgba(255,99,132,0.2)',
+                  backgroundColor: 'rgba(237, 0, 0, 0.3)',
                   borderColor: 'rgba(255,99,132,1)',
-                  borderWidth: 1,
-                  hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                  borderWidth: 1.4,
+                  hoverBackgroundColor: 'rgba(237, 0, 0, 0.5)',
                   hoverBorderColor: 'rgba(255,99,132,1)',
                   data: myTarget,
-
                   //data: [65, 59, 80, 81, 56, 55, 40]
                 }
               ]
@@ -89,15 +89,14 @@ class BarExample extends React.Component {
   }
   render() {
     return (
-      <Card className="Bar" style={{ background: 'linear-gradient(55deg, #e2e2e2  10%, #fdfff9 90%)', minHeight: '25%', maxHeight: '25%', minWidth: '40%', maxWidth: '40%'}}>
-        <Toolbar><Typography style={{position: 'absolute', left: '6%'}} variant="title">WorkLoad Distribution Graph</Typography> </Toolbar>
-              <CardContent> 
-        {!this.state.loaded && <CircularProgress size={300} style={{  marginLeft: '25%', color: purple[700] }} thickness={0.1} /> } {this.state.loaded &&
-          
+      <Card className="Bar" style={{ background: 'linear-gradient(55deg, #e2e2e2  10%, #fdfff9 90%)',}}>
+        <Toolbar><Typography style={{ position: 'absolute', left: '6%'}} variant="title">WorkLoad Distribution Graph</Typography> </Toolbar>
+              <CardContent>
+        {!this.state.loaded && <CircularProgress size={100} style={{  marginLeft: '45%', color: purple[700] }} thickness={0.3} /> } {this.state.loaded &&
           <Bar
             data={this.state.chartData}
-            width={10}
-            height={300}
+            width={'100%'}
+            height={400}
             options={{
               maintainAspectRatio: false,
               scales: {
@@ -114,7 +113,7 @@ class BarExample extends React.Component {
             }}
           />}
 </CardContent>
-      </Card> 
+      </Card>
     )
 
   }
