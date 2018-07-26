@@ -311,7 +311,7 @@ fetch(URL.url+'stafftotals', {
                         return (
                         <Grid item xs={3} spacing={40}>
                           <div >
-                          <ExpansionPanel defaultExpanded>
+                          <ExpansionPanel>
                             <ExpansionPanelSummary style={{ padding:5, flexGrow: 1,}}expandIcon={<ExpandMoreIcon />}>
                             <Typography className={classes.heading}>{n.unit_code}</Typography>
                                         <Typography className={classes.secondaryHeading}> - {n.name}</Typography>
