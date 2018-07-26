@@ -324,9 +324,9 @@ class CustomizedTable extends React.Component {
         >
           <DialogTitle id="scroll-dialog-title" style={{  minWidth: 500, background: 'linear-gradient(55deg, #fff9f9  10%, #fffef4 90%)'}}>
                 Create New Offering
-                <Button variant="outlined" color="secondary"  style={{color: "#bf0000 ", position: "absolute", top: '2%', right: '5%'}} onClick={this.props.cclosed}>
-                Cancel<CloseIcon/>
-                </Button>
+                <Button  variant="fab" color="secondary"  style={{position: 'absolute', top:'1%', right: '2%'}} onClick={this.props.cclosed}>
+                      <CloseIcon/>
+                  </Button>
           </DialogTitle>
           <DialogContent  style={{ alignItems:'center', background: 'linear-gradient(55deg, #e2e2e2  10%, #fdfff9 90%)'}}>
                     <form onSubmit={this.handleSubmit}>
@@ -430,7 +430,9 @@ class CustomizedTable extends React.Component {
 
 
                         <p style={{textAlign: 'center'}} >
-                        <Button className={this.state.classes.button} type="submit" size="large"  variant="contained" style={{ color: "#0f6600"}} type="submit" variant="outlined" >
+
+
+                        <Button  type="submit" size="large"  variant="contained" style={{ color: "#0f6600"}} type="submit" variant="outlined" >
                                 <SaveIcon className={classNames(this.state.classes.leftIcon, this.state.classes.iconSmall)} />
                                 Create Offering
                         </Button></p>

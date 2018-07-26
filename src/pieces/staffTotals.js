@@ -239,8 +239,11 @@ class EnhancedTable extends React.Component {
         <Typography  gutterBottom align="center" variant="display1">
         {staffSelect.name}
           </Typography>  </div>
-<Button  variant="fab" color="secondary"  style={{position: 'absolute', top:'1%', right: '2%'}} onClick={this.handleClose.bind(this)}>
+<Button  variant="outlined" color="secondary"  style={{color: "#bf0000 ", position: 'absolute', top:'1%', right: '2%'}} onClick={this.handleClose.bind(this)}>
 <CloseIcon/></Button>
+
+
+
 </DialogTitle>
 <DialogContent style={{padding:4, minWidth:400, background: 'linear-gradient(55deg, #e2e2e2  10%, #fdfff9 90%)',}}>
 <DialogContentText>
