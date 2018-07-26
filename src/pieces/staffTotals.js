@@ -18,13 +18,11 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
 import STE from './offer/OfferingsAssigned';
 import CloseIcon from '@material-ui/icons/Close';
-
+import URL from './ui/url.json'
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
-
 
 
 const CustomTableCell = withStyles(theme => ({
@@ -52,7 +50,7 @@ class EnhancedTableHead extends React.Component {
   render() {
     return (
       <TableHead style={{color: 'white'}}>
-        <TableRow>          
+        <TableRow>
           {columnData.map(column => {
             return (
               <CustomTableCell
@@ -80,43 +78,6 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-const toolbarStyles = theme => ({
-  root: {
-    paddingRight: theme.spacing.unit,
-  },
-  spacer: {
-    flex: '1 1 100%',
-  },
-
-  title: {
-    flex: '0 0 auto',
-  },
-});
-
-let EnhancedTableToolbar = props => {
-  const { numSelected, classes } = props;
-  return (
-    <Toolbar
-      className={classNames(classes.tolo, {
-        [classes.highlight]: numSelected > 0,
-      })}
-    >
-      <div className={classes.title}>
-          <Typography variant="title" id="tableTitle">
-            Staff Totals
-          </Typography> 
-      </div>
-      <div className={classes.spacer} />
-    </Toolbar>
-  );
-};
-
-EnhancedTableToolbar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
-};
-
-EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
 
 const styles = theme => ({
   root: {
@@ -135,15 +96,7 @@ const styles = theme => ({
   default:{
 
   },
-  paper: {
-    margin: theme.spacing.unit,
-    position: 'absolute',
-    width: theme.spacing.unit * 150,
-    height: theme.spacing.unit * 50,
-    backgroundColor: 'theme.palette.background.paper',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
-  },
+
 });
 
 class EnhancedTable extends React.Component {
@@ -166,7 +119,7 @@ class EnhancedTable extends React.Component {
   handleROpen = (data, e) => {
     this.setState({ staffSelect: data, mew: true ,open:true});
   };
-  
+
   handleOpen = () => {
     this.setState({ open: true });
   };
@@ -215,18 +168,18 @@ class EnhancedTable extends React.Component {
   };
 
   isSelected = id => this.state.selected.indexOf(id) !== -1;
-  
+
   viewerClosed() {
     this.setState({load:true, mew: false});
   };
 
   componentDidMount() {
     this.setState({ isLoading: true });
-    fetch('http://immense-headland-42479.herokuapp.com/api/stafftotals')
+    fetch(URL.url+'stafftotals')
     .then((response) => response.json())
     .then((responseJson) => {
         this.setState({ hits: responseJson, isLoading: false });
-    }) 
+    })
 }
   render() {
   const { classes } = this.props;
@@ -235,9 +188,13 @@ class EnhancedTable extends React.Component {
 
 
     return (
-      <Paper className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} />
-        {isLoading ? (<LinearProgress style={{ color: lime[500] }}  variant="query" />) :
+      <Paper>
+        <Toolbar><Typography style={{position: 'absolute', left: 60}} variant="title" id="tableTitle">Staff totals</Typography>
+        </Toolbar>
+
+
+
+        {isLoading ? (<LinearProgress variant="query" />) :
         (<div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <EnhancedTableHead
@@ -246,14 +203,14 @@ class EnhancedTable extends React.Component {
               orderBy={orderBy}
               onSelectAllClick={this.handleSelectAllClick}
               rowCount={hits.length}
-            />     
+            />
         <TableBody>
               {hits
                 .map(n => {
-                  return (     
-                <Tooltip placement="left" TransitionComponent={Zoom} title="View staff info">   
+                  return (
+                <Tooltip placement="left" TransitionComponent={Zoom} title="View staff info">
                     <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
-                      <CustomTableCell style={{textAlign: 'center'}} component="th" scope="row"> {n.name}</CustomTableCell>                    
+                      <CustomTableCell style={{textAlign: 'center'}} component="th" scope="row"> {n.name}</CustomTableCell>
                       <CustomTableCell style={{textAlign: 'center'}} >{n.offerings_taken}</CustomTableCell>
                       <CustomTableCell style={{textAlign: 'center'}} >{n.target}</CustomTableCell>
                       <CustomTableCell style={{textAlign: 'center', color: n.total_load < 0.9* n.target? 'blue' : n.total_load > 1.1*n.target? 'red' :  'green'}}>{n.total_load}</CustomTableCell>
@@ -262,7 +219,6 @@ class EnhancedTable extends React.Component {
                     </Tooltip>
                   );
                 })}
-
             </TableBody>
           </Table>
         </div>)}
@@ -273,20 +229,28 @@ class EnhancedTable extends React.Component {
           scroll={this.state.scroll}
           aria-labelledby="scroll-dialog-title"
         >
-          <DialogTitle id="scroll-dialog-title">Offerings assigned to {staffSelect.name}
-          <Button variant="outlined" color="secondary"  style={{color: "#bf0000 ", position: "absolute", right: '5%'}}  onClick={this.handleClose.bind(this)}>       
-            Close
-          </Button>
-          </DialogTitle>
-          <DialogContent style={{ minWidth:500, minHeight:250, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(55deg, #e2e2e2  10%, #fdfff9 90%)'}}>
-          <DialogContentText>
-            <STE staffD = {staffSelect}/> 
+
+        <DialogTitle style={{ background: 'linear-gradient(55deg, #fff9f9  10%, #fffef4 90%)'}}>
+        <div style={{padding:1,}} >
+        <Typography variant="subheading" gutterBottom noWrap>
+         Offerings assigned to
+          </Typography>
+
+        <Typography  gutterBottom align="center" variant="display1">
+        {staffSelect.name}
+          </Typography>  </div>
+<Button  variant="fab" color="secondary"  style={{position: 'absolute', top:'1%', right: '2%'}} onClick={this.handleClose.bind(this)}>
+<CloseIcon/></Button>
+</DialogTitle>
+<DialogContent style={{padding:4, minWidth:400, background: 'linear-gradient(55deg, #e2e2e2  10%, #fdfff9 90%)',}}>
+<DialogContentText>
+            <STE staffD = {staffSelect}/>
         </DialogContentText>
         </DialogContent>
         </Dialog>
 
         ) : (<div></div>)}
-        
+
       </Paper>
     );}
 }

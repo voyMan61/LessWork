@@ -5,17 +5,13 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
+import Paper from '@material-ui/core/Paper';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Toolbar from '@material-ui/core/Toolbar';
 import purple from '@material-ui/core/colors/deepPurple';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = {
-    card: {
-        minWidth: 275,
-        borderStyle: 'solid',
-        maxWidth: 750,
-
-    },
     bullet: {
         display: 'inline-block',
         margin: '0 2px',
@@ -49,7 +45,7 @@ class SimpleCard1 extends React.Component {
             patternData: this.props.patternData,
             classes: this.props.classes,
             loaded:false,
-            
+
         }
 
     }
@@ -194,7 +190,7 @@ class SimpleCard1 extends React.Component {
         if (this.state.offeringLoaded === true && this.state.locationLoaded === true && this.state.staffOfferingLoaded === true && this.state.periodLoaded === true) {
 
             var singleOffering = this.state.offeringData.find(item => item.staff_id === this.props.staffD.id);
-            console.log('r')
+
             const data1 = this.state.staffOfferingData.map((data) => {
                 var loc = this.state.locationData.find(item => item.id === singleOffering.location_id).name;
                 var periodCode = this.state.periodData.find(item => item.id === data.period_id).code;
@@ -204,79 +200,39 @@ class SimpleCard1 extends React.Component {
                 //console.log(this.state.period_code);
 
                 return (
-                    <div key={data.id} style={{flex: 3, flexDirection: 'row', alignItems: 'center',  justifyContent: 'center'}}>
-    <Toolbar><Typography style={{position: 'relative', left: '6%'}} variant="title">Offerings</Typography> </Toolbar>
-        <Card style={{background: 'linear-gradient(90deg, #e2e2e2  10%, #fdfff9 90%)', minHeight: 180, maxHeight: 180, minWidth: 300, maxWidth: 300}}>
-                <CardContent> 
+                    <div style={{display:'flex',alignItems: 'center', padding: '1%', }} key={data.id}>
+      <Card style={{  background: 'linear-gradient(90deg, #e2e2e2  10%, #fdfff9 90%)', }}>
+              <CardContent>
+                                <Typography variant="display1" component="p">
+                                    {singleOffering.unit_code}
+                                </Typography>
                                 <Typography variant="headline" component="p">
-                                    {singleOffering.unit_code} {singleOffering.name}
+                                  {singleOffering.name}
                                 </Typography>
                                 <Typography component="p">
                                     {loc} | {periodCode} | {singleOffering.pattern_code}
                                 </Typography>
                             </CardContent>
-                            <CardActions>
-                                <Button size="small" color="primary" href="/lols">
-                                Pattern details
-                                </Button>
-                            </CardActions>
                         </Card>
-                        <br />
                     </div >
                 )
             });
-
             return (
-                <div style={{padding: 33, flex: 3, flexDirection: 'row', alignItems: 'center',  justifyContent: 'center'}}>
+                <div style={{ padding: '2%', }}>
                     {data1}
-                        <Card  style={{background: 'linear-gradient(155deg, #e2e2e2  10%, #fdfff9 90%)', minHeight: 300, maxHeight: 300, minWidth: 400, maxWidth: 400}}>
-                    <Toolbar><Typography style={{position: 'relative'}} variant="title">Summary</Typography> </Toolbar>
-                        <CardContent> 
-                            <Typography gutterBottom variant="headline" component="h2">
-                                RESEARCH
-                            </Typography>
-                            <Typography component="p">
-                                Baseline Research: { this.props.staffD.baseline_research}
-                            </Typography>
-                            <Typography className={this.state.classes.pos} component="p">
-                                Other Research: { this.props.staffD.research} <br />
-                            </Typography>
-                            <Typography gutterBottom variant="headline" component="h2">
-                                SERVICE
-                            </Typography>
-                            <Typography component="p">
-                                Baseline Service: { this.props.staffD.baseline_service} <br />
-                            </Typography>
-                            <Typography component="p">
-                                Other Service: { this.props.staffD.service} <br />
-                            </Typography>
-                            <Typography component="p">
-                                Service description: { this.props.staffD.service_description} <br />
-                            </Typography>
-                            <Typography className={this.state.classes.pos} component="p">
-                                Extra: { this.props.staffD.extra} <br />
-                            </Typography>
-
-                        </CardContent>
-                    </Card>
                 </div>
-                
                 );
         }
-
         else {
             return (
-<div style={{padding: 33, display: 'flex', alignItems: 'center',  justifyContent: 'center'}}>
-<Card className="Bar" style={{background: 'linear-gradient(155deg, #e2e2e2  10%, #fdfff9 90%)', minHeight: 20, maxHeight: 250, minWidth: 250, maxWidth: 250}}>
-    <Toolbar><Typography style={{position: 'relative', left: '6%'}} variant="title">Offerings</Typography> </Toolbar>
-        <CardContent style={{ zIndex:-1}}>
-        <CircularProgress size={'160%'} style={{color: purple[700] }} thickness={0.2} /> 
-    </CardContent>
-</Card></div>
-                        )
-                    }
-
-
+                <div style={{alignItems: 'center', padding: '1%', justifyContent: 'center'}}>
+              <Card className="Bar" style={{ background: 'linear-gradient(155deg, #e2e2e2  10%, #fdfff9 90%)', }}>
+              <CardContent >
+              <CircularProgress  size={'40%'} style={{ position: 'relative', bottom:'5%', left: '35%', color: purple[700] }} thickness={0.3} />
+              </CardContent>
+              </Card></div>
+            )
+        }
     }
 }
 

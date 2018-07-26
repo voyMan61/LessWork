@@ -1,15 +1,17 @@
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
+
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import SaveIcon from '@material-ui/icons/Save';
 
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 import Button from '@material-ui/core/Button';
 import classNames from 'classnames';
-import SaveIcon from '@material-ui/icons/Save';
+
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -17,6 +19,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+import URL from '../ui/url.json'
 
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -90,7 +93,7 @@ class CustomizedTable extends React.Component {
             classes: this.props.classes,
             locationLoaded: false,
             locationData: this.props.locationData,
-            
+
             location: 1,
             postPassed: false,
             unitLoaded: false,
@@ -120,7 +123,7 @@ class CustomizedTable extends React.Component {
         e.preventDefault();
         //http://immense-headland-42479.herokuapp.com/api/new/pattern
         //https://jsonplaceholder.typicode.com/posts
-        fetch('http://immense-headland-42479.herokuapp.com/api/new/offering', {
+        fetch(URL.url+'new/offering', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -128,11 +131,9 @@ class CustomizedTable extends React.Component {
             },
 
             body: JSON.stringify({
-
                 unit_id: this.state.unit,
                 pattern_id: this.state.pattern,
                 period_id: this.state.period
-
             })
         }).then(response => {
             if (response.ok) {
@@ -152,8 +153,7 @@ class CustomizedTable extends React.Component {
         var periodObj;
 
 
-
-        fetch('http://immense-headland-42479.herokuapp.com/api/periodoptions/' + event.target.value, {
+        fetch(URL.url+'periodoptions/' + event.target.value, {
             //mode: 'no-cors',
             method: 'GET',
             headers: {
@@ -190,7 +190,7 @@ class CustomizedTable extends React.Component {
 
     };
 
-    
+
 
     handleUnit = name => event => {
         this.setState({
@@ -206,7 +206,7 @@ class CustomizedTable extends React.Component {
 
     };
 
-    
+
 
     componentDidMount() {
         var locationObj;
@@ -214,7 +214,7 @@ class CustomizedTable extends React.Component {
         var patternObj;
         var periodObj;
 
-        fetch('http://immense-headland-42479.herokuapp.com/api/location', {
+        fetch(URL.url+'location', {
             //mode: 'no-cors',
             method: 'GET',
             headers: {
@@ -236,7 +236,7 @@ class CustomizedTable extends React.Component {
             }
         });
 
-        fetch('http://immense-headland-42479.herokuapp.com/api/unit', {
+        fetch(URL.url+'unit', {
             //mode: 'no-cors',
             method: 'GET',
             headers: {
@@ -258,7 +258,7 @@ class CustomizedTable extends React.Component {
             }
         });
 
-        fetch('http://immense-headland-42479.herokuapp.com/api/pattern', {
+        fetch(URL.url+'pattern', {
             //mode: 'no-cors',
             method: 'GET',
             headers: {
@@ -280,7 +280,7 @@ class CustomizedTable extends React.Component {
             }
         });
 
-        fetch('http://immense-headland-42479.herokuapp.com/api/periodoptions/1', {
+        fetch(URL.url+'periodoptions/1', {
             //mode: 'no-cors',
             method: 'GET',
             headers: {
@@ -319,15 +319,15 @@ class CustomizedTable extends React.Component {
             modal = {true}
             autoDetectWindowHeight={false}
             autoScrollBodyContent={false}
-            contentStyle={{width: "100%", maxWidth: "none"}}
+            contentStyle={{width: "100%",  maxWidth: "none"}}
         >
-          <DialogTitle id="scroll-dialog-title" style={{ background: 'linear-gradient(55deg, #fff9f9  10%, #fffef4 90%)'}}>
+          <DialogTitle id="scroll-dialog-title" style={{  minWidth: 500, background: 'linear-gradient(55deg, #fff9f9  10%, #fffef4 90%)'}}>
                 Create New Offering
-                <Button variant="outlined" color="secondary"  style={{color: "#bf0000 ", position: "absolute", top: '2%', right: '5%'}} onClick={this.props.cclosed}>       
+                <Button variant="outlined" color="secondary"  style={{color: "#bf0000 ", position: "absolute", top: '2%', right: '5%'}} onClick={this.props.cclosed}>
                 Cancel<CloseIcon/>
                 </Button>
           </DialogTitle>
-          <DialogContent style={{ background: 'linear-gradient(55deg, #e2e2e2  10%, #fdfff9 90%)'}}>
+          <DialogContent  style={{ alignItems:'center', background: 'linear-gradient(55deg, #e2e2e2  10%, #fdfff9 90%)'}}>
                     <form onSubmit={this.handleSubmit}>
                     <p style={{textAlign: 'center'}} >
                         <TextField
@@ -423,46 +423,44 @@ class CustomizedTable extends React.Component {
                             }
                         </TextField></p>
 
-                       
                         {isloading ? <Paper className={this.state.classes.root}>
                             <LinearProgress color="secondary" variant="query" />
                         </Paper> : isloading}
 
 
-                        <Snackbar
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
-                            }}
-                            open={this.state.postPassed}
-                            autoHideDuration={6000}
-                            onClose={this.handleClose}
-                            ContentProps={{
-                                'aria-describedby': 'message-id',
-                            }}
-                            message={<span id="message-id">{this.state.message}</span>}
-                            action={[
-
-                                <IconButton
-                                    key="close"
-                                    aria-label="Close"
-                                    color="inherit"
-                                    className={this.state.classes.close}
-                                    onClick={this.handleClose}
-                                >
-                                    <CloseIcon />
-                                </IconButton>,
-                            ]}
-                        />
+                        <p style={{textAlign: 'center'}} >
+                        <Button className={this.state.classes.button} type="submit" size="large"  variant="contained" style={{ color: "#0f6600"}} type="submit" variant="outlined" >
+                                <SaveIcon className={classNames(this.state.classes.leftIcon, this.state.classes.iconSmall)} />
+                                Create Offering
+                        </Button></p>
                     </form>
                     </DialogContent>
-                    <DialogActions style={{ color: "#005e5e", background: 'linear-gradient(55deg, #fffef9  10%, #fffbf9 90%)'}}>
-                    <Button className={this.state.classes.button} type="submit" size="large"  variant="contained" style={{position: "relative", right: '25%', color: "#0f6600"}} type="submit" variant="outlined" >
-                            <SaveIcon className={classNames(this.state.classes.leftIcon, this.state.classes.iconSmall)} />
-                            Create Offering
-                    </Button>
-        </DialogActions>
-        </Dialog>
+                    </Dialog>
+                    <Snackbar
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'left',
+                        }}
+                        open={this.state.postPassed}
+                        autoHideDuration={6000}
+                        onClose={this.handleClose}
+                        ContentProps={{
+                            'aria-describedby': 'message-id',
+                        }}
+                        message={<span id="message-id">{this.state.message}</span>}
+                        action={[
+
+                            <IconButton
+                                key="close"
+                                aria-label="Close"
+                                color="inherit"
+                                className={this.state.classes.close}
+                                onClick={this.handleClose}
+                            >
+                                <CloseIcon />
+                            </IconButton>,
+                        ]}
+                    />
                 </Paper>
 
             );

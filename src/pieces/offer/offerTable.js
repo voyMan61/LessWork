@@ -8,18 +8,16 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
-import OfferMake from './offer/offerConf.js'
-import OfferCreator from './offer/offerCreator.js'
+import OfferEdit from './offerEditor.js'
+import OfferViewer from './offerViewer.js'
 import Button from '@material-ui/core/Button';
-import OfferDetails from './offer/offerTable'
-
+import URL from '../ui/url.json'
 
 const CustomTableCell = withStyles(theme => ({
   head: {
@@ -45,7 +43,7 @@ class EnhancedTableHead extends React.Component {
   render() {
     return (
       <TableHead>
-        <TableRow>          
+        <TableRow>
           {columnData.map(column => {
             return (
               <CustomTableCell>{column.label}</CustomTableCell>
@@ -63,7 +61,7 @@ const styles = theme => ({
     width: '100%',
     marginTop: theme.spacing.unit * 3,
   },
-  
+
   table: {
     minWidth: 1020,
   },
@@ -98,16 +96,17 @@ class EnhancedTable extends React.Component {
       creatorOpen: false,
     };
   }
+
   handleChange = () => {
     this.setState(state => ({ checked: !state.checked }));
   };
 
 
- 
+
   handleROpen = (data, e) => {
     this.setState(state => ({
-      oData: data, 
-      open: true, 
+      oData: data,
+      open: true,
       offerView: true
     }));
   };
@@ -129,6 +128,7 @@ class EnhancedTable extends React.Component {
   };
 
   handleCreator = () => {
+    console.log('create');
     this.setState({ creatorOpen: true });
   };
 
@@ -136,10 +136,10 @@ class EnhancedTable extends React.Component {
     this.setState({creatorOpen: false});
   };
 
-  
+
 componentDidMount() {
   var offerObj;
-  fetch('http://immense-headland-42479.herokuapp.com/api/offering', {
+  fetch(URL.url+'offering', {
       //mode: 'no-cors',
       method: 'GET',
       headers: {
@@ -155,38 +155,55 @@ componentDidMount() {
               this.setState({
                 objectLoaded: true,
                   patternData: offerObj,
-                  hits: offerObj, 
+                  hits: offerObj,
                   isLoading: false,
               })
           });
       }
   });
 }
-render() {
-    const { creatorOpen} = this.state;
-  
-    if(creatorOpen){
-        return(
-          <Paper>
-            <Toolbar><Typography style={{position: 'absolute', left: 60}} variant="title" id="tableTitle">Offering</Typography></Toolbar>
-            <OfferCreator cclosed={this.creatorClosed.bind(this)}/>
-            <OfferDetails/>
-          </Paper>
-        );}
-    else{
-      return (
-          <Paper>
-          <Toolbar><Typography style={{position: 'absolute', left: 60}} variant="title" id="tableTitle">Offerings</Typography> 
-            <Button style={{position: 'absolute', color: 'white', backgroundColor: '#001489', right: 60}} variant="contained" size="large" onClick={this.handleCreator}>
-              Create new offering
-            </Button>
-          </Toolbar>
-          <OfferDetails/>
-          </Paper>
-        );
-  
-      }
+
+
+  render() {
+  const { classes } = this.props;
+  const { objectLoaded, oData, offerView, hits} = this.state;
+
+if(objectLoaded) {
+    return (
+          <div className={classes.tableWrapper}>
+            <Table className={classes.table} aria-labelledby="tableTitle">
+              <EnhancedTableHead/>
+                <TableBody>
+                  {hits
+                    .map(n => {
+                      if(n.id>24 || n.id<16){
+                      return (
+                        <Tooltip placement="left" TransitionComponent={Zoom} title="View/Edit offering">
+                        <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
+                            <CustomTableCell component="th" scope="row">{n.unit_code}</CustomTableCell>
+                            <CustomTableCell >{n.name}</CustomTableCell>
+                            <CustomTableCell>{n.enrolment}</CustomTableCell>
+                            <CustomTableCell>{n.pattern_code}</CustomTableCell>
+                            <CustomTableCell>{n.type}</CustomTableCell>
+                        </TableRow>
+                        </Tooltip>
+                      );}
+                    })}
+                </TableBody>
+            </Table>
+            {offerView ? ( <OfferViewer epriv={this.props.priv} viewed={this.viewerClosed.bind(this)} od={oData}/>):(<div></div>)}
+          </div>
+    );
   }
+  else {
+    return (
+        <Paper>
+        <LinearProgress variant="query" />
+        </Paper>
+    )
+}
+  }
+
 }
 
 EnhancedTable.propTypes = {

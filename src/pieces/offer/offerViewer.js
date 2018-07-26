@@ -8,7 +8,6 @@ import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 
 import SaveIcon from '@material-ui/icons/Save';
-import CloseIcon from '@material-ui/icons/Close';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -17,7 +16,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import Switch from '@material-ui/core/Switch';
-
+import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons/Close';
 
 const CustomTableCell = withStyles(theme => ({
     head: {
@@ -29,7 +29,7 @@ const CustomTableCell = withStyles(theme => ({
       fontSize: 12,
     },
   }))(TableCell);
-  
+
   const styles = theme => ({
     root: {
       width: '100%',
@@ -61,15 +61,16 @@ const CustomTableCell = withStyles(theme => ({
             ptAct: [],
             totalfr:0,
             totalps:0,
-            totalpt:0, 
+            totalpt:0,
             open: true,
             scroll: 'paper',
             dd:'',
             confirm: this.props.od.confirm,
             confirme:'not confirmed',
+            editMode: true,
         }
     }
-  
+
     progress = () => {
       const { completed } = this.state;
       if (completed > 100) {
@@ -80,7 +81,7 @@ const CustomTableCell = withStyles(theme => ({
         this.setState({ completed: completed + diff, buffer: completed + diff + diff2 });
       }
     };
-  
+
     handleClickOpen = scroll => () => {
       this.setState({ open: true, scroll });
     };
@@ -95,22 +96,78 @@ const CustomTableCell = withStyles(theme => ({
     handleStuff = () => {
         this.setState({ open: false });
     }
-    
+
 
     render() {
-      const {classes } = this.props;
-    return ( 
+      const {classes,  } = this.props;
+      const{editMode} = this.state;
+      console.log(this.props.epriv)
+    return (
       <Paper className={this.state.classes.root}>
-          <Dialog
+          <Dialog style={{ minWidth:500, }}
           open={this.state.open}
           scroll={this.state.scroll}
           aria-labelledby="scroll-dialog-title"
         >
-          <DialogTitle id="scroll-dialog-title">{this.props.od.unit_code} {this.props.od.name}
+          <DialogTitle id="scroll-dialog-title">
+          <div style={{padding:1,maxWidth:300,}} >
+          <Typography gutterBottom align="center" variant="display1">
+                {this.props.od.unit_code}
+            </Typography><Typography variant="title" gutterBottom>
+                {this.props.od.name}
+              </Typography>
+
+          <Button  variant="fab" color="secondary"  style={{position: 'absolute', top:'1%', right: '2%'}} className={classes.button} onClick={this.props.viewed}>
+                <CloseIcon/>
+            </Button>          </div>
           </DialogTitle>
-          <DialogContent>
+          <DialogContent style={{padding:4, minWidth:400,}}>
           <DialogContentText>
-                     
+
+
+          {editMode ? (<div>
+            <Table style={{background:'red'}} className={this.state.classes.table}>
+              <TableHead>
+                <TableRow>
+                  <CustomTableCell>modify offering </CustomTableCell>
+                  <CustomTableCell></CustomTableCell>
+                </TableRow>
+            </TableHead>
+              <TableBody>
+                    <TableRow>
+                      <CustomTableCell component="th" scope="row">Enrolments</CustomTableCell>
+                      <CustomTableCell>{this.props.od.enrolment}</CustomTableCell>
+                    </TableRow>
+                    {/*<TableRow>
+                      <CustomTableCell component="th" scope="row">Type</CustomTableCell>
+                      <CustomTableCell>{this.props.od.type}</CustomTableCell>
+                    </TableRow>   */}
+                    <TableRow>
+                      <CustomTableCell component="th" scope="row">Tutorials to staff</CustomTableCell>
+                      <CustomTableCell>{this.props.od.tutorial_to_staff}</CustomTableCell>
+                    </TableRow>
+                    <TableRow>
+                      <CustomTableCell component="th" scope="row">Tutorials to casual</CustomTableCell>
+                      <CustomTableCell>{this.props.od.tutorial_to_casual}</CustomTableCell>
+                    </TableRow>
+                    <TableRow>
+                      <CustomTableCell component="th" scope="row">CASUAL TUTORIAL</CustomTableCell>
+                      <CustomTableCell>{this.props.od.tutorial_to_casual}</CustomTableCell>
+                    </TableRow>
+            </TableBody>
+            </Table>
+
+            </div>):(<div></div>)}
+
+
+
+
+
+
+
+
+
+
         <Table className={this.state.classes.table}>
           <TableHead>
             <TableRow>
@@ -118,58 +175,15 @@ const CustomTableCell = withStyles(theme => ({
               <CustomTableCell>Value</CustomTableCell>
             </TableRow>
         </TableHead>
-          <TableBody> 
-                <TableRow>
-                  <CustomTableCell component="th" scope="row">Confirmed</CustomTableCell>
-                  <CustomTableCell>
-                  <Switch
-                checked={this.state.confirm}
-                onChange={this.handleConfirmation('confirm')}
-                value="confirm"
-              />
-              </CustomTableCell>
-                </TableRow>
-                <TableRow>
-                  <CustomTableCell component="th" scope="row">CASUAL TUTORIAL</CustomTableCell>
-                  <CustomTableCell>{this.props.od.tutorial_to_casual}</CustomTableCell>
-                </TableRow>
-                <TableRow>
-                  <CustomTableCell component="th" scope="row">Projected Enrolments</CustomTableCell>
-                  <CustomTableCell>{this.props.od.enrolment}</CustomTableCell>
-                </TableRow>
-                <TableRow>
-                  <CustomTableCell component="th" scope="row">ENTER COORDINATOR</CustomTableCell>
-                  <CustomTableCell>{this.props.od.type}</CustomTableCell>
-                </TableRow>
-                <TableRow>
-                  <CustomTableCell component="th" scope="row">COORDINATOR TUTORIALS</CustomTableCell>
-                  <CustomTableCell>{this.props.od.tutorial_to_staff}</CustomTableCell>
-                </TableRow>
-                <TableRow>
-                  <CustomTableCell component="th" scope="row">CASUAL TUTORIAL</CustomTableCell>
-                  <CustomTableCell>{this.props.od.tutorial_to_casual}</CustomTableCell>
-                </TableRow>
-
-
-        </TableBody> 
-        </Table>
-
-        <Table className={this.state.classes.table}>
-          <TableHead>
-            <TableRow>
-              <CustomTableCell>Rows</CustomTableCell>
-              <CustomTableCell>Value</CustomTableCell>
-            </TableRow>
-        </TableHead>
-          <TableBody> 
+          <TableBody>
                 <TableRow>
                   <CustomTableCell component="th" scope="row">Enrolments</CustomTableCell>
                   <CustomTableCell>{this.props.od.enrolment}</CustomTableCell>
                 </TableRow>
-                <TableRow>
+                {/*<TableRow>
                   <CustomTableCell component="th" scope="row">Type</CustomTableCell>
                   <CustomTableCell>{this.props.od.type}</CustomTableCell>
-                </TableRow>
+                </TableRow>   */}
                 <TableRow>
                   <CustomTableCell component="th" scope="row">Tutorials to staff</CustomTableCell>
                   <CustomTableCell>{this.props.od.tutorial_to_staff}</CustomTableCell>
@@ -178,7 +192,11 @@ const CustomTableCell = withStyles(theme => ({
                   <CustomTableCell component="th" scope="row">Tutorials to casual</CustomTableCell>
                   <CustomTableCell>{this.props.od.tutorial_to_casual}</CustomTableCell>
                 </TableRow>
-        </TableBody> 
+                <TableRow>
+                  <CustomTableCell component="th" scope="row">CASUAL TUTORIAL</CustomTableCell>
+                  <CustomTableCell>{this.props.od.tutorial_to_casual}</CustomTableCell>
+                </TableRow>
+        </TableBody>
         </Table>
 
         <Table className={this.state.classes.table}>
@@ -188,7 +206,7 @@ const CustomTableCell = withStyles(theme => ({
                 <CustomTableCell>Hours</CustomTableCell>
                 </TableRow>
             </TableHead>
-            <TableBody> 
+            <TableBody>
                 <TableRow>
                   <CustomTableCell component="th" scope="row">Students in a group</CustomTableCell>
                   <CustomTableCell>{this.props.od.student_per_group}</CustomTableCell>
@@ -220,20 +238,11 @@ const CustomTableCell = withStyles(theme => ({
                 <TableRow>
                   <CustomTableCell component="th" scope="row">Casual staff hours billable</CustomTableCell>
                   <CustomTableCell>{this.props.od.casual_hours_billable}</CustomTableCell>
-                </TableRow>   
-        </TableBody> 
+                </TableRow>
+        </TableBody>
         </Table>
         </DialogContentText>
         </DialogContent>
-        <DialogActions>
-            <Button variant="outlined" color="secondary" style={{position: "absolute", left: '50px'}} className={classes.button} onClick={this.props.viewed}>       
-                <CloseIcon/>Close
-            </Button>
-
-      <Button variant="outlined" color="primary"  className={classes.button}>
-        <SaveIcon/> Save
-      </Button>
-          </DialogActions>
         </Dialog>
       </Paper>
     );

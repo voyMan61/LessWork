@@ -18,11 +18,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Button from '@material-ui/core/Button';
 
+import Typography from '@material-ui/core/Typography';
 import Snackbar from '@material-ui/core/Snackbar';
 import SaveIcon from '@material-ui/icons/Save';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-
+import URL from '../ui/url.json'
 
 
 if (sessionStorage.getItem('calfr')) {
@@ -152,13 +153,13 @@ class CustomizedTable extends React.Component {
         e.preventDefault();
         //http://immense-headland-42479.herokuapp.com/api/new/pattern
         //https://jsonplaceholder.typicode.com/posts
-        fetch('http://immense-headland-42479.herokuapp.com/api/new/pattern', {
+      console.log(URL.url+'new/pattern')
+        fetch(URL.url+'new/pattern', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-
             body: JSON.stringify({
 
                 code: this.state.code,
@@ -302,7 +303,7 @@ class CustomizedTable extends React.Component {
         var calps = 0;
         var calpt = 0;
 
-        fetch('http://immense-headland-42479.herokuapp.com/api/activity', {
+        fetch(URL.url+'activity', {
             //mode: 'no-cors',
             method: 'GET',
             headers: {
@@ -338,7 +339,7 @@ class CustomizedTable extends React.Component {
             }
         });
 
-        fetch('http://immense-headland-42479.herokuapp.com/api/location', {
+        fetch(URL.url+'location', {
             //mode: 'no-cors',
             method: 'GET',
             headers: {
@@ -370,7 +371,6 @@ class CustomizedTable extends React.Component {
 
                 <Paper className={this.state.classes.root}>
 
-
             <Dialog
           open={this.state.open}
           scroll={this.state.scroll}
@@ -382,14 +382,17 @@ class CustomizedTable extends React.Component {
             contentStyle={{width: "100%", maxWidth: "none"}}
         >
           <DialogTitle id="scroll-dialog-title" style={{ background: 'linear-gradient(55deg, #fff9f9  10%, #fffef4 90%)'}}>
+          <div style={{padding:1,maxWidth:300,}} >
+          <Typography variant="display1" gutterBottom noWrap>
                 Create New Pattern
-                <Button variant="outlined" color="secondary"  style={{color: "#bf0000 ", position: "absolute", top: '2%', right: '5%'}} onClick={this.props.cclosed}>       
-                Cancel<CloseIcon/>
-                </Button>
-          </DialogTitle>
-          <DialogContent style={{ background: 'linear-gradient(55deg, #e2e2e2  10%, #fdfff9 90%)'}}>
+            </Typography></div>
+<Button  variant="fab" color="secondary"  style={{position: 'absolute', top:'1%', right: '2%'}} onClick={this.props.cclosed}>
+<CloseIcon/></Button>
+</DialogTitle>
+<DialogContent style={{padding:4, minWidth:400, background: 'linear-gradient(55deg, #e2e2e2  10%, #fdfff9 90%)',}}>
+
                     <form onSubmit={this.handleSubmit}>
-                    <p style={{textAlign: 'center'}} >
+                    <p style={{position: 'relative',color:'#d6e9ff', textAlign: 'center'}} >
                         <TextField
                             required
                             id="code"
@@ -404,7 +407,7 @@ class CustomizedTable extends React.Component {
                             value={this.state.code}
 
                         />
-                        </p><p style={{textAlign: 'center'}}>
+
                         <TextField
                             id="location_id"
                             select
@@ -426,7 +429,20 @@ class CustomizedTable extends React.Component {
                                 {option.name}
                             </MenuItem>
                         ))}
-                        </TextField></p><p style={{textAlign: 'center'}}>
+                        </TextField></p>
+                        <p style={{position: 'relative',color:'#d6e9ff', textAlign: 'center'}} >
+                        <TextField
+                            id="description"
+                            label="Short Description"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            placeholder="E.g LT, Internal"
+                            className={this.state.classes.textField}
+                            margin="normal"
+                            onChange={this.handleDesc('sdesc')}
+                            value={this.state.sdesc}
+                        />
                         <TextField
                             id="mode"
                             select
@@ -449,20 +465,8 @@ class CustomizedTable extends React.Component {
                             </MenuItem>
                         ))}
                         </TextField>
-                        </p><p style={{textAlign: 'center'}}>
-                        <TextField
-                            id="description"
-                            label="Short Description"
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            placeholder="E.g LT, Internal"
-                            className={this.state.classes.textField}
-                            margin="normal"
-                            onChange={this.handleDesc('sdesc')}
-                            value={this.state.sdesc}
-                        />
-                        </p><p style={{textAlign: 'center'}}>
+
+                        </p><p style={{position: 'relative', textAlign: 'center'}} >
                         <TextField
                             id="long_description"
                             label="Long Description"
@@ -477,8 +481,7 @@ class CustomizedTable extends React.Component {
                             onChange={this.handleDesc('ldesc')}
                             value={this.state.ldesc}
 
-                        />
-                        </p>
+                        /></p>
 
                         <Table className={this.state.classes.table}>
                             {this.state.frAct.length !== 0 &&
@@ -561,40 +564,17 @@ class CustomizedTable extends React.Component {
                                 })}
                             </TableBody>
                         </Table>
-
+                        <p style={{textAlign: 'center'}} >
+                        <Button type="submit" variant="contained" size="large"  className={this.state.classes.button} style={{ color: "#0f6600"}} type="submit" variant="outlined" >
+                                <SaveIcon/>    Create
+                        </Button></p>
       {isloading ?  <Paper className={this.state.classes.root}>
           <LinearProgress color="secondary" variant="query" />
         </Paper> : isloading}
-
-                        <Snackbar
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
-                            }}
-                            open={this.state.postPassed}
-                            autoHideDuration={6000}
-                            onClose={this.handleClose}
-                            ContentProps={{
-                                'aria-describedby': 'message-id',
-                            }}
-                            message={<span id="message-id">{this.state.message}</span>}
-                            action={[
-
-                                <IconButton
-                                    key="close"
-                                    aria-label="Close"
-                                    color="inherit"
-                                    className={this.state.classes.close}
-                                    onClick={this.handleClose}
-                                >
-                                    <CloseIcon />
-                                </IconButton>,
-                            ]}
-                        />
                     </form>
                     </DialogContent>
         <DialogActions style={{ color: "#005e5e", background: 'linear-gradient(55deg, #fffef9  10%, #fffbf9 90%)'}}>
-                        <Button  size="small" style ={{color: "#002b68", width: 160, position: 'relative'}} variant="outlined" color={'secondary'}>
+                          <p style={{textAlign: 'center'}} ><Button  size="small" style ={{color: "#002b68", width: 160, position: 'relative'}} variant="outlined" color={'secondary'}>
                         Flat rate: {this.state.totalfr}
                         </Button>
                         <Button size="small" style ={{color: "#002b68", width: 200, position: 'relative'}} variant="outlined" color={'secondary'}>
@@ -602,12 +582,33 @@ class CustomizedTable extends React.Component {
                         </Button>
                         <Button size="small" style ={{color: "#002b68", width: 160, position: 'relative'}} variant="outlined" color={'secondary'}>
                             Per student: {this.state.totalps}
-                        </Button>
-                        <Button  size="large" style={{color: "#0f6600"}} type="submit" color="primary" variant="outlined" className={this.state.classes.button}>
-                    <SaveIcon/>Create
-            </Button>
+                        </Button></p>
         </DialogActions>
         </Dialog>
+        <Snackbar
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+            }}
+            open={this.state.postPassed}
+            autoHideDuration={6000}
+            onClose={this.handleClose}
+            ContentProps={{
+                'aria-describedby': 'message-id',
+            }}
+            message={<span id="message-id">{this.state.message}</span>}
+            action={[
+                <IconButton
+                    key="close"
+                    aria-label="Close"
+                    color="inherit"
+                    className={this.state.classes.close}
+                    onClick={this.handleClose}
+                >
+                    <CloseIcon />
+                </IconButton>,
+            ]}
+        />
         </Paper>
             );
         }
