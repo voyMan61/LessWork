@@ -197,7 +197,7 @@ background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',}}>
 </p>
 <p >          <Card  className={classes.card2}>
         <CardContent style={{backgroundColor: 'rgb('+ r +','+ g +','+ b +')',}}>
-        <ExpansionPanel expanded={expanded === 'Staff'} onChange={this.handleExpandChange('Staff')}>
+        <ExpansionPanel expanded={expanded === 'Staff'} onChange={this.handleExpandChange('Staff/Unit Coordinator')}>
           <ExpansionPanelSummary expandIcon={<Sticon />}>
           <Typography style={{textAlign: 'right', fontSize:15,}}>Staff</Typography>
           </ExpansionPanelSummary>
@@ -206,23 +206,6 @@ background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',}}>
           value={this.state.value}
           onChangeValue={this.handleStChangeValue}
           />
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-
-
-            <ExpansionPanel expanded={expanded === 'Unit Coordinator'} onChange={this.handleExpandChange('Unit Coordinator')}>
-          <ExpansionPanelSummary expandIcon={<UCicon />}>
-          <Typography style={{fontSize:15,}}>Unit Coordinator</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-          <FormControl className={classes.formControl}>
-          <TextField
-          id="2"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-          onChange={this.handleLogChange}
-          />       </FormControl>
           </ExpansionPanelDetails>
         </ExpansionPanel>
 
