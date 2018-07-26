@@ -123,6 +123,7 @@ class CustomizedTable extends React.Component {
         e.preventDefault();
         //http://immense-headland-42479.herokuapp.com/api/new/pattern
         //https://jsonplaceholder.typicode.com/posts
+        console.log(URL.url+'new/offering')
         fetch(URL.url+'new/offering', {
             method: 'POST',
             headers: {

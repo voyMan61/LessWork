@@ -120,8 +120,6 @@ const{mits, hits, staffSelect,log} = this.state;
             <div style={{ position:'relative', left:'30%', bottom:'15%'}}>
                     <Barchart  chartData={this.state.chartData} /></div>
           </Paper>);
-
-
   }
 //this.props.lin === 5
 

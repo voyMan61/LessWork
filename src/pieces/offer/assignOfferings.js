@@ -39,6 +39,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import Snackbar from '@material-ui/icons/Save';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 
 const CustomTableCell = withStyles(theme => ({
@@ -154,12 +157,15 @@ class EnhancedTable extends React.Component {
       staffSelect:'',
       confirmed:null,
       loadD:null,
-      catg:'',
-      cotg:'',
+      catg:0,
+      cotg:0,
       loadT:null,
       currentID:null,
       enrol:null,
       isloading:false,
+      expanded: null,
+      postPassed: false,
+      enrols:0,
     };
   }
 
@@ -185,7 +191,6 @@ class EnhancedTable extends React.Component {
     this.setState({ open: false });
   };
 
-
   viewerClosed() {
     this.setState({
       currentCount: this.state.currentCount+1,
@@ -193,27 +198,31 @@ class EnhancedTable extends React.Component {
     })
   };
 
+
 handlecasual = name => event => {
-  this.setState({catg: event.target.tutorial_to_casual})
+    console.log('casual',event.target.value)
+  this.setState({catg: event.target.value})
 };
 
 handlecoord = name => event => {
-  this.setState({cotg: event.target.tutorial_to_staff})
+    console.log('staff',event.target.value)
+  this.setState({cotg: event.target.value})
 };
 
 handleEnrolments = name => event => {
-  this.setState({enrol: event.target.enrolment})
+  console.log(event.target.value)
+  this.setState({enrols: event.target.value})
 };
 
 
-  handleConfirm = name => event => {
-    console.log(event.target.id)
-    this.setState({currentID:event.target.id, confirmed:event.target.checked});
- };
+handleConfirm = name => event => {
+  console.log(event.target.id, 'checked', event.target.checked)
+  this.setState({currentID:event.target.id, confirmed:event.target.checked});
+};
 
 
 handleStaff = name => event => {
-
+  console.log(event.target.value.id)
   this.setState({ loadT: event.target.value.target ,loadD: event.target.value.total_load, staffSelect:event.target.value});
 };
   handleCreator = () => {
@@ -224,6 +233,12 @@ handleStaff = name => event => {
   creatorClosed() {
     this.setState({creatorOpen: false});
   };
+
+    handleEChange = panel => (event, expanded) => {
+        this.setState({
+          expanded: expanded ? panel : false, confirmed:false,enrols:0, cotg:0,catg:0,staffSelect:null
+        });
+      };
 
 
 componentDidMount() {
@@ -276,23 +291,60 @@ fetch(URL.url+'stafftotals', {
       }
   });
 }
+handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+        return;
+    }
+
+    this.setState({ postPassed: false });
+};
+
+        handleSubmit = (e) => {
+            this.setState({ isloading: true });
+            e.preventDefault();
+            //http://immense-headland-42479.herokuapp.com/api/new/pattern
+            //https://jsonplaceholder.typicode.com/posts
+            console.log(JSON.stringify({
+              confirm:this.state.confirmed,
+              enrolment:parseInt(this.state.enrols),
+              tutorial_to_staff:parseInt(this.state.cotg),
+              tutorial_to_casual:parseInt(this.state.catg),
+              staff_id:this.state.staffSelect.id
+            }))
+            console.log(URL.url+'offering/'+this.state.currentID)
+            fetch(URL.url+'offering/'+this.state.currentID, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+
+                body: JSON.stringify({
+                  confirm:this.state.confirmed,
+                  enrolment:parseInt(this.state.enrols),
+                  tutorial_to_staff:parseInt(this.state.cotg),
+                  tutorial_to_casual:parseInt(this.state.catg),
+                  staff_id:this.state.staffSelect.id
+                })
+            }).then(response => {
+                if (response.ok) {
+                    this.setState({ postPassed: true, isloading: false, message: "Offering updated" });
+                    return response
+                } else {
+                    this.setState({ postPassed: true, isloading: false, message: "Offering not updated. Please try again" })
+                    return Promise.reject('something went wrong!')
+                }
+            })
+                .then(data => console.log('data is', data))
+                .catch(error => console.log('error is', error));
+        };
 
 
-    handleSubmit = (e) => {
-      console.log(e)
-        this.setState({ isloading: true });
-        var n = JSON.stringify({
-          confirm:this.state.confirmed,
-        	enrolment:this.state.enrols,
-        	tutorial_to_staff:this.state.cotg,
-        	tutorial_to_casual:this.state.catg,
-        	staff_id:this.state.staffSelect
-        })
-        console.log(this.state.currentID)
 
-        e.preventDefault();
 
-    };
+
+
+
 
 
 
@@ -300,33 +352,37 @@ fetch(URL.url+'stafftotals', {
 
   render() {
   const { classes } = this.props;
-  const { currentID, catg, cotg, loadD, confirmed, staffSelect, staffData, staffLoaded, h, d, da, objectLoaded, oData, offerView, hits} = this.state;
+  const { postPassed, expanded, currentID, catg, enrols, cotg, loadD, confirmed, staffSelect, staffData, staffLoaded, h, d, da, objectLoaded, oData, offerView, hits} = this.state;
   if(objectLoaded && staffLoaded) {
       return (
             <div>
     <Grid container spacing={24}>
                     {hits
                       .map(n => {
-                        if(n.staff_id === null){
+                        if(n.enrolment === 0){
                         return (
                         <Grid item xs={3} spacing={40}>
-                          <div >
-                          <ExpansionPanel >
+                          <div>
+                          <ExpansionPanel expanded={expanded === n.id} onChange={this.handleEChange(n.id)}>
                             <ExpansionPanelSummary style={{ padding:5, flexGrow: 1,}}expandIcon={<ExpandMoreIcon />}>
                             <Typography className={classes.heading}>{n.unit_code}</Typography>
                                         <Typography className={classes.secondaryHeading}> - {n.name}</Typography>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails className={classes.details}>
-                              <div style={{ textAlign:'center', alignItems:'center'}} >
+
                             <form onSubmit={this.handleSubmit}>
-                              <p>confirm<Switch
-                            checked={confirmed}
-                            id={n.id}
-                            onChange={this.handleConfirm()}
-                            value={confirmed}
-                            color="primary"
-                          /></p>
-                          <p>select staff
+                                <p style={{ top:'10%', textAlign:'center', position: 'relative',}} >Confirm
+                                <Switch
+                                checked={confirmed}
+                                id={n.id}
+                                label={'Confirm'}
+                                onChange={this.handleConfirm()}
+                                value={confirmed}
+                                color="primary"  />
+                          </p>
+
+
+                          <p style={{ top:'12%', textAlign:'center', position: 'relative',}} >select staff
                           <Select
                           id={n.id}
                           value= {staffSelect}
@@ -340,18 +396,13 @@ fetch(URL.url+'stafftotals', {
                           );
                           })}
                           </Select>
-
-
                           </p>
-                            <p>staff load </p>
-                            <div>
 
 
 
-//workload viz
 
-                            </div>
-                            <p>
+
+                          <p style={{position: 'relative',color:'#d6e9ff', textAlign: 'center'}} >
                             <TextField
                                 id={n.id}
                                 label="Coordinator tutorial Groups"
@@ -361,12 +412,10 @@ fetch(URL.url+'stafftotals', {
                                 placeholder="0"
                                 margin="normal"
                                 onChange={this.handlecoord()}
-                                value={cotg}
-                            />
+                                value={this.state.cotg}
+                            /></p>
+  <p style={{position: 'relative',color:'#d6e9ff', textAlign: 'center'}} >
 
-</p>
-
-<p>
 <TextField
     id={n.id}
     label="Casual tutorial Groups"
@@ -376,45 +425,61 @@ fetch(URL.url+'stafftotals', {
     placeholder="0"
     margin="normal"
     onChange={this.handlecasual()}
-    value={cotg}
+    value={this.state.catg}
 />
 
-</p>
-
-
-<p>
 <TextField
     id={n.id}
     label="Enrolments"
     InputLabelProps={{
         shrink: true,
     }}
-    placeholder="0"
     margin="normal"
     onChange={this.handleEnrolments()}
-    value={cotg}
+    value={this.state.enrols}
 />
-
 </p>
 
-                            <Button type="submit" variant="outlined" size="small" style={{ color: "#0f6600"}} >
+                            <Button type="submit" variant="outlined" size="large" style={{ position:'relative', left:'33%', textAlign:'center',  color: "#0f6600"}} >
                             <SaveIcon/> Save
                             </Button>
-                            </form></div>
+                            </form>
+                            <div style={{ textAlign:'center', alignItems:'center'}} ></div>
                             </ExpansionPanelDetails>
                             <Divider />
-                            <ExpansionPanelActions>
-                              <Button size="small">Cancel</Button>
-
-                            </ExpansionPanelActions>
-
-
                           </ExpansionPanel>
                           </div>
                           </Grid>
                         );}
                       })}
                       </Grid>
+
+                      <Snackbar
+                          anchorOrigin={{
+                              vertical: 'bottom',
+                              horizontal: 'left',
+                          }}
+                          open={this.state.postPassed}
+                          autoHideDuration={6000}
+                          onClose={this.handleClose}
+                          ContentProps={{
+                              'aria-describedby': 'message-id',
+                          }}
+                          message={<span id="message-id">{this.state.message}</span>}
+                          action={[
+                              <IconButton
+                                  key="close"
+                                  aria-label="Close"
+                                  color="inherit"
+                                  onClick={this.handleClose}
+                              >
+                                  <CloseIcon />
+                              </IconButton>,
+                          ]}
+                      />
+
+
+
                 </div>
       );
 
@@ -436,3 +501,11 @@ EnhancedTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 export default withStyles(styles)(EnhancedTable);
+
+
+
+/*
+  <p>staff load </p>
+
+//workload viz
+*/
