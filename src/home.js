@@ -197,7 +197,7 @@ background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',}}>
 </p>
 <p >          <Card  className={classes.card2}>
         <CardContent style={{backgroundColor: 'rgb('+ r +','+ g +','+ b +')',}}>
-        <ExpansionPanel expanded={expanded === 'Staff'} onChange={this.handleExpandChange('Staff/Unit Coordinator')}>
+        <ExpansionPanel expanded={expanded === 'Staff'} onChange={this.handleExpandChange('Staff')}>
           <ExpansionPanelSummary expandIcon={<Sticon />}>
           <Typography style={{textAlign: 'right', fontSize:15,}}>Staff</Typography>
           </ExpansionPanelSummary>
@@ -208,7 +208,6 @@ background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',}}>
           />
           </ExpansionPanelDetails>
         </ExpansionPanel>
-
 
                 <ExpansionPanel expanded={expanded === 'Dean'} onChange={this.handleExpandChange('Dean')}>
                   <ExpansionPanelSummary expandIcon={<Dicon />}>
