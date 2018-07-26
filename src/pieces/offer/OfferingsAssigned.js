@@ -203,11 +203,10 @@ class SimpleCard1 extends React.Component {
                 //console.log(this.state.period_code);
 
                 return (
-                  <Grid container spacing={24}>
+
                     <div key={data.id}>
 
-                    <Grid item xs={6} spacing={16}>
-      <Card style={{  background: 'linear-gradient(90deg, #e2e2e2  10%, #fdfff9 90%)', }}>
+      <Card style={{ padding: '5%', background: 'linear-gradient(90deg, #e2e2e2  10%, #fdfff9 90%)', }}>
               <CardContent>
                                 <Typography variant="display1" component="p">
                                     {singleOffering.unit_code}
@@ -220,14 +219,14 @@ class SimpleCard1 extends React.Component {
                                 </Typography>
                             </CardContent>
                         </Card>
-                        </Grid>
                     </div >
-                    </Grid>
                 )
             });
             return (
-                <div style={{ padding: '2%', }}>
+                <div style={{ padding: '5%', }}>
+                    <Grid container spacing={16}>
                     {data1}
+                    </Grid>
                 </div>
                 );
         }

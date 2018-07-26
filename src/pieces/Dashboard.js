@@ -32,6 +32,7 @@ staffSelect:[],
 log: true,
 mits:false,
 key:1,
+costData:[],
 }
 }
 
@@ -50,11 +51,35 @@ var obj;
 var myData = [];
 var myLabel = [];
 var myTarget = [];
+var costObj ;
 //http://localhost:3000/Staff.json
 //http://localhost:5000/api/stafftotals
 //http://arcane-cove-45625.herokuapp.com/api/stafftotals
 //http://immense-headland-42479.herokuapp.com/api/stafftotals
 
+
+fetch(URL.url+'costing', {
+    //mode: 'no-cors',
+    method: 'GET',
+    headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+    },
+},
+).then(response => {
+    if (response.ok) {
+        response.json().then(json => {
+            costObj = json;
+            this.setState({
+                costLoaded: true,
+                costData: costObj
+            })
+
+        });
+    }
+    console.log(this.state.costData)
+});
 
 
 
@@ -99,8 +124,8 @@ console.log(error);
 }
 
 render() {
-const{mits, hits, staffSelect,log, renderA} = this.state;
-
+const{costData, mits, hits, staffSelect,log, renderA} = this.state;
+console.log(costData)
   if(this.props.lin === 1){
     return(
     <Paper style={{height:'100%'}}>
@@ -110,11 +135,12 @@ const{mits, hits, staffSelect,log, renderA} = this.state;
     <Typography style={{position: 'fixed', right: '6%'}} variant="contained" size="large" color="secondary" >
     </Typography>
             </Toolbar>
+            <div style={{padding:'5%',}}>
+            <Barchart  chartData={this.state.chartData} /></div>
             <div style={{maxHeight:'33%'}}>
               <Toolbar><Typography variant="title">Offerings </Typography> </Toolbar>
             <OfferingsAssigned key={this.props.sid} staffD = {this.props.sid}/></div>
-            <div style={{padding:'5%',}}>
-            <Barchart  chartData={this.state.chartData} /></div>
+
           </Paper>);
   }
 //this.props.lin === 5
@@ -125,9 +151,23 @@ const{mits, hits, staffSelect,log, renderA} = this.state;
               Dashboard  </Typography>
               </Toolbar>
 
+
+              <div style={{position:'relative', padding:'5%',}}>
+              <Barchart  chartData={this.state.chartData} /></div>
+
+
               <div style={{alignItems:'center',padding:'5%',}}>
               <Card style={{background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',}}>
               <CardContent >
+              <Typography variant="headline" gutterBottom>
+                Costs
+              </Typography>
+
+              <Typography style={{textAlign:'center'}}variant="subheading" gutterBottom>
+        Total casual Load: {costData.total_casual_load}&emsp;&emsp;&emsp;&emsp;
+        Total billable hours: {costData.total_billable_hours}&emsp;&emsp;&emsp;&emsp;
+        Total Cost  {costData.total_cost}
+      </Typography>
               </CardContent >
               </Card ></div>
 
@@ -136,12 +176,12 @@ const{mits, hits, staffSelect,log, renderA} = this.state;
               <div style={{alignItems:'center',padding:'5%',}}>
             <Card style={{background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',}}>
             <CardContent >
-            <Toolbar><Typography variant="title">Offerings to be assigned </Typography> </Toolbar>
+            <Typography variant="headline" gutterBottom>
+              Offerings to be assigned </Typography>
             <Assigner />
             </CardContent >
             </Card ></div>
-            <div style={{position:'relative', padding:'5%',}}>
-            <Barchart  chartData={this.state.chartData} /></div>
+
             </Paper>);
     }
 
