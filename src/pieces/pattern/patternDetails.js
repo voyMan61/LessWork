@@ -197,7 +197,6 @@ class EnhancedTable extends React.Component {
           <Table className={classes.table} aria-labelledby="tableTitle">
             <EnhancedTableHead/>
             <TableBody>
-<<<<<<< HEAD
               {hits.map(n => {
                   if (n.id > 25 || n.id < 11) {
                     return (<Tooltip placement="left" TransitionComponent={Zoom} title="View Pattern">
@@ -226,25 +225,6 @@ class EnhancedTable extends React.Component {
 
                 })
               }
-=======
-              {hits
-                .map(n => {
-                    if(n.id>225 || n.id<11 ){
-                  return (
-                    <Tooltip placement="left" TransitionComponent={Zoom} title="View Pattern">
-                    <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
-                      <CustomTableCell style={{textAlign: 'center'}} component="th" scope="row">
-                        {n.code}
-                      </CustomTableCell>
-                      <CustomTableCell style={ {width:'20%'}}>{n.description}</CustomTableCell>
-                      <CustomTableCell style={{textAlign: 'center'}}>{n.mode}</CustomTableCell>
-                      <CustomTableCell style={{textAlign: 'center'}}>{n.student_per_group}</CustomTableCell>
-                      <CustomTableCell style={ {width:'35%'}}> {n.long_description }</CustomTableCell>
-                    </TableRow>
-                    </Tooltip>
-                  );}
-                })}
->>>>>>> 21c2f9c4e3563c9063c85436cfb7be8d5c1d26c1
             </TableBody>
           </Table>
         </div>
