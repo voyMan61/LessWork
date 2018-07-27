@@ -21,6 +21,12 @@ import Grid from '@material-ui/core/Grid';
 import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
 import Switch from '@material-ui/core/Switch';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
 
 const styles = theme => ({
   heading: {
@@ -75,6 +81,11 @@ const styles = theme => ({
   }
 });
 
+function Transition(props) {
+  return <Slide direction="up" {...props} />;
+}
+
+
 class EnhancedTable extends React.Component {
   constructor(props) {
     super(props);
@@ -112,9 +123,17 @@ class EnhancedTable extends React.Component {
       r: 255,
       g: 255,
       b: 255,
-      d: ''
+      d: '',
+      showButton: false,
     };
   }
+  handleSClickOpen = () => {
+    this.setState({ modee: true });
+  };
+
+  handleSClose = () => {
+    this.setState({ modee: false });
+  };
 
   handleChange = () => {
     this.setState(state => ({
@@ -177,7 +196,7 @@ class EnhancedTable extends React.Component {
       enrols: 0,
       cotg: 0,
       catg: 0,
-      staffSelect: null
+      staffSelect: null,
     });
   };
 
@@ -231,7 +250,9 @@ class EnhancedTable extends React.Component {
     }
     this.setState({postPassed: false});
   };
-
+handleMe =(e) => {
+  this.setState({showButton:true});
+}
   handleSubmit = (e) => {
     this.setState({isloading: true});
     e.preventDefault();
@@ -253,11 +274,11 @@ class EnhancedTable extends React.Component {
       })
     }).then(response => {
       if (response.ok) {
-        this.setState({postPassed: true, isloading: false, message: "Offering updated"});
+        this.setState({showButton: true, postPassed: true, isloading: false, message: "Offering updated"});
         this.props.reffed;
         return response
       } else {
-        this.setState({postPassed: true, isloading: false, message: "Offering not updated. Please try again"})
+        this.setState({showButton: true, postPassed: true, isloading: false, message: "Offering not updated. Please try again"})
         return Promise.reject('something went wrong!')
       }
     }).then(data => console.log('data is', data)).catch(error => console.log('error is', error));
@@ -280,8 +301,10 @@ class EnhancedTable extends React.Component {
       staffLoaded,
       d,
       objectLoaded,
-      hits
+      hits,
+      showButton
     } = this.state;
+
     if (objectLoaded && staffLoaded) {
       return (<div key={this.state.postPassed}>
         <Grid container="container" spacing={24}>
@@ -361,7 +384,7 @@ class EnhancedTable extends React.Component {
                               }} margin="normal" onChange={this.handleEnrolments()} value={this.state.enrols}/>
                           </p>
 
-                          <Button onClick={() => handleToUpdate('someVar')} type="submit" variant="outlined" size="large" style={{
+                          <Button  type="submit" variant="outlined" size="large" style={{
                               position: 'relative',
                               left: '30%',
                               textAlign: 'center',
