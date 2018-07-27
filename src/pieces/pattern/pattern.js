@@ -95,7 +95,7 @@ creatorClosed() {
     return (
         <Paper>
         <Toolbar><Typography style={{position: 'absolute', left: 60}} variant="title" id="tableTitle">Patterns</Typography>
-        { this.props.lin != 5 ? (<div></div>) : (<Button style={{position: 'absolute', color: 'white', backgroundColor: '#001489', right: 60}} variant="contained" size="large" onClick={this.handleCreator}>
+        { this.props.lin !== 5 ? (<div></div>) : (<Button style={{position: 'absolute', color: 'white', backgroundColor: '#001489', right: 60}} variant="contained" size="large" onClick={this.handleCreator}>
                     Create new pattern
                   </Button>)}
 

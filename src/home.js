@@ -119,6 +119,7 @@ this.setState({lvalue:2,currentUser: 'UC', logged:false, expanded: null, log: tr
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowSizeChange);
+      window.removeEventListener('resize', this.handleResize);
   }
 
   handleWindowSizeChange = () => {
@@ -133,10 +134,6 @@ this.setState({lvalue:2,currentUser: 'UC', logged:false, expanded: null, log: tr
 
   componentDidMount() {
       window.addEventListener('resize', this.handleResize);
-  }
-
-  componentWillUnmount(){
-      window.removeEventListener('resize', this.handleResize);
   }
 
   handleResize = () => {
@@ -216,6 +213,7 @@ background: 'linear-gradient(55deg, #ede8e8  10%, #e2e2e2 90%)',}}>
                   <ExpansionPanelDetails>
                   <FormControl className={classes.formControl}>
                   <TextField
+
                   id="3"
                   label="Password"
                   type="password"

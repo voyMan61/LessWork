@@ -150,7 +150,9 @@ class EnhancedTable extends React.Component {
       offerView: false,
       objectLoaded: false,
       creatorOpen: false,
-      da: [ {} ],
+      da: [
+        {}
+      ],
       d: null,
       h: null,
       staffLoaded: false,
@@ -356,7 +358,8 @@ class EnhancedTable extends React.Component {
     if (objectLoaded && staffLoaded) {
       return (<div>
         <Grid container="container" spacing={24}>
-          {hits.map(n => {
+          {
+            hits.map(n => {
               if (n.enrolment === 0) {
                 return (<Grid item="item" xs={3} spacing={40}>
                   <div>

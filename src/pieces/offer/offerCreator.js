@@ -1,28 +1,22 @@
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import {withStyles} from '@material-ui/core/styles';
-
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import SaveIcon from '@material-ui/icons/Save';
-
-import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
-
 import Button from '@material-ui/core/Button';
 import classNames from 'classnames';
-
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
-import URL from '../ui/url.json'
-
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+
+import URL from '../ui/url.json'
+
 
 const styles = theme => ({
   root: {
