@@ -198,8 +198,7 @@ componentDidMount() {
             <TableBody>
               {hits
                 .map(n => {
-
-                    if(n.id>22 || n.id<11 ){
+                    if(n.id>225 || n.id<11 ){
                   return (
                     <Tooltip placement="left" TransitionComponent={Zoom} title="View Pattern">
                     <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
@@ -213,7 +212,6 @@ componentDidMount() {
                     </TableRow>
                     </Tooltip>
                   );}
-
                 })}
             </TableBody>
           </Table>
