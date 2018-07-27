@@ -299,7 +299,7 @@ class EnhancedTable extends React.Component {
                         }}>
                         <Typography className={classes.heading}>{n.unit_code}</Typography>
                         <Typography className={classes.secondaryHeading}>
-                          - {n.name}</Typography>
+                           &emsp;{n.name}</Typography>
                       </ExpansionPanelSummary>
                       <ExpansionPanelDetails className={classes.details}>
 

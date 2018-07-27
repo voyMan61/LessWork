@@ -190,7 +190,7 @@ class Dashboard extends React.Component {
               <Typography variant="subheading" style={{
                   textAlign: 'center'
                 }} gutterBottom="gutterBottom">
-                Total casual Load: {costData.total_casual_load}&emsp;&emsp;&emsp;&emsp; Total billable hours: {costData.total_billable_hours}&emsp;&emsp;&emsp;&emsp; Total Cost {costData.total_cost}
+                Total casual Load: {costData.total_casual_load}&emsp;&emsp;&emsp;&emsp; Total billable hours: {costData.total_billable_hours}&emsp;&emsp;&emsp;&emsp; Total Cost: {costData.total_cost}
               </Typography>
             </CardContent >
           </Card >
