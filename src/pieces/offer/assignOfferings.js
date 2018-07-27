@@ -2,15 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Tooltip from '@material-ui/core/Tooltip';
-import Zoom from '@material-ui/core/Zoom';
 import Button from '@material-ui/core/Button';
 import URL from '../ui/url.json'
 import TextField from '@material-ui/core/TextField';
@@ -18,70 +12,15 @@ import MenuItem from '@material-ui/core/MenuItem';
 import SaveIcon from '@material-ui/icons/Save';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import classNames from 'classnames';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Chip from '@material-ui/core/Chip';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import Snackbar from '@material-ui/icons/Save';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-
-import OfferViewer from './offerViewer.js'
-
-const CustomTableCell = withStyles(theme => ({
-  head: {
-    backgroundColor: '#301615',
-    color: theme.palette.common.white,
-    fontSize: 14
-  },
-  body: {
-    fontSize: 12
-  }
-}))(TableCell);
-
-const columnData = [
-  {
-    id: 'Unit Code',
-    label: 'Unit Code'
-  }, {
-    id: 'Name',
-    label: 'Name'
-  }, {
-    id: 'Enrolled',
-    label: 'Enrolled'
-  }, {
-    id: 'Patter',
-    label: 'Pattern code'
-  }, {
-    id: 'Type',
-    label: 'Type'
-  }
-];
-
-class EnhancedTableHead extends React.Component {
-  render() {
-    return (<TableHead>
-      <TableRow>
-        {
-          columnData.map(column => {
-            return (<CustomTableCell>{column.label}</CustomTableCell>);
-          })
-        }
-      </TableRow>
-    </TableHead>);
-  }
-}
 
 const styles = theme => ({
   heading: {
@@ -203,31 +142,25 @@ class EnhancedTable extends React.Component {
   };
 
   handlecasual = name => event => {
-    console.log('casual', event.target.value)
     this.setState({catg: event.target.value})
   };
 
   handlecoord = name => event => {
-    console.log('staff', event.target.value)
     this.setState({cotg: event.target.value})
   };
 
   handleEnrolments = name => event => {
-    console.log(event.target.value)
     this.setState({enrols: event.target.value})
   };
 
   handleConfirm = name => event => {
-    console.log(event.target.id, 'checked', event.target.checked)
     this.setState({currentID: event.target.id, confirmed: event.target.checked});
   };
 
   handleStaff = name => event => {
-    console.log(event.target.value.id)
     this.setState({loadT: event.target.value.target, loadD: event.target.value.total_load, staffSelect: event.target.value});
   };
   handleCreator = () => {
-    console.log('create');
     this.setState({creatorOpen: true});
   };
 
@@ -304,14 +237,6 @@ class EnhancedTable extends React.Component {
     e.preventDefault();
     //http://immense-headland-42479.herokuapp.com/api/new/pattern
     //https://jsonplaceholder.typicode.com/posts
-    console.log(JSON.stringify({
-      confirm: this.state.confirmed,
-      enrolment: parseInt(this.state.enrols),
-      tutorial_to_staff: parseInt(this.state.cotg),
-      tutorial_to_casual: parseInt(this.state.catg),
-      staff_id: this.state.staffSelect.id
-    }))
-    console.log(URL.url + 'offering/' + this.state.currentID)
     fetch(URL.url + 'offering/' + this.state.currentID, {
       method: 'POST',
       headers: {
@@ -329,6 +254,7 @@ class EnhancedTable extends React.Component {
     }).then(response => {
       if (response.ok) {
         this.setState({postPassed: true, isloading: false, message: "Offering updated"});
+        this.props.reffed;
         return response
       } else {
         this.setState({postPassed: true, isloading: false, message: "Offering not updated. Please try again"})
@@ -338,6 +264,7 @@ class EnhancedTable extends React.Component {
   };
 
   render() {
+    var handleToUpdate = this.props.handleToUpdate;
     const {classes} = this.props;
     const {
       postPassed,
@@ -356,7 +283,7 @@ class EnhancedTable extends React.Component {
       hits
     } = this.state;
     if (objectLoaded && staffLoaded) {
-      return (<div>
+      return (<div key={this.state.postPassed}>
         <Grid container="container" spacing={24}>
           {
             hits.map(n => {
@@ -434,7 +361,7 @@ class EnhancedTable extends React.Component {
                               }} margin="normal" onChange={this.handleEnrolments()} value={this.state.enrols}/>
                           </p>
 
-                          <Button type="submit" variant="outlined" size="large" style={{
+                          <Button onClick={() => handleToUpdate('someVar')} type="submit" variant="outlined" size="large" style={{
                               position: 'relative',
                               left: '30%',
                               textAlign: 'center',

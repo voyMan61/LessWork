@@ -16,11 +16,10 @@ import Assigner from './offer/assignOfferings.js'
 import OfferingsAssigned from './offer/OfferingsAssigned.js';
 import URL from './ui/url.json'
 
-
-
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
+    this.handleRefresh = this.handleRefresh.bind(this)
     this.state = {
       chartData: {},
       staffData: {},
@@ -31,14 +30,21 @@ class Dashboard extends React.Component {
       log: false,
       mits: false,
       key: 1,
-      costData: []
+      costData: [],
+      refresh: 2
     }
+  }
+  handleRefresh(e) {
+    e.preventDefault()
+  }
+  handleToUpdate = (someArg) => {
+    alert('Offering Assigned');
+    this.setState({refresh: 1})
   }
 
   handleStaffChange = event => {
     this.forceUpdate();
     this.setState({mits: false, log: true, staffSelect: event.target.value});
-    console.log(event.target.value);
   };
   handleStaffBChange = event => {
     this.forceUpdate();
@@ -48,7 +54,6 @@ class Dashboard extends React.Component {
       log: true,
       staffSelect: event.target.value
     });
-    console.log(event.target.value);
   };
   componentDidMount() {
     var obj;
@@ -74,10 +79,8 @@ class Dashboard extends React.Component {
         response.json().then(json => {
           costObj = json;
           this.setState({costLoaded: true, costData: costObj})
-
         });
       }
-      console.log(this.state.costData)
     });
 
     this.setState({isLoading: true});
@@ -116,13 +119,7 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    const {
-      costData,
-      hits,
-      staffSelect,
-      log,
-    } = this.state;
-    console.log(costData)
+    const {costData, hits, staffSelect, log, refresh} = this.state;
     if (this.props.lin === 1) {
       return (<Paper style={{
           height: '100%'
@@ -161,8 +158,8 @@ class Dashboard extends React.Component {
       </Paper>);
     }
     //this.props.lin === 5
-    if (true) {
-      return (<Paper>
+    if (true && refresh >= 1) {
+      return (<Paper key={refresh}>
         <Toolbar>
           <Typography style={{
               position: 'absolute',
@@ -210,7 +207,7 @@ class Dashboard extends React.Component {
               <Typography variant="headline" gutterBottom="gutterBottom">
                 Offerings to be assigned
               </Typography>
-              <Assigner/>
+              <Assigner handleToUpdate={this.handleToUpdate}/>
             </CardContent >
           </Card >
         </div>
@@ -242,7 +239,6 @@ class Dashboard extends React.Component {
       </Paper>);
     }
 
-    
   }
 }
 

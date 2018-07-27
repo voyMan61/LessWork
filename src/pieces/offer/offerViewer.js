@@ -96,7 +96,7 @@ class CustomizedTable extends React.Component {
   }
 
   render() {
-    const {classes} = this.props; 
+    const {classes} = this.props;
     console.log(this.props.epriv)
     return (<Paper className={this.state.classes.root}>
       <Dialog style={{

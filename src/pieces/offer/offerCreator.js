@@ -17,7 +17,6 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import URL from '../ui/url.json'
 
-
 const styles = theme => ({
   root: {
     width: '100%',
@@ -95,7 +94,8 @@ class CustomizedTable extends React.Component {
       periodLoaded: false,
       periodData: this.props.periodData,
       period: 1,
-      open: true
+      open: true,
+      tem: []
     }
 
   }
@@ -172,7 +172,7 @@ class CustomizedTable extends React.Component {
     var Findlocation = this.state.patternData.find(item => item.id === event.target.value);
     this.setState({[name]: event.target.value, location: Findlocation.location_id});
     var periodObj;
-    fetch('http://immense-headland-42479.herokuapp.com/api/periodoptions/' + Findlocation.location_id, {
+    fetch(URL.url + 'periodoptions/' + Findlocation.location_id, {
       //mode: 'no-cors',
       method: 'GET',
       headers: {
@@ -185,7 +185,6 @@ class CustomizedTable extends React.Component {
         response.json().then(json => {
           periodObj = json;
           this.setState({periodLoaded: true, periodData: periodObj, period: periodObj[0].id})
-
         });
       }
     });
@@ -247,7 +246,6 @@ class CustomizedTable extends React.Component {
         response.json().then(json => {
           patternObj = json;
           this.setState({patternLoaded: true, patternData: patternObj})
-
         });
       }
     });
@@ -326,7 +324,8 @@ class CustomizedTable extends React.Component {
                   }} margin="normal">{
                     this.state.patternData.map(option => (<MenuItem key={option.id} value={option.id}>
                       {option.code}
-                    </MenuItem>))
+                    </MenuItem>)).filter((option) => option.key >= 26 || option.key <= 10)
+                  }
                   }
                 </TextField>
               </p>
@@ -399,21 +398,20 @@ class CustomizedTable extends React.Component {
             <CloseIcon/>
           </IconButton>
             ]}/>
-      </Paper>);
-    } else {
-      return (<Paper className={this.state.classes.root}>
-        <Dialog open={this.state.open} scroll={this.state.scroll} aria-labelledby="scroll-dialog-title">
-          <DialogTitle id="scroll-dialog-title">Loading Creator
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              <LinearProgress color="primary" variant="query"/>
-            </DialogContentText>
-          </DialogContent>
-        </Dialog>
-      </Paper>)
-    }
-  }
+      </Paper>); } else {
+        return (<Paper className={this.state.classes.root}>
+          <Dialog open={this.state.open} scroll={this.state.scroll} aria-labelledby="scroll-dialog-title">
+            <DialogTitle id="scroll-dialog-title">Loading Creator
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                <LinearProgress color="primary" variant="query"/>
+              </DialogContentText>
+            </DialogContent>
+          </Dialog>
+        </Paper>)
+      }
+      }
 }
 
 export default withStyles(styles)(CustomizedTable);

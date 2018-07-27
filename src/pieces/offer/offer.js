@@ -9,7 +9,6 @@ import Button from '@material-ui/core/Button';
 import OfferCreator from './offerCreator.js'
 import OfferDetails from './offerTable'
 
-
 const styles = theme => ({
   root: {
     width: '100%',
@@ -76,7 +75,7 @@ class EnhancedTable extends React.Component {
             }} variant="title" id="tableTitle">Offering</Typography>
         </Toolbar>
         <OfferCreator cclosed={this.creatorClosed.bind(this)}/>
-        <OfferDetails priv={this.props.lin }/>
+        <OfferDetails priv={this.props.lin}/>
       </Paper>);
     } else {
       return (<Paper>
@@ -98,7 +97,7 @@ class EnhancedTable extends React.Component {
               </Button>)
           }
         </Toolbar>
-        <OfferDetails priv={this.props.lin }/>
+        <OfferDetails priv={this.props.lin}/>
       </Paper>);
     }
   }

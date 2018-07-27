@@ -1,28 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
 import LinearProgress from '@material-ui/core/LinearProgress';
-
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
 import OfferViewer from './offerViewer.js'
-import Button from '@material-ui/core/Button';
 import URL from '../ui/url.json'
 
 const CustomTableCell = withStyles(theme => ({
   head: {
     backgroundColor: '#301615',
     color: theme.palette.common.white,
-    fontSize: 14
+    fontSize: 14,
+    textAlign: 'center'
   },
   body: {
     fontSize: 12
@@ -45,6 +41,9 @@ const columnData = [
   }, {
     id: 'Type',
     label: 'Type'
+  }, {
+    id: 'Staff',
+    label: 'Staff'
   }
 ];
 
@@ -96,9 +95,11 @@ class EnhancedTable extends React.Component {
       checked: false,
       hits: [],
       oData: '',
+      staffDe: [],
       offerView: false,
       objectLoaded: false,
-      creatorOpen: false
+      creatorOpen: false,
+      staffLoaded: false
     };
   }
 
@@ -138,6 +139,9 @@ class EnhancedTable extends React.Component {
 
   componentDidMount() {
     var offerObj;
+    fetch(URL.url + 'stafftotals').then((response) => response.json()).then((responseJson) => {
+      this.setState({staffLoaded: true, staffDe: responseJson});
+    })
     fetch(URL.url + 'offering', {
       //mode: 'no-cors',
       method: 'GET',
@@ -158,9 +162,15 @@ class EnhancedTable extends React.Component {
 
   render() {
     const {classes} = this.props;
-    const {objectLoaded, oData, offerView, hits} = this.state;
-
-    if (objectLoaded) {
+    const {
+      objectLoaded,
+      oData,
+      offerView,
+      hits,
+      staffDe,
+      staffLoaded
+    } = this.state;
+    if (objectLoaded && staffLoaded) {
       return (<div className={classes.tableWrapper}>
         <Table className={classes.table} aria-labelledby="tableTitle">
           <EnhancedTableHead/>
@@ -168,13 +178,32 @@ class EnhancedTable extends React.Component {
             {
               hits.map(n => {
                 if (n.confirm && n.enrolment > 0) {
-                  return (<Tooltip placement="left" TransitionComponent={Zoom} title="View/Edit offering">
+                  return (<Tooltip placement="left" TransitionComponent={Zoom} title="View offering">
                     <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>
-                      <CustomTableCell component="th" scope="row">{n.unit_code}</CustomTableCell>
+                      <CustomTableCell style={{
+                          textAlign: 'center'
+                        }} component="th" scope="row">{n.unit_code}</CustomTableCell>
                       <CustomTableCell >{n.name}</CustomTableCell>
-                      <CustomTableCell>{n.enrolment}</CustomTableCell>
-                      <CustomTableCell>{n.pattern_code}</CustomTableCell>
-                      <CustomTableCell>{n.type}</CustomTableCell>
+                      <CustomTableCell style={{
+                          textAlign: 'center'
+                        }}>{n.enrolment}</CustomTableCell>
+                      <CustomTableCell style={{
+                          textAlign: 'center'
+                        }}>{n.pattern_code}</CustomTableCell>
+                      <CustomTableCell style={{
+                          textAlign: 'center'
+                        }}>{n.type}</CustomTableCell>
+                      <CustomTableCell style={{
+                          textAlign: 'center'
+                        }}>
+                        {
+                          staffDe.map(m => {
+                            if (n.staff_id === m.id) {
+                              return (m.name)
+                            }
+                          })
+                        }
+                      </CustomTableCell>
                     </TableRow>
                   </Tooltip>);
                 }

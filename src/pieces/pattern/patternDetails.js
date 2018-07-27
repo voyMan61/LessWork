@@ -186,8 +186,7 @@ class EnhancedTable extends React.Component {
       </Paper>)
     }
     if (patterAct) {
-      return (
-      <Paper className={classes.root}>
+      return (<Paper className={classes.root}>
         <PatternActivities viewed={this.viewerClosed.bind(this)} Pid={patId} Pcode={patcode}/>
       </Paper>);
     }
@@ -197,7 +196,8 @@ class EnhancedTable extends React.Component {
           <Table className={classes.table} aria-labelledby="tableTitle">
             <EnhancedTableHead/>
             <TableBody>
-              {hits.map(n => {
+              {
+                hits.map(n => {
                   if (n.id > 25 || n.id < 11) {
                     return (<Tooltip placement="left" TransitionComponent={Zoom} title="View Pattern">
                       <TableRow key={n.id} data-item={n} onClick={this.handleROpen.bind(this, n)}>

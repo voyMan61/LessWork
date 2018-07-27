@@ -10,29 +10,19 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 
-import MenuList from '@material-ui/core/MenuList';
-import ListItemText from '@material-ui/core/ListItemText';
 
-import Avatar from '@material-ui/core/Avatar';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import FolderIcon from '@material-ui/icons/BusinessCenter';
 import Sticon from '@material-ui/icons/Message'
 import Dicon from '@material-ui/icons/Send'
-import UCicon from '@material-ui/icons/Email';
 import SAicon from '@material-ui/icons/Settings';
 import Person from '@material-ui/icons/PersonPin';
 import TextField from '@material-ui/core/TextField';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import Seletctor from './pieces/sSelect.js'
-import LogoM from './pieces/ui/mLogo2.png';
+import Seletctor from './pieces/sSelect.js' 
 import Part from './pieces/ui/parts.js';
 /*
 import InboxIcon from '@material-ui/icons/MoveToInbox';
