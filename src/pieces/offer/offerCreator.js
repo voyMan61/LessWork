@@ -273,6 +273,7 @@ class CustomizedTable extends React.Component {
           this.setState({periodLoaded: true, periodData: periodObj})
 
         });
+<<<<<<< HEAD
       }
     });
 
@@ -418,6 +419,192 @@ class CustomizedTable extends React.Component {
           </DialogContent>
         </Dialog>
       </Paper>)
+=======
+
+
+    }
+
+    render() {
+        const { isloading } = this.state;
+        if (this.state.locationLoaded === true && this.state.unitLoaded === true && this.state.patternLoaded === true && this.state.periodLoaded === true) {
+            return (
+
+                <Paper className={this.state.classes.root}>
+ <Dialog
+          open={this.state.open}
+          scroll={this.state.scroll}
+          aria-labelledby="scroll-dialog-title"
+          title="Dialog"
+            modal = {true}
+            autoDetectWindowHeight={false}
+            autoScrollBodyContent={false}
+            contentStyle={{width: "100%",  maxWidth: "none"}}
+        >
+          <DialogTitle id="scroll-dialog-title" style={{  minWidth: 500, background: 'linear-gradient(55deg, #fff9f9  10%, #fffef4 90%)'}}>
+                Create New Offering
+                <Button  variant="fab" color="secondary"  style={{position: 'absolute', top:'1%', right: '2%'}} onClick={this.props.cclosed}>
+                      <CloseIcon/>
+                  </Button>
+          </DialogTitle>
+          <DialogContent  style={{ alignItems:'center', background: 'linear-gradient(55deg, #e2e2e2  10%, #fdfff9 90%)'}}>
+                    <form onSubmit={this.handleSubmit}>
+                    <p style={{textAlign: 'center'}} >
+                        <TextField
+                            id="unit_id"
+                            select
+                            label="Unit Name"
+                            className={this.state.classes.unittextField}
+                            value={this.state.unit}
+                            onChange={this.handleUnit('unit')}
+                            SelectProps={{
+                                MenuProps: {
+                                    className: this.state.classes.unitmenu,
+                                },
+                            }}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            margin="normal"
+                        >{this.state.unitData.map(option => (
+                            <MenuItem key={option.id} value={option.id}>
+                                {option.code + " " + option.name}
+                            </MenuItem>
+                        ))}
+                        </TextField></p><p style={{textAlign: 'center'}} >
+                        <TextField
+                            id="pattern_id"
+                            select
+                            label="Pattern Code"
+                            className={this.state.classes.textField}
+                            value={this.state.pattern}
+                            onChange={this.handlePattern('pattern')}
+                            SelectProps={{
+                                MenuProps: {
+                                    className: this.state.classes.unitmenu,
+                                },
+                            }}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            margin="normal"
+                        >{this.state.patternData.map(option => (
+                            <MenuItem key={option.id} value={option.id}>
+                                {option.code}
+                            </MenuItem>
+                        ))}
+                        </TextField></p><p style={{textAlign: 'center'}} >
+                        <TextField
+                            id="location_id"
+                            select
+                            label="Location"
+                            className={this.state.classes.textField}
+                            value={this.state.location}
+                            onChange={this.handleLoc('location')}
+                            SelectProps={{
+                                MenuProps: {
+                                    className: this.state.classes.menu,
+                                },
+                            }}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            margin="normal"
+                        >{this.state.locationData.map(option => (
+                            <MenuItem key={option.id} value={option.id}>
+                                {option.name}
+                            </MenuItem>
+                        ))}
+                        </TextField></p><p style={{textAlign: 'center'}} >
+                        <TextField
+                            id="period_id"
+                            select
+                            label="Period"
+                            className={this.state.classes.textField}
+                            value={this.state.period}
+                            onChange={this.handlePeriod('period')}
+                            SelectProps={{
+                                MenuProps: {
+                                    className: this.state.classes.menu,
+                                },
+                            }}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            margin="normal"
+                        >
+
+                            {
+                                this.state.periodData.map(option => (
+                                    <MenuItem key={option.id} value={option.id}>
+                                        {option.code}
+                                    </MenuItem>
+                                ))
+                            }
+                        </TextField></p>
+
+                        {isloading ? <Paper className={this.state.classes.root}>
+                            <LinearProgress color="secondary" variant="query" />
+                        </Paper> : isloading}
+
+
+                        <p style={{textAlign: 'center'}} >
+
+
+                        <Button  type="submit" size="large"  variant="contained" style={{ color: "#0f6600"}} type="submit" variant="outlined" >
+                                <SaveIcon className={classNames(this.state.classes.leftIcon, this.state.classes.iconSmall)} />
+                                Create Offering
+                        </Button></p>
+                    </form>
+                    </DialogContent>
+                    </Dialog>
+                    <Snackbar
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'left',
+                        }}
+                        open={this.state.postPassed}
+                        autoHideDuration={6000}
+                        onClose={this.handleClose}
+                        ContentProps={{
+                            'aria-describedby': 'message-id',
+                        }}
+                        message={<span id="message-id">{this.state.message}</span>}
+                        action={[
+
+                            <IconButton
+                                key="close"
+                                aria-label="Close"
+                                color="inherit"
+                                className={this.state.classes.close}
+                                onClick={this.handleClose}
+                            >
+                                <CloseIcon />
+                            </IconButton>,
+                        ]}
+                    />
+                </Paper>
+
+            );
+        } else {
+           return (
+                <Paper className={this.state.classes.root} >
+                <Dialog
+                    open={this.state.open}
+                    scroll={this.state.scroll}
+                    aria-labelledby="scroll-dialog-title"
+                  >
+                    <DialogTitle id="scroll-dialog-title">Loading Creator
+                    </DialogTitle>
+                    <DialogContent>
+                    <DialogContentText>
+                      <LinearProgress color= "primary" variant="query" />
+                  </DialogContentText>
+                  </DialogContent>
+                  </Dialog>
+                </Paper>
+              )
+        }
+>>>>>>> 21c2f9c4e3563c9063c85436cfb7be8d5c1d26c1
     }
   }
 }
