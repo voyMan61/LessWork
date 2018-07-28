@@ -99,7 +99,7 @@ const parts =
         }
       },
       "size": {
-        "value": 1.5,
+        "value": 2.5,
         "random": true,
         "anim": {
           "enable": false,
@@ -112,12 +112,12 @@ const parts =
         "enable": true,
         "distance": 63.13193588162762,
         "color": "#ffffff",
-        "opacity": 0.7418002466091246,
+        "opacity": 1,
         "width": 1.1048088779284833
       },
       "move": {
         "enable": true,
-        "speed": 1.5782983970406905,
+        "speed": 2.5782983970406905,
         "direction": "none",
         "random": true,
         "straight": false,
