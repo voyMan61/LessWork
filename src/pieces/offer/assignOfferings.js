@@ -310,7 +310,7 @@ handleMe =(e) => {
         <Grid container="container" spacing={24}>
           {
             hits.map(n => {
-              if (n.enrolment === 0) {
+              if (n.enrolment === 0 && n.unit_code != "ICT101") {
                 return (<Grid item="item" xs={3} spacing={40}>
                   <div>
                     <ExpansionPanel style={{
